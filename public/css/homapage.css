@@ -1,0 +1,68 @@
+body {
+    /* preserve navbar */
+    padding-top: 61px;
+  }
+  
+  .bg-dark {
+    background-color: Black !important;
+  }
+  
+  .bg-light {
+    background-color: WhiteSmoke !important;
+  }
+  
+  .bg-trees {
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .py-6 {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+  
+  .py-7 {
+    padding-top: 150px;
+    padding-bottom: 150px;
+  }
+  
+  @media (min-width: 992px) {
+     .border-lg-0 {
+        border: none !important;
+     }
+  }
+
+  .bgimg-1{
+    background-image: url("../img/kar1.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+  .bgimg-2{
+    background-image: url("../img/0T3A0987.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+  .bgimg-3{
+    background-image: url("../img/duyurular8624.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+  .boyut{
+    width: 18rem; height: 12rem;
+    background-color: #F8F9FA;
+  }
+.owl-carousel{
+  display: flex;
+  justify-content: center;
+}
+.bg-kou{
+  background-image: url('../img/0T3A0987.jpeg');
+  background-size: cover;
+}
+.headerImg{
+  transform: translateX(-70px);
+}
+body:hover .headerImg{
+  transform: translateX(0px);
+  transition: all 2s;
+}
