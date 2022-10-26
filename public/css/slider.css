@@ -1,0 +1,111 @@
+*{
+    box-sizing:border-box;
+}
+body{
+    margin:0;
+}
+.slider .item{
+    margin-top: -50px;
+    height: 100vh;
+    background-size: cover;
+}
+.slider .slide1{
+    background-image: url('../img/0T3A0987.jpeg');
+}
+.slider .slide2{
+    background-image: url('../img/kar1.jpeg');
+}
+.slider .slide3{
+    background-image: url('../img/1.jpeg');
+}
+.slider .caption{
+    position: absolute;
+    top:50%;
+    left: 10%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+.slider .caption .title{
+    background: rgba(255,255,255,0.5);
+    font-size: 60px;
+    padding: 10px;
+    text-transform:uppercase;
+    font-weight: bold;
+    display: inline-block;
+}
+.slider .desc{
+    font-size: 35px;
+    font-weight:300;
+    margin:10px 0px 10px;
+    color: #fff;
+}
+.slider .owl-dots{
+    position: absolute;
+    z-index: 100;
+    bottom: 50px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+}
+.slider .owl-dots button.owl-dot{
+    width:20px;
+    height: 20px;
+    border-radius: 50%;
+    border:1px solid #fff;
+    margin: 0px 3px;
+    outline:none;
+}
+.slider .owl-dots button.owl-dot.active{
+    background: #fff;
+}
+.slider .owl-carousel .owl-nav button.owl-prev,.slider .owl-carousel .owl-nav button.owl-next{
+    width:50px;
+    height: 50px;
+    border-bottom:4px solid #fff;
+    border-left:4px solid #fff;
+    position:absolute;
+    transform:translateY(-50%);
+    top:50%;
+    text-indent: -60px;
+    overflow: hidden;
+    outline: none;
+    opacity: 1;
+    transition:all ease 0.5;
+    -webkit-transition: all ease 0.5s;
+    -ms-transition:all ease 0.5s;
+}
+.slider .owl-carousel .owl-nav button.owl-prev{
+    left:-30px;
+    transform:translateY(-50%)rotate(45deg);
+    -webkit-transform:translateY(-50%)rotate(45deg);
+    -ms-transform:translateY(-50%)rotate(45deg);
+}
+.slider .owl-carousel .owl-nav button.owl-next{
+    right:-30px;
+    transform:translateY(-50%)rotate(-135deg);
+    -webkit-transform:translateY(-50%)rotate(-135deg);
+    -ms-transform:translateY(-50%)rotate(-135deg);
+}
+.slider .owl-carousel:hover .owl-nav button.owl-prev{
+    left:30px;
+}
+.slider .owl-carousel:hover .owl-nav button.owl-next{
+    right:30px;
+}
+.slider{
+    overflow: hidden;
+}
+.transparent {
+    width:auto;
+    height:auto;
+    background-color:#292828;
+    opacity:0.97;
+    filter:alpha(opacity=60);
+}
+.transparent:hover {
+    width:auto;
+    height:auto;
+    background-color:#000;
+    opacity:1;
+}
+

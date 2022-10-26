@@ -1,0 +1,52 @@
+@media only screen and (min-width: 760px) {
+    .headerImg{
+        transform: translateX(-70px);
+    }
+    body:hover .headerImg{
+        transform: translateX(0px);
+        transition: all 2s;
+    }
+
+  }
+@media only screen and (max-width: 600px) {
+    .navbarstyl{
+        background: linear-gradient(180deg,#F8F9FA 0%, #F8F9FA 100%);
+        height:20rem !important;
+    }
+  }
+.navbarstyl{
+    background: linear-gradient(180deg,#159B44 0%, #F8F9FA 100%);
+    height: 7rem;
+}
+.nav-link{
+    color:#000 ;
+}
+.nav-link:hover{
+    color:rgb(0, 133, 20) ;
+}
+.navbarstyl button:hover{
+    background-color: #000;
+  }
+.navbarstyl button{
+    /* background: linear-gradient(180deg,#159B44 0%, #F8F9FA 100%)!important; */
+    background: #159B44 !important;
+}
+.card{
+    background: linear-gradient(180deg, #212529 0%, #198754 100%);
+    width: 32rem;
+    height: 16rem; 
+}
+.card:hover{
+    width: 40rem;
+    height: 18rem;
+    transition: all 1s;
+    opacity: 0.7;
+}
+.card button{
+    color: #198754;
+}
+.card button:hover{
+    background: #198754;
+}
+
+
