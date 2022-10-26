@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/homapage.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/slider.css">
+    <title>Document</title>
+</head>
+<body>
+   <nav class="navbar fixed-top navbar-dark transparent">
+      <div class="container-fluid ">
+      <img class="headerImg" src="../img/kocaeli-universitesi-logo-2.png" alt="" style="height:50px;"> 
+        <a class="navbar-brand text-white" href="#">Kocaeli Üniversitesi Staj Takip Sistemi</a>
+        <a class="rounded-2 text-decoration-none text-white" href="login">Giriş Yap <i class="bi bi-box-arrow-in-right d-none d-md-inline"></i></a>
+        </div>
+      </div>
+  </nav>  
+   <!-- <img src="../img/kocaeli-universitesi-logo-2.png" alt="" style="height:40px ;"> 
+    <a class="navbar-brand bg-dark px-1 py-3" href="#">
+        Kocaeli Üniversitesi Staj Takip Sistemi
+    </a>
+    <button class="navbar-toggler px-4 py-3 border-0" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    ><i class="bi bi-box-arrow-in-right"></i></button>
+ 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <ul class="navbar-nav ms-auto me-0 me-lg-3 border-top border-lg-0">
+          <li class="nav-item p-2">
+            <button type="button" class="btn btn-dark">Giriş Yap</button>
+          </li>
+       </ul>
+    </div>
+</nav> -->
+<header class="py-7 text-center text-white bg-kou d-flex d-md-none">
+   <div class="container-fluid">
+   </div>
+</header>
+<div class="slider d-none d-md-flex">
+   <div class="owl-carousel">
+       <div class="item slide1">
+           <div class="caption">
+               <!-- <div class="title">MElike</div>
+               <div class="desc">Seher Ünaldı</div> -->
+           </div>
+       </div>
+       <div class="item slide2">
+           <div class="caption">
+               <!-- <div class="title"></div>
+               <div class="desc"></div> -->
+           </div>
+       </div>
+       <div class="item slide3">
+           <div class="caption">
+               <!-- <div class="title"></div>
+               <div class="desc"></div> -->
+           </div>
+       </div>
+   </div>
+</div>
+
+<section class="py-5">
+   <div class="container-fluid px-4 ">
+      <h2 class="text-center">Bilişim Sistemleri Mühendisliği</h2>
+      <div class="row my-4">
+         <div class="col-md-4 py-3">
+            <section class="py-5 text-center bg-light bgimg-1">
+               <h3 class="h2">Bölümümüz</h3>
+               <p class="lead">Bölümümüz web sitesi</p>
+               <a class="btn btn-primary rounded-2" href="http://bilisim.kocaeli.edu.tr" target="_blank">Tıklayın</a>
+            </section>
+         </div>
+         <div class="col-md-4  py-3">
+            <section class="py-5 text-center bg-light bgimg-2">
+               <h3 class="h2">Staj Evrakları</h3>
+               <p class="lead">Staj aşamalarındaki tüm evraklar </p>
+               <a class="btn btn-primary rounded-2" href="http://bilisim.kocaeli.edu.tr/staj.php" target="_blank">Tıklayın</a>
+            </section>
+         </div>
+            <div class="col-md-4  py-3">
+            <section class="py-5 text-center bg-light bgimg-3">
+               <h3 class="h2">Duyurular</h3>
+               <p class="lead">Tüm duyuruları görüntüleyin</p>
+               <a class="btn btn-primary rounded-2" href="#">Tıklayın</a>
+            </section>
+         </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<section class="py-5 d-none d-xl-flex">
+   <section class="container ">
+      <h2 class="display-4 text-center">Duyurular</h2>
+      <div class="owl-theme owl-carousel">
+         <% duyuru.forEach(duyuru => { %>
+            <div class="item">
+               <div class="col-md-5">
+                  <blockquote class="boyut p-3 font-italic border rounded-2">
+                  <h5><%= duyuru.duyuruBaslik %> </h5> 
+                  <p><%= duyuru.duyuruTuru %> </p>
+               </blockquote>
+            </div>
+         </div>
+         <% }) %>     
+      </div>
+   </section>
+</section>
+ 
+<section class="py-5 bg-light d-flex d-xl-none">
+   <section class="container">
+      <h2 class="display-4 text-center">Duyurular</h2>
+
+      <div class="row justify-content-around mt-5 mb-3">
+         <% duyuru.forEach(duyuru => { %>
+          <div class="col-md-5">
+            <blockquote class="blockquote p-3 font-italic bg-white">
+              <p><%= duyuru.duyuruBaslik %> </p>
+              <footer class="blockquote-footer"><%= duyuru.duyuruTuru %> </footer>
+            </blockquote>
+         </div>
+         <% }) %>
+      </div><!-- .row -->
+   </section>
+</section>
+
+ <!-- Subscription - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+ 
+ <!-- Footer - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+ <footer class="p-2 bg-dark text-white text-center">
+   <div class="text-start fw-lighter">
+      <div class="row p-5 mx-5 text-center d-none d-md-flex justify-lg-content-between ">
+         <div class="col-3"><p>SEHER MELİKE ÜNALDI</p> </div>
+         <div class="col-3"><p>ZEHRA AN</p> </div>
+         <div class="col-3"><p>ÖZER ARMAĞAN</p> </div>
+         <div class="col-3"><p>ERDEM HACIHASANOĞLU</p> </div>
+      </div>
+   </div>
+   <div class="text-start fw-lighter">
+      <div class="row p-5 mx-5 text-center d-flex d-md-none">
+         <p>SEHER MELİKE ÜNALDI</p>
+         <p>ZEHRA AN</p>
+         <p>ÖZER ARMAĞAN</p>
+         <p>ERDEM HACIHASANOĞLU</p>
+      </div>
+   </div> 
+   <hr>
+   &copy;2022 Kocaeli Üniversitesi
+   <span class="text-primary">&hearts;</span>
+
+ </footer>
+
+
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script type="text/javascript">
+     $('.slider .owl-carousel').owlCarousel({
+     loop:true,
+     nav:true,
+     dots:true,
+     items:1,
+     autoplay:true,
+     smartSpeed:1200
+ })
+ </script>
+ <script type="text/javascript">
+   $('.owl-carousel').owlCarousel({
+       loop:true,
+       margin:10,
+       nav:true,
+       autoplay:true,
+       smartSpeed:1200,
+       responsive:{
+           0:{
+               items:0
+           },
+           600:{
+               items:2
+           },
+           1000:{
+               items:4
+           }
+       }
+   })
+</script>
+</body>
+</html>
