@@ -48,10 +48,30 @@ const kullaniciislemleri_get=async function(req, res) {
         console.log(err);
     }
 }
+const kullaniciislemleri_post=async function(req, res) {
+    const kullaniciAd=req.body.kullaniciAd;
+    const kullaniciSoyad=req.body.kullaniciSoyad;
+    const kullaniciNumara=req.body.kullaniciNumara;
+    const kullaniciParola=req.body.kullaniciParola;
+    const kullaniciTelNo=req.body.kullaniciTelNo;
+    const kullaniciMail=req.body.kullaniciMail;
+    const rolID=req.body.rolID;
+    const kullaniciFakulte=req.body.kullaniciFakulte;
+    const kullaniciBolum=req.body.kullaniciBolum;
+    const kullaniciSinif=req.body.kullaniciSinif;
+    try {
+        await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:kullaniciParola,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
+    }
+    catch(err) {
+        console.log(err);
+        console.log("hatalı ekleme");
+    }
+}
 
 module.exports={
     stajimeislemleri_get,
     duyuruolustur_get,
     duyuruolustur_post,
-    kullaniciislemleri_get
+    kullaniciislemleri_get,
+    kullaniciislemleri_post
 }

@@ -12,8 +12,9 @@ router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
 router.get("/duyuruolustur",adminControllers.duyuruolustur_get);
 router.post("/duyuruolustur",adminControllers.duyuruolustur_post);
 
-
+//kullanici islemleri get post
 router.get("/kullaniciislemleri", adminControllers.kullaniciislemleri_get);
+router.post("/kullaniciislemleri", adminControllers.kullaniciislemleri_post);
 
 // router.post("/kullaniciislemleri", async function(req, res){
 

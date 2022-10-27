@@ -6,7 +6,7 @@ const duyuru = require("../models/duyuru.js");
 
 
 const userControllers=require("../controllers/user_controllers");
-router.use("/",userControllers.anasayfa_get);
+router.get("/",userControllers.anasayfa_get);
 
 
 // const authController=require('../controllers/auth_controllers.js');
@@ -18,24 +18,6 @@ router.use("/",userControllers.anasayfa_get);
 
 // // router.get('/',authController.AnasayfaGoster);
 
-
-
-
-router.get("/", async function(req, res) {
-    try {
-        // const [duyurular, ] = await db.execute("select * from duyuru");
-        // let diziUzunluk=duyurular.length;
-        const duyurular=await duyuru.findAll();
-        console.log(duyurular);
-        res.render("sayfalar/homepage.ejs", {
-            duyurular:duyurular,
-            // diziUzunluk:diziUzunluk 
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-});
 
 module.exports = router;
 

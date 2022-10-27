@@ -36,10 +36,6 @@ const stajkayit=sequelize.define("stajkayit",{
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    firmaAd: {
-      type: DataTypes.STRING(250),
-      allowNull: true
-    },
     basvuruForm: {
       type: DataTypes.BLOB,
       allowNull: true

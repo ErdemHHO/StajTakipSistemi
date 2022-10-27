@@ -128,28 +128,28 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label  for="kulSoyad" class="form-label">Soyadı:</label>
+                                        <label  for="kullaniciSoyad" class="form-label">Soyadı:</label>
                                         <input name="kullaniciSoyad" type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
                                         <div class="invalid-feedback">
                                         Kullanıcının soyadı boş geçilemez.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="kulNumara" class="form-label">Numara:</label>
+                                        <label for="kullaniciNumara" class="form-label">Numara:</label>
                                         <input  name="kullaniciNumara" type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
                                         <div class="invalid-feedback">
                                         Kullanıcının numarası boş geçilemez.
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label  for="kulSifre" class="form-label">Şifre:</label>
-                                        <input name="kullaniciParola" type="text" class="form-control" id="kulSifre" placeholder="" value="" required>
+                                        <label  for="kullaniciParola" class="form-label">Şifre:</label>
+                                        <input name="kullaniciParola" type="password" class="form-control" id="kulSifre" placeholder="" value="" required>
                                         <div class="invalid-feedback">
                                         Kullanıcının şifresi boş geçilemez.
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label  for="kulTelNo" class="form-label">Telefon:</label>
+                                        <label  for="kullaniciTelNo" class="form-label">Telefon:</label>
                                         <div class="input-group has-validation">
                                         <input name="kullaniciTelNo" type="text" class="form-control" id="kulTelNo" placeholder="" required>
                                         <div class="invalid-feedback">
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label  for="kulEmail" class="form-label">E-Posta:</label>
+                                        <label  for="kullaniciMail" class="form-label">E-Posta:</label>
                                         <div class="input-group has-validation">
                                         <input name="kullaniciMail" type="email" class="form-control" id="kulEmail" placeholder="" required>
                                         <div class="invalid-feedback">
@@ -168,16 +168,17 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label  class="form-label">Rolü:</label>
-                                        <select for="kulRol" class="form-select" id="country" required>
+                                        <input name="rolID" type="text" class="form-control" id="rolID" placeholder="" required>
+                                        <!-- <select name="rolID" for="kulRol" class="form-select" id="country" required>
                                         <option value="">Seçiniz</option>
                                         roller rol tablosundan gelecek
-                                        </select>
+                                        </select> -->
                                         <div class="invalid-feedback">
                                             Rol boş geçilemez.
                                         </div> 
                                     </div>
                                     <div class="col-md-3">
-                                        <label  for="kulFakulte" class="form-label">Fakültesi:</label>
+                                        <label  for="kullaniciFakulte" class="form-label">Fakültesi:</label>
                                         <div class="input-group has-validation">
                                         <input name="kullaniciFakulte" type="text" class="form-control" id="kulFakulte" placeholder="" required>
                                         </div>
@@ -186,7 +187,7 @@
                                         </div>
                                     </div>
                                         <div class="col-md-3">
-                                            <label  for="kulBolum" class="form-label">Bölümü:</label>
+                                            <label  for="kullaniciBolum" class="form-label">Bölümü:</label>
                                             <div class="input-group has-validation">
                                             <input name="kullaniciBolum" type="text" class="form-control" id="kulBolum" placeholder="" required>
                                             </div>
@@ -195,7 +196,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label  for="kulSınıf" class="form-label">Sınıfı(Opsiyonel)</label>
+                                            <label  for="kullaniciSinif" class="form-label">Sınıfı(Opsiyonel)</label>
                                             <input name="kullaniciSinif" type="text" class="form-control"  placeholder="" required>
                                             <!--<select class="form-select" id="country">
                                              <option name="kullaniciSinif" value="">Seçiniz</option>
