@@ -7,7 +7,7 @@ const adminControllers=require("../controllers/admin_controllers");
 
 //staj ime işlemleri get-post
 router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
-
+router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
 //duyuru oluştur sayfası get-post
 router.get("/duyuruolustur",adminControllers.duyuruolustur_get);
 router.post("/duyuruolustur",adminControllers.duyuruolustur_post);
