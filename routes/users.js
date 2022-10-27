@@ -3,14 +3,23 @@ const router = express.Router();
 const db = require("../data/db.js");
 const duyuru = require("../models/duyuru.js");
 
-const authController=require('../controllers/auth_controllers.js');
-//router.get('/duyuruolustur',authController.duyuruOlustur);
-router.get('/profil',authController.profil);
-router.get('/kullaniciislem',authController.kullaniciIslem);
-router.get('/login',authController.loginFormunuGoster);
-router.post('/login',authController.login)
 
-// router.get('/',authController.AnasayfaGoster);
+
+const userControllers=require("../controllers/user_controllers");
+router.use("/",userControllers.anasayfa_get);
+
+
+// const authController=require('../controllers/auth_controllers.js');
+// //router.get('/duyuruolustur',authController.duyuruOlustur);
+// router.get('/profil',authController.profil);
+// router.get('/kullaniciislem',authController.kullaniciIslem);
+// router.get('/login',authController.loginFormunuGoster);
+// router.post('/login',authController.login)
+
+// // router.get('/',authController.AnasayfaGoster);
+
+
+
 
 router.get("/", async function(req, res) {
     try {

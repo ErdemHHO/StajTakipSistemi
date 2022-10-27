@@ -1,33 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../data/db.js");
-const duyuru = require("../models/duyuru.js");
-const kullanici = require("../models/kullanici.js");
 
-router.get("/stajimeislemleri", async function(req, res) {
-    try {
-        const [products, ] = await db.execute("select * from stajkayit");
-        const [veri, ] = await db.execute("select * from kullanici");
-        console.log(products[0])
-        res.render("yonetici/stajImeIslemleri.ejs", {
-            stajKayitTable: products,
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-});
-router.get("/kullaniciislemleri", async function(req, res) {
-    try {
-        const kullanicilar=await kullanici.findAll();
-        res.render("yonetici/kullanıcıIslemleri.ejs", {
-            kullaniciTable: kullanicilar
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-});
+
+//controllers
+const adminControllers=require("../controllers/admin_controllers");
+
+//staj ime işlemleri get-post
+router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
+
+//duyuru oluştur sayfası get-post
+router.get("/duyuruolustur",adminControllers.duyuruolustur_get);
+router.post("/duyuruolustur",adminControllers.duyuruolustur_post);
+
+
+router.get("/kullaniciislemleri", adminControllers.kullaniciislemleri_get);
+
 // router.post("/kullaniciislemleri", async function(req, res){
 
 //     const kullaniciAd=req.body.kullaniciAd;
@@ -57,26 +44,7 @@ router.get("/kullaniciislemleri", async function(req, res) {
 //         console.log(err)
 //     }
 // })
-router.post("/duyuruolustur", async function(req, res){
-    const duyuruBaslik=req.body.duyuruBaslik;
-    const duyuruAciklama=req.body.duyuruAciklama;
-    const duyuruTuru=req.body.duyuruTuru;
-    try{
-      await duyuru.create({duyuruBaslik:duyuruBaslik,duyuruAciklama:duyuruAciklama,duyuruTuru:duyuruTuru})
-      
-    }
-    catch(err){
-        console.log(err)
-    }
-})
-router.get("/duyuruolustur", async function(req, res) {
-    try {
-        res.render("yonetici/duyuru.ejs", {
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-});
+//
+
 
 module.exports=router;
