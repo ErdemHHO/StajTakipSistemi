@@ -78,4 +78,9 @@ const kullanici=sequelize.define("kullanici",{
     },
   ]
 });
+async function sync(){
+  // await duyuru.sync({force: true});
+  // const count=await duyuru.count();
+}
+sync();
 module.exports=kullanici;

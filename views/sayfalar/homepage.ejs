@@ -99,16 +99,16 @@
    <section class="container ">
       <h2 class="display-4 text-center">Duyurular</h2>
       <div class="owl-theme owl-carousel">
-         <% duyuru.forEach(duyuru => { %>
+         <% duyurular.forEach(duyuru => { %>
             <div class="item">
                <div class="col-md-5">
                   <blockquote class="boyut p-3 font-italic border rounded-2">
-                  <h5><%= duyuru.duyuruBaslik %> </h5> 
-                  <p><%= duyuru.duyuruTuru %> </p>
+                  <h5><%= duyuru.dataValues.duyuruBaslik %> </h5> 
+                  <p><%= duyuru.dataValues.duyuruTuru %> </p>
                </blockquote>
             </div>
          </div>
-         <% }) %>     
+         <% }) %>      
       </div>
    </section>
 </section>
@@ -118,11 +118,11 @@
       <h2 class="display-4 text-center">Duyurular</h2>
 
       <div class="row justify-content-around mt-5 mb-3">
-         <% duyuru.forEach(duyuru => { %>
+         <% duyurular.forEach(duyuru => { %>
           <div class="col-md-5">
             <blockquote class="blockquote p-3 font-italic bg-white">
-              <p><%= duyuru.duyuruBaslik %> </p>
-              <footer class="blockquote-footer"><%= duyuru.duyuruTuru %> </footer>
+              <p><%= duyuru.dataValues.duyuruBaslik %> </p>
+              <footer class="blockquote-footer"><%= duyuru.dataValues.duyuruTuru %> </footer>
             </blockquote>
          </div>
          <% }) %>

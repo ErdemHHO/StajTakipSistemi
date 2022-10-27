@@ -79,33 +79,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for( let i = 0; i < kullaniciTable.length; i++ ) { %>                           
-                                <tr>
+
+                                <% kullaniciTable.forEach(kullanici => { %>
+                                 <tr>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciNumara%>
+                                        <%= kullanici.dataValues.kullaniciNumara%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciAd%> <%= kullaniciTable[i].kullaniciSoyad%>
+                                        <%= kullanici.dataValues.kullaniciAd%> <%= kullanici.dataValues.kullaniciSoyad%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].rolID%>
+                                        <%= kullanici.dataValues.rolID%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciMail%>
+                                        <%= kullanici.dataValues.kullaniciMail%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciTelNo%>
+                                        <%= kullanici.dataValues.kullaniciTelNo%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciFakulte%>
+                                        <%= kullanici.dataValues.kullaniciFakulte%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciBolum%>
+                                        <%= kullanici.dataValues.kullaniciBolum%>
                                     </td>
                                     <td>
-                                        <%= kullaniciTable[i].kullaniciSinif%>
+                                        <%= kullanici.dataValues.kullaniciSinif%>
                                     </td>
-                                </tr><% } %>
+                                </tr><% }) %>
                             </tbody>
                 </table>
                 </div>
@@ -169,9 +170,7 @@
                                         <label  class="form-label">Rolü:</label>
                                         <select for="kulRol" class="form-select" id="country" required>
                                         <option value="">Seçiniz</option>
-                                        <% rolTable.forEach(rol => { %>
-                                            <option value="<%= rol.rolID %>"><%= rol.rolID %>  </option>
-                                        <% }) %> 
+                                        roller rol tablosundan gelecek
                                         </select>
                                         <div class="invalid-feedback">
                                             Rol boş geçilemez.

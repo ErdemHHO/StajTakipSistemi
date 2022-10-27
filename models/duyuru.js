@@ -45,13 +45,8 @@ const duyuru=sequelize.define("duyuru",{
 });
 
 async function sync(){
-  // await duyuru.sync({force:true});
-  const d1=duyuru.create({
-    duyuruBaslik:"Ders Seçimleri",
-    duyuruAciklama:"Ders secimlerinizi yapmanız gerekmektedir.",
-    duyuruTuru:"Öğrenci"
-  })
-  console.log("duyuru eklendi");
+  // await duyuru.sync({force: true});
+  // const count=await duyuru.count();
 }
 sync();
 module.exports=duyuru;
