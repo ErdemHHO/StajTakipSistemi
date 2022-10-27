@@ -1,0 +1,96 @@
+'use strict';
+
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert('Kullanici', [
+                {
+                        kullaniciNumara: "108901614",
+                        kullaniciAd: "kimbu",
+                        kullaniciSoyad: "seher",
+                        kullaniciParola: "1",
+                        kullaniciMail: "1@gmail.com",
+                        kullaniciTelNo: "1231221313",
+                        kullaniciFakulte: "dsfsdfs",
+                        kullaniciBolum: "dsfdsfdsf",
+                        kullaniciSinif: "2",
+                        rolID: "2",
+                },
+                {
+                        kullaniciNumara: "123344678",
+                        kullaniciAd: "a",
+                        kullaniciSoyad: "a",
+                        kullaniciParola: "dsfdsfsdf",
+                        kullaniciMail: "deneme@gmail.com",
+                        kullaniciTelNo: "23243242",
+                        kullaniciFakulte: "dsf",
+                        kullaniciBolum: "sdf",
+                        kullaniciSinif: "2",
+                        rolID: "3",
+                },
+                {
+                        kullaniciNumara: "123345679",
+                        kullaniciAd: "a",
+                        kullaniciSoyad: "a",
+                        kullaniciParola: "a",
+                        kullaniciMail: "sdaasdas@gmail.com",
+                        kullaniciTelNo: "324234",
+                        kullaniciFakulte: "dsfsd",
+                        kullaniciBolum: "sdfsdf",
+                        kullaniciSinif: "2",
+                        rolID: "3",
+                },
+                {
+                        kullaniciNumara: "123456789",
+                        kullaniciAd: "deneme",
+                        kullaniciSoyad: "debene",
+                        kullaniciParola: "debene",
+                        kullaniciMail: "debene@gmail.com",
+                        kullaniciTelNo: "5387436125",
+                        kullaniciFakulte: "dsfdsfsd",
+                        kullaniciBolum: "sdfsdf",
+                        kullaniciSinif: "3",
+                        rolID: "4",
+                },
+                {
+                        kullaniciNumara: "201307011",
+                        kullaniciAd: "admin",
+                        kullaniciSoyad: "hho",
+                        kullaniciParola: "1234",
+                        kullaniciMail: "erdemhho@gmail.com",
+                        kullaniciTelNo: "5387436124",
+                        kullaniciFakulte: "efssfsd",
+                        kullaniciBolum: "vdfgdg",
+                        kullaniciSinif: "3",
+                        rolID: "1",
+                },
+                {
+                        kullaniciNumara: "201307069",
+                        kullaniciAd: "Özer",
+                        kullaniciSoyad: "Armağan",
+                        kullaniciParola: "557448",
+                        kullaniciMail: "201307069@kocaeli.edu.tr",
+                        kullaniciTelNo: "05532910742",
+                        kullaniciFakulte: "Teknoloji Fakültesi",
+                        kullaniciBolum: "Bilişim Sistemleri Mühendisliği",
+                        kullaniciSinif: "3",
+                        rolID: "4",
+                },
+                {
+                        kullaniciNumara: "987654321",
+                        kullaniciAd: "a",
+                        kullaniciSoyad: "a",
+                        kullaniciParola: "a",
+                        kullaniciMail: "sdaasdas@gmail.com",
+                        kullaniciTelNo: "324234431",
+                        kullaniciFakulte: "dsfsd",
+                        kullaniciBolum: "sdfsdf",
+                        kullaniciSinif: "3",
+                        rolID: "3",
+                },
+            ]);
+},
+
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('Kullanici', null, {});
+  }
+};

@@ -3,12 +3,14 @@ const app = express();
 
 const userRoutes = require("./routes/users");
 
+const duyuru=require("./models/duyuru");
 //formdan gelen değerlerin okunabilmesi için
 app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine","ejs");
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
+
 
 app.use("/",userRoutes);
 
