@@ -5,7 +5,7 @@ const anasayfa_get=async function(req, res) {
     try {
         const duyurular=await duyuru.findAll();
         console.log(duyurular);
-        res.render("sayfalar/homepage.ejs", {
+        res.render("home-login/homepage.ejs", {
             duyurular:duyurular,
         });
     }
