@@ -6,6 +6,7 @@ const duyuru = require("../models/duyuru.js");
 
 
 const userControllers=require("../controllers/user_controllers");
+
 router.get("/",userControllers.anasayfa_get);
 
 

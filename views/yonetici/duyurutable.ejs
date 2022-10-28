@@ -90,49 +90,29 @@
             </li>
     </nav>
     <div class="p-5 m-5">
-        <table class="table table-bordered  table-hover" id="duyuruTable">
-            <h5 class="text-center ">Duyurular</h5><hr />
-                <thead class="table-success">
-                    <tr>
-                        <th class="text-center">Duyuru Numarası</th>
-                        <th class="text-center">Duyuru Başlığı</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr>
-                        <td>1</td>
-                        <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>yazlaba 13 gün</td>
-                    </tr>
-                </tbody>
-        </table>
+      <table class="table table-bordered  table-hover" id="duyuruTable">
+        <h5 class="text-center ">Duyurular</h5><hr />
+            <thead class="table-success">
+                <tr>
+                    <th class="text-center">Duyuru Numarası</th>
+                    <th class="text-center">Duyuru Başlığı</th>
+                </tr>
+            </thead>
+            <tbody> 
+              <% duyurular.forEach(element => { %>
+                <tr>
+                  <td>
+                    <%= element.dataValues.duyuruID %> 
+                  </td>
+                    <td>
+                      <%= element.dataValues.duyuruBaslik %> 
+                    </td>
+                </tr>
+               
+              <% }) %>
+             
+            </tbody>
+      </table>
     </div>
     
 

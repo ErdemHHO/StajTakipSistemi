@@ -90,113 +90,106 @@
             </li>
     </nav>
     <div class="p-5 m-5">
-        <table class="table table-bordered  table-hover p-5 m-5" id="myTable">
-            <h4 class="text-center pt-3">TÜM KULLANICILAR</h4><hr/>
-                <thead class="table-success">
-                    <tr>
-                        <th class="text-center">NUMARA</th>
-                        <th class="text-center">İSİM SOYİSİM</th>
-                        <th class="text-center">ROL</th>
-                        <th class="text-center">E-POSTA</th>
-                        <th class="text-center">TELEFON</th>
-                        <th class="text-center">FAKÜLTE</th>
-                        <th class="text-center">BÖLÜM</th>
-                        <th class="text-center">SINIF</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr>
-                        <td>201307065</td>
-                        <td>melike hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                    <tr>
-                        <td>201307011</td>
-                        <td>erdem hho</td>
-                        <td>Öğrenci</td>
-                        <td>erdemhho@gmail.com</td>
-                        <td>5387436124</td>
-                        <td>teknoloji Fakültesi</td>
-                        <td>bilişim sistemleri mühendisliği</td>
-                        <td>3.sınıf</td>
-                    </tr>
-                </tbody>
-        </table>
+        <main>
+            <div class="text-center border-bottom">
+                <h4>YENİ KULLANICI EKLEYİN</h4>
+            </div>
+            <form class="needs-validation pt-5" novalidate>
+                <div class="row g-5 mx-5">
+                    <div class="col">
+                        <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="kulAdi" class="form-label">Adı:</label>
+                            <input type="text" class="form-control" id="kulAdi" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                            Kullanıcının adı boş geçilemez.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="kulSoyad" class="form-label">Soyadı:</label>
+                            <input type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                            Kullanıcının soyadı boş geçilemez.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="kulNumara" class="form-label">Numara:</label>
+                            <input type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                            Kullanıcının numarası boş geçilemez.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="kulSifre" class="form-label">Şifre:</label>
+                            <input type="text" class="form-control" id="kulSifre" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                            Kullanıcının şifresi boş geçilemez.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="kulTelNo" class="form-label">Telefon:</label>
+                            <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="kulTelNo" placeholder="" required>
+                            <div class="invalid-feedback">
+                                Telefon boş geçilemez.
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="kulEmail" class="form-label">E-Posta:</label>
+                            <div class="input-group has-validation">
+                            <input type="email" class="form-control" id="kulEmail" placeholder="" required>
+                            <div class="invalid-feedback">
+                                E-Posta boş geçilemez veya düzgün bir E-posta giriniz.
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="rolID" class="form-label">Sınıfı(Opsiyonel)</label>
+                            <select name="rolID" class="form-select">
+                            <option name="rolID" value="">Seçiniz</option>
+                            <option>Yönetici</option>
+                            <option>Komisyon</option>
+                            <option>Öğretmen</option>
+                            <option>Öğrenci</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Rol boş geçilemez.
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="kulFakulte" class="form-label">Fakültesi:</label>
+                            <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="kulFakulte" placeholder="" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Fakülte boş geçilemez.
+                            </div>
+                        </div>
+                            <div class="col-md-3">
+                                <label for="kulBolum" class="form-label">Bölümü:</label>
+                                <div class="input-group has-validation">
+                                <input type="text" class="form-control" id="kulBolum" placeholder="" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Bölüm boş geçilemez.
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="kulSınıf" class="form-label">Sınıfı(Opsiyonel)</label>
+                                <select name="kullaniciSinif" class="form-select">
+                                <option name="kullaniciSinif" value="">Seçiniz</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                </select>
+                            </div>
+                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                    </div>
+                </div>
+            </form>
+        </main> 
     </div>
     
 
@@ -227,7 +220,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script>
         $('#myTable').DataTable({
-            lengthMenu:[15,30,50,100],
+            lengthMenu:[5,10,20,50],
             language:{
                 url:'https://cdn.datatables.net/plug-ins/1.12.1/i18n/tr.json',
                 "info": "Toplam _TOTAL_ Kayıt",

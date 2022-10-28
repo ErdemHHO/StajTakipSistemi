@@ -100,54 +100,16 @@
    <section class="container ">
       <h2 class="display-4 text-center">Duyurular</h2>
       <div class="owl-theme owl-carousel">
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2">
-               <p>Elektrik Elektronik Devreler Dersi Laboratuvar Föyü</p>
-               <footer class="boyut-footer">Genel Duyuru</footer>
+         <% duyurular.forEach(duyuru => { %>
+            <div class="item">
+               <div class="col-md-5">
+                  <blockquote class="boyut p-3 font-italic border rounded-2">
+                  <h5><%= duyuru.dataValues.duyuruBaslik %> </h5> 
+                  <p><%= duyuru.dataValues.duyuruTuru %> </p>
                </blockquote>
             </div>
          </div>
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2">
-                  <p>Programlama Lab. I Dersi ve Lab. Düzeni Hk.</p>
-                  <footer class="boyut-footer">Genel Duyuru</footer>
-               </blockquote>
-            </div><!-- .col -->
-         </div>
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2">
-                  <p>Elektrik Elektronik Devreler Laboratuvar Grup Listesi</p>
-                  <footer class="boyut-footer">Arş. Gör. Zeynep SARI</footer>
-               </blockquote>
-            </div><!-- .col -->
-         </div>
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2">
-                  <p>Amazing teaching! They don't even use words.</p>
-                  <footer class="boyut-footer">Isaac New York (Newton?)</footer>
-               </blockquote>
-         </div>
-         </div>
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2">
-                  <p>Migros Ticaret Uzun Dönem Staj Programı - SMART</p>
-                  <footer class="boyut-footer">Arş. Gör. Seda BALTA</footer>
-               </blockquote>
-         </div>
-         </div>
-         <div class="item">
-            <div class="col-md-5">
-               <blockquote class="boyut p-3 font-italic border rounded-2" >
-                  <p>Migros Ticaret Uzun Dönem Staj Programı - SMART</p>
-                  <footer class="boyut-footer">Arş. Gör. Seda BALTA</footer>
-               </blockquote>
-            </div>
-         </div>
+         <% }) %>      
       </div>
    </section>
 </section>
@@ -157,59 +119,14 @@
       <h2 class="display-4 text-center">Duyurular</h2>
 
       <div class="row justify-content-around mt-5 mb-3">
-         <div class="col-md-5">
+         <% duyurular.forEach(duyuru => { %>
+          <div class="col-md-5">
             <blockquote class="blockquote p-3 font-italic bg-white">
-              <p>Nature can teach better than we do.</p>
-              <footer class="blockquote-footer">W3club (W3schools?)</footer>
+              <p><%= duyuru.dataValues.duyuruBaslik %> </p>
+              <footer class="blockquote-footer"><%= duyuru.dataValues.duyuruTuru %> </footer>
             </blockquote>
          </div>
-
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-               <p>Nature is not another university. It's life.</p>
-               <footer class="blockquote-footer">Albert English (Einstein?)</footer>
-            </blockquote>
-         </div><!-- .col -->
-
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-               <p>Everything we teach can be found in nature.</p>
-               <footer class="blockquote-footer">Mozqito DevOps Network (Mozilla?)</footer>
-            </blockquote>
-         </div><!-- .col -->
-
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-               <p>Amazing teaching! They don't even use words.</p>
-               <footer class="blockquote-footer">Isaac New York (Newton?)</footer>
-            </blockquote>
-         </div><!-- .col -->
-
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-               <p>Ada, what do you think?</p>
-               <footer class="blockquote-footer">Nicola Tester (Testla?)</footer>
-            </blockquote>
-         </div><!-- .col -->
-
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-               <p>Like others said: "Nature is the best!"</p>
-               <footer class="blockquote-footer">Ada Lovely</footer>
-            </blockquote>
-         </div><!-- .col -->
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-              <p>Nature can teach better than we do.</p>
-              <footer class="blockquote-footer">W3club (W3schools?)</footer>
-            </blockquote>
-         </div>
-         <div class="col-md-5">
-            <blockquote class="blockquote p-3 font-italic bg-white">
-              <p>Nature can teach better than we do.</p>
-              <footer class="blockquote-footer">W3club (W3schools?)</footer>
-            </blockquote>
-         </div>
+         <% }) %>
       </div><!-- .row -->
    </section>
 </section>

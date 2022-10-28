@@ -5,16 +5,40 @@ const router = express.Router();
 //controllers
 const adminControllers=require("../controllers/admin_controllers");
 
+//-------------------------------ÖĞRENCİ-------------------------------
+
+
+//-------------------------------ÖĞRETMEN-------------------------------
+
+
+//-------------------------------KOMİSYON-------------------------------
+
+//komisyon kullanıcı tablosu
+router.get("/komisyonstajbilgileri",adminControllers.komisyonstajtablosu_get);
+
+
+//-------------------------------YÖNETİCİ-------------------------------
+
+//yönetici stajtable işlemleri
+router.get("/stajimetablosu",adminControllers.stajtable_get);
+
 //staj ime işlemleri get-post
 router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
 router.get("/stajimeislemleri",adminControllers.stajimeislemleri_get);
+
+
 //duyuru oluştur sayfası get-post
 router.get("/duyuruolustur",adminControllers.duyuruolustur_get);
 router.post("/duyuruolustur",adminControllers.duyuruolustur_post);
+//duyuru tablosu sayfası 
+router.get("/duyurular",adminControllers.duyurutablosu_get);
 
-//kullanici islemleri get post
-router.get("/kullaniciislemleri", adminControllers.kullaniciislemleri_get);
-router.post("/kullaniciislemleri", adminControllers.kullaniciislemleri_post);
+//kullanici tablosu get-post
+router.get("/kullanicitablosu", adminControllers.kullanicitablosu_get);
+
+//kullanici ekle get-post
+router.get("/kullaniciekle", adminControllers.kullaniciekle_get);
+router.post("/kullaniciekle", adminControllers.kullaniciekle_post);
 
 // router.post("/kullaniciislemleri", async function(req, res){
 
