@@ -10,6 +10,7 @@ const adminControllers=require("../controllers/admin_controllers");
 
 //-------------------------------ÖĞRETMEN-------------------------------
 
+router.get("/ogretmenstajtab",adminControllers.ogretmenstajtablosu_get);
 
 //-------------------------------KOMİSYON-------------------------------
 

@@ -2,10 +2,23 @@ const db = require("../data/db.js");
 const duyuru = require("../models/duyuru.js");
 const kullanici = require("../models/kullanici.js");
 const stajkayit = require("../models/stajkayit.js");
+const stajdegerlendirme = require("../models/stajdegerlendirme.js");
 
 //-------------------------------ÖĞRENCİ-------------------------------
 
 //-------------------------------ÖĞRETMEN-------------------------------
+
+const ogretmenstajtablosu_get=async function(req, res) {
+    const ogretmenstajkayittable=await stajkayit.findAll();
+    try {
+        res.render("ogretmen/stajogretmentable.ejs", {      
+            stajdegerlendirme:ogretmenstajkayittable      
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 
 //-------------------------------KOMİSYON-------------------------------
 
@@ -49,6 +62,8 @@ const stajtable_get=async function(req, res) {
     }
 }
 
+//******STAJ SAYFALARI******/
+
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
     try {
@@ -59,6 +74,8 @@ const stajimeislemleri_get=async function(req, res) {
         console.log(err);
     }
 }
+
+//******DUYURU SAYFALARI******/
 
 //yonetici duyuru tablosu
 const duyurutablosu_get= async function(req, res) {
@@ -72,8 +89,6 @@ const duyurutablosu_get= async function(req, res) {
         console.log(err);
     }
 }
-
-
 // yonetici duyuru olustur islemleri
 const duyuruolustur_get= async function(req, res) {
     try {
@@ -95,7 +110,6 @@ const duyuruolustur_post=async function(req, res){
         console.log(err)
     }
 }
-
 //yonetici kullanıci tablo islemleri
 const kullanicitablosu_get=async function(req, res) {
     try {
@@ -108,6 +122,8 @@ const kullanicitablosu_get=async function(req, res) {
         console.log(err);
     }
 }
+
+//******STAJ SAYFALARI******/
 
 //yonetici kullanıci ekle islemleri
 const kullaniciekle_get=async function(req, res) {
@@ -150,6 +166,7 @@ module.exports={
     stajtable_get,
     duyurutablosu_get,
     komisyonkullanicitablosu_get,
-    komisyonstajtablosu_get
+    komisyonstajtablosu_get,
+    ogretmenstajtablosu_get
 
 }
