@@ -1,3 +1,5 @@
+const bcrypt=require("bcrypt");
+
 const db = require("../data/db.js");
 const duyuru = require("../models/duyuru.js");
 const kullanici = require("../models/kullanici.js");
@@ -166,6 +168,7 @@ const kullaniciekle_post=async function(req, res) {
     const kullaniciSoyad=req.body.kullaniciSoyad;
     const kullaniciNumara=req.body.kullaniciNumara;
     const kullaniciParola=req.body.kullaniciParola;
+    const hashedPassword=await bcrypt.hash(kullaniciParola,10);
     const kullaniciTelNo=req.body.kullaniciTelNo;
     const kullaniciMail=req.body.kullaniciMail;
     const rolID=req.body.rolID;
@@ -174,7 +177,7 @@ const kullaniciekle_post=async function(req, res) {
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
     try {
-        await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:kullaniciParola,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
+        await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
     }
     catch(err) {
         console.log(err);

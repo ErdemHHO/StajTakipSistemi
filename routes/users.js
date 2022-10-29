@@ -6,7 +6,10 @@ const duyuru = require("../models/duyuru.js");
 
 
 const userControllers=require("../controllers/user_controllers");
+const authControllers=require("../controllers/auth_controllers");
 
+router.post("/login",authControllers.login_post);
+router.get("/login",authControllers.login_get);
 router.get("/",userControllers.anasayfa_get);
 
 

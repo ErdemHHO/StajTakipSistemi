@@ -16,23 +16,27 @@
   </head>
   <body class="text-center">
 <main class="form-signin w-100 m-auto border bg-white rounded-4">
-  <form>
+  <form method="post">
     <div class="container">
       <img class="mb-4" src="../img/kocaeli-universitesi-logo-2.png" alt="" width="150" >
       <h1 class="h3 mb-3 fw-normal">Giriş Yapın</h1>
 
-      <div class="form-floating">
-        <input type="text" class="form-control" id="floatingInput" placeholder="ogrno,egtmnno">
+      <div class="form-floating">     
+        <input name="kullanıcıNumarası" type="text" class="form-control" id="floatingInput" placeholder="ogrno,egtmnno">
         <label for="floatingInput">Numaranız</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input name="kullanıcıSifre" type="password" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Şifreniz</label>
       </div>
-      <a class="w-100 btn btn-lg btn-success" type="submit" href="./profil.html">Giriş Yap</a>
+      <button type="submit" class="btn btn-success" style="width:275px;height: 50px;">Giriş Yap</button>
+      <% if (typeof message != "undefined") { %>
+        <div class="alert alert-danger m-3">
+         <%= message %> 
+       </div>
+       <% } %>  
       <p class="mt-5 mb-3 text-muted">Kocaeli Üniversitesi Bilişim Sistemleri Mühendisliği Staj Takip Sistemi-2022</p>
     </div>
-    
   </form>
 </main>
 
