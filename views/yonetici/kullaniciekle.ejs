@@ -94,34 +94,34 @@
             <div class="text-center border-bottom">
                 <h4>YENİ KULLANICI EKLEYİN</h4>
             </div>
-            <form class="needs-validation pt-5" novalidate>
+            <form method="post" class="needs-validation pt-5" novalidate>
                 <div class="row g-5 mx-5">
                     <div class="col">
                         <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="kulAdi" class="form-label">Adı:</label>
-                            <input type="text" class="form-control" id="kulAdi" placeholder="" value="" required>
+                            <input name="kullaniciAd" type="text" class="form-control" id="kulAdi" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının adı boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulSoyad" class="form-label">Soyadı:</label>
-                            <input type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
+                            <input name="kullaniciSoyad" type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının soyadı boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulNumara" class="form-label">Numara:</label>
-                            <input type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
+                            <input name="kullaniciNumara" type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının numarası boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulSifre" class="form-label">Şifre:</label>
-                            <input type="text" class="form-control" id="kulSifre" placeholder="" value="" required>
+                            <input name="kullaniciParola" type="text" class="form-control" id="kulSifre" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının şifresi boş geçilemez.
                             </div>
@@ -129,7 +129,7 @@
                         <div class="col-md-6">
                             <label for="kulTelNo" class="form-label">Telefon:</label>
                             <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="kulTelNo" placeholder="" required>
+                            <input name="kullaniciTelNo" type="text" class="form-control" id="kulTelNo" placeholder="" required>
                             <div class="invalid-feedback">
                                 Telefon boş geçilemez.
                             </div>
@@ -138,7 +138,7 @@
                         <div class="col-md-6">
                             <label for="kulEmail" class="form-label">E-Posta:</label>
                             <div class="input-group has-validation">
-                            <input type="email" class="form-control" id="kulEmail" placeholder="" required>
+                            <input name="kullaniciMail" type="email" class="form-control" id="kulEmail" placeholder="" required>
                             <div class="invalid-feedback">
                                 E-Posta boş geçilemez veya düzgün bir E-posta giriniz.
                             </div>
@@ -146,12 +146,11 @@
                         </div>
                         <div class="col-md-3">
                             <label for="rolID" class="form-label">Sınıfı(Opsiyonel)</label>
-                            <select name="rolID" class="form-select">
-                            <option name="rolID" value="">Seçiniz</option>
-                            <option>Yönetici</option>
-                            <option>Komisyon</option>
-                            <option>Öğretmen</option>
-                            <option>Öğrenci</option>
+                            <select name="rolID" id="rolID" class="form-select">
+                            <option value="-1" selected>Seçiniz</option>
+                            <% rol.forEach(roller => { %>
+                                <option value="<%= roller.dataValues.rolID %> "><%= roller.dataValues.rolAdi %> 
+                            <% }) %>
                             </select>
                             <div class="invalid-feedback">
                                 Rol boş geçilemez.
@@ -160,7 +159,7 @@
                         <div class="col-md-3">
                             <label for="kulFakulte" class="form-label">Fakültesi:</label>
                             <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="kulFakulte" placeholder="" required>
+                            <input name="kullaniciFakulte" type="text" class="form-control" id="kulFakulte" placeholder="" required>
                             </div>
                             <div class="invalid-feedback">
                                 Fakülte boş geçilemez.
@@ -169,7 +168,7 @@
                             <div class="col-md-3">
                                 <label for="kulBolum" class="form-label">Bölümü:</label>
                                 <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="kulBolum" placeholder="" required>
+                                <input name="kullaniciBolum" type="text" class="form-control" id="kulBolum" placeholder="" required>
                                 </div>
                                 <div class="invalid-feedback">
                                     Bölüm boş geçilemez.

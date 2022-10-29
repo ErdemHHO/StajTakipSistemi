@@ -4,6 +4,8 @@ const kullanici = require("../models/kullanici.js");
 const stajkayit = require("../models/stajkayit.js");
 const stajdegerlendirme = require("../models/stajdegerlendirme.js");
 
+const rol = require("../models/rol.js");
+
 //-------------------------------ÖĞRENCİ-------------------------------
 
 //-------------------------------ÖĞRETMEN-------------------------------
@@ -110,6 +112,27 @@ const duyuruolustur_post=async function(req, res){
         console.log(err)
     }
 }
+// yonetici duyuru güncelle islemleri
+const duyuruguncelle_get= async function(req, res) {
+    try {
+        res.render("yonetici/duyuruolustur.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const duyuruguncelle_post=async function(req, res){
+    const duyuruBaslik=req.body.duyuruBaslik;
+    const duyuruAciklama=req.body.duyuruAciklama;
+    const duyuruTuru=req.body.duyuruTuru;
+    try{
+      await duyuru.create({duyuruBaslik:duyuruBaslik,duyuruAciklama:duyuruAciklama,duyuruTuru:duyuruTuru})   
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 //yonetici kullanıci tablo islemleri
 const kullanicitablosu_get=async function(req, res) {
     try {
@@ -123,12 +146,14 @@ const kullanicitablosu_get=async function(req, res) {
     }
 }
 
-//******STAJ SAYFALARI******/
+//******KULLANICI SAYFALARI******/
 
 //yonetici kullanıci ekle islemleri
 const kullaniciekle_get=async function(req, res) {
+    const roller=await rol.findAll();
     try {
         res.render("yonetici/kullaniciekle.ejs", {
+            rol:roller
         });
     }
     catch(err) {
@@ -137,18 +162,19 @@ const kullaniciekle_get=async function(req, res) {
 }
 const kullaniciekle_post=async function(req, res) {
     const kullaniciAd=req.body.kullaniciAd;
+    console.log(kullaniciAd);
     const kullaniciSoyad=req.body.kullaniciSoyad;
     const kullaniciNumara=req.body.kullaniciNumara;
     const kullaniciParola=req.body.kullaniciParola;
     const kullaniciTelNo=req.body.kullaniciTelNo;
     const kullaniciMail=req.body.kullaniciMail;
-    const sayi=req.body.rolID;
+    const rolID=req.body.rolID;
     // const rolID=req.body.rolID;
     const kullaniciFakulte=req.body.kullaniciFakulte;
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
     try {
-        await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:kullaniciParola,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:sayi});
+        await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:kullaniciParola,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
     }
     catch(err) {
         console.log(err);

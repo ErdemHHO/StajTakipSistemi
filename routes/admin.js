@@ -41,7 +41,7 @@ router.get("/kullanicitablosu", adminControllers.kullanicitablosu_get);
 router.get("/kullaniciekle", adminControllers.kullaniciekle_get);
 router.post("/kullaniciekle", adminControllers.kullaniciekle_post);
 
-// router.post("/kullaniciislemleri", async function(req, res){
+// router.post("/kullaniciekle", async function(req, res){
 
 //     const kullaniciAd=req.body.kullaniciAd;
 //     console.log(req.body.kullaniciAd);
@@ -70,7 +70,7 @@ router.post("/kullaniciekle", adminControllers.kullaniciekle_post);
 //         console.log(err)
 //     }
 // })
-//
+
 
 
 module.exports=router;

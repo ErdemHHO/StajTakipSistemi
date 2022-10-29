@@ -34,7 +34,7 @@
     background-color:   #F8F9FA !important;
 }
 .card{
-    background: linear-gradient(180deg, #212529 0%, #198754 100%);
+    background: linear-gradient(180deg, #198754 0%, #198754 100%);
     width: 32rem;
     height: 16rem;
 }
