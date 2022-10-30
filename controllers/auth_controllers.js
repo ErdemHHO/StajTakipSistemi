@@ -51,8 +51,20 @@ const login_post=async function(req, res){
       //parola kontrolü
       const match=await bcrypt.compare(sifre, user.kullaniciParola);
       if(match){
+        let rol=user.dataValues.rolID;
         //login oldu
-        return res.redirect("/");
+        if(rol==1){
+            return res.redirect("/admin/kullaniciekle");
+        }
+        else if(rol==2){
+            return res.redirect("/admin/komisyonstajbilgileri");
+        }
+        else if(rol==3){
+            return res.redirect("/admin/ogretmenstajtab");
+        }
+        else{
+            return res.redirect("/");
+        }
       }
       else{
         return res.render("home-login/login.ejs",{message:"Şifre Hatalı!" });   
