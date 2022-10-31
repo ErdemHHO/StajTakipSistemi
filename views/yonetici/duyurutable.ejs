@@ -28,67 +28,65 @@
           </div>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link" href="./profil.html">Profil</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/admin/profil">Profil</a></li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Yetkileriniz
                   </a>
                   <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="./kullanicitable.html">Kullanıcı İşlemleri</a></li>
-                    <li><a class="dropdown-item" href="./stajtable.html">Öğrenci Staj-IME İşlemleri</a></li>
-                    <li><a class="dropdown-item" href="./duyurutable.html">Duyuru Oluşturma</a></li>
+                    <li><a class="dropdown-item" href="/admin/kullanicitablosu">Kullanıcı İşlemleri</a></li>
+                    <li><a class="dropdown-item" href="/admin/stajimetablosu">Öğrenci Staj-IME İşlemleri</a></li>
+                    <li><a class="dropdown-item" href="/admin/duyurular">Duyuru Oluşturma</a></li>
                     <li>
                       <hr class="dropdown-divider">
                     </li>
                   </ul>
                 </li>
-                <li><a class="nav-link" href="../sayfalar/homepage.html">Çıkış</a></li>
+                <li><a class="nav-link" href="/logout">Çıkış</a></li>
             </ul>
           </div>
         </div>
     </div>
-  </nav>
+</nav>
 
-    <nav class="main-menu">
-        <ul>
-            <li class="has-subnav">
-                <a href="./duyurutable.html">
-                    <i class="fa fa-2x bi bi-arrow-right"></i>
-                    <span class="nav-text">
-                        Duyurular
-                    </span>
-                </a>
-                
-            </li>
-            <li class="has-subnav">
-                <a href="./duyuruolustur.html">
-                    <i class="fa fa-2x bi bi-arrow-right"></i>
-                    <span class="nav-text">
-                        Duyuru Yayınlayın
-                    </span>
-                </a>
-                
-            </li>
-            <li class="has-subnav">
-                <a href="./duyuruguncelle.html">
-                    <i class="fa fa-2x bi bi-arrow-right"></i>
-                    <span class="nav-text">
-                        Duyuru Güncelleyin
-                    </span>
-                </a>
-               
-            </li>
-            <li>
-                <a href="./duyurusil.html">
-                    <i class=" fa fa-2x bi bi-arrow-right"></i>
-                    <span class="nav-text">
-                        Duyuru Silin
-                    </span>
-                </a>
-            </li>
-    </nav>
+<nav class="main-menu">
+    <ul>
+        <li class="has-subnav">
+            <a href="/admin/duyurular">
+                <i class="fa fa-2x bi bi-arrow-right"></i>
+                <span class="nav-text">
+                    Duyurular
+                </span>
+            </a>
+            
+        </li>
+        <li class="has-subnav">
+            <a href="/admin/duyuruolustur">
+                <i class="fa fa-2x bi bi-arrow-right"></i>
+                <span class="nav-text">
+                    Duyuru Yayınlayın
+                </span>
+            </a>
+            
+        </li>
+        <li class="has-subnav">
+            <a href="/admin/duyuruguncelle">
+                <i class="fa fa-2x bi bi-arrow-right"></i>
+                <span class="nav-text">
+                    Duyuru Güncelleyin
+                </span>
+            </a>
+           
+        </li>
+        <li>
+            <a href="/admin/duyurusil">
+                <i class=" fa fa-2x bi bi-arrow-right"></i>
+                <span class="nav-text">
+                    Duyuru Silin
+                </span>
+            </a>
+        </li>
+</nav>
     <div class="p-5 m-5">
       <table class="table table-bordered  table-hover" id="duyuruTable">
         <h5 class="text-center ">Duyurular</h5><hr />

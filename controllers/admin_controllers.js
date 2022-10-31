@@ -4,54 +4,8 @@ const db = require("../data/db.js");
 const duyuru = require("../models/duyuru.js");
 const kullanici = require("../models/kullanici.js");
 const stajkayit = require("../models/stajkayit.js");
-const stajdegerlendirme = require("../models/stajdegerlendirme.js");
-
 const rol = require("../models/rol.js");
 
-//-------------------------------ÖĞRENCİ-------------------------------
-
-//-------------------------------ÖĞRETMEN-------------------------------
-
-const ogretmenstajtablosu_get=async function(req, res) {
-    const ogretmenstajkayittable=await stajkayit.findAll();
-    try {
-        res.render("ogretmen/stajogretmentable.ejs", {      
-            stajdegerlendirme:ogretmenstajkayittable      
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
-
-//-------------------------------KOMİSYON-------------------------------
-
-//komisyon kullanıcı tablosu
-const komisyonstajtablosu_get=async function(req, res) {
-    const stajkayittable=await stajkayit.findAll();
-    try {
-        res.render("komisyon/komisyonstajimetable.ejs", {      
-            stajkayittable:stajkayittable      
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
-//komisyon staj tablosu
-const komisyonkullanicitablosu_get=async function(req, res) {
-    try {
-        const kullaniciTable=await kullanici.findAll();
-        res.render("komisyon/komisyonkullanıcıtable.ejs", {
-            kullaniciTable: kullaniciTable
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
-
-//-------------------------------YÖNETİCİ-------------------------------
 
 //yonetici staj-ime bilgi tablosu işlemleri
 const stajtable_get=async function(req, res) {
@@ -65,8 +19,6 @@ const stajtable_get=async function(req, res) {
         console.log(err);
     }
 }
-
-//******STAJ SAYFALARI******/
 
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
@@ -135,6 +87,16 @@ const duyuruguncelle_post=async function(req, res){
         console.log(err)
     }
 }
+
+const duyurusil_get= async function(req, res) {
+    try {
+        res.render("yonetici/duyurusil.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 //yonetici kullanıci tablo islemleri
 const kullanicitablosu_get=async function(req, res) {
     try {
@@ -147,8 +109,6 @@ const kullanicitablosu_get=async function(req, res) {
         console.log(err);
     }
 }
-
-//******KULLANICI SAYFALARI******/
 
 //yonetici kullanıci ekle islemleri
 const kullaniciekle_get=async function(req, res) {
@@ -184,18 +144,77 @@ const kullaniciekle_post=async function(req, res) {
         console.log("hatalı ekleme");
     }
 }
-
+const kullanicisil_get=async function(req, res) {
+    try {
+        res.render("yonetici/kullanicısil.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const kullaniciguncelle_get=async function(req, res) {
+    try {
+        res.render("yonetici/kullanıcıguncelle.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const profil_get=async function(req, res) {
+    try {
+        res.render("yonetici/profil.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const stajbasvurudegerlendir_get=async function(req, res) {
+    try {
+        res.render("yonetici/stajbasvurudegerlendir.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const stajbelgeleri_get=async function(req, res) {
+    try {
+        res.render("yonetici/stajbelgeleri.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const stajogretmenbelirle_get=async function(req, res) {
+    try {
+        res.render("yonetici/stajogretmenbelirle.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 module.exports={
     stajimeislemleri_get,
     duyuruolustur_get,
     duyuruolustur_post,
+    duyurusil_get,
     kullanicitablosu_get,
     kullaniciekle_get,
     kullaniciekle_post,
     stajtable_get,
     duyurutablosu_get,
-    komisyonkullanicitablosu_get,
-    komisyonstajtablosu_get,
-    ogretmenstajtablosu_get
+    duyuruguncelle_get,
+    duyuruguncelle_post,
+    stajogretmenbelirle_get,
+    stajbelgeleri_get,
+    stajbasvurudegerlendir_get,
+    profil_get,
+    kullaniciguncelle_get,
+    kullanicisil_get,
 
 }

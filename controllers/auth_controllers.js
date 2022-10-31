@@ -19,6 +19,30 @@
 // }
 const bcrypt=require("bcrypt");
 const kullanici = require("../models/kullanici.js");
+const duyuru = require("../models/duyuru.js");
+
+const anasayfa_get=async function(req, res) {
+    try {
+        const duyurular=await duyuru.findAll();
+        console.log(duyurular);
+        res.render("home-login/homepage.ejs", {
+            duyurular:duyurular,
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+const logout_get=async function(req, res) {
+    try {
+        // await req.session.destroy();
+        return res.redirect("/giris");
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 
 const login_get=async function(req, res) {
     try {
@@ -51,6 +75,7 @@ const login_post=async function(req, res){
       //parola kontrolü
       const match=await bcrypt.compare(sifre, user.kullaniciParola);
       if(match){
+        req.session.isAuth=1;
         let rol=user.dataValues.rolID;
         //login oldu
         if(rol==1){
@@ -76,6 +101,8 @@ const login_post=async function(req, res){
 }
 
 module.exports={
+    anasayfa_get,
     login_get,
-    login_post
+    login_post,
+    logout_get,
 }

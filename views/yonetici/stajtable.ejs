@@ -28,33 +28,31 @@
               </div>
               <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                      <a class="nav-link" href="./profil.html">Profil</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/profil">Profil</a></li>
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Yetkileriniz
                       </a>
                       <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="./kullanicitable.html">Kullanıcı İşlemleri</a></li>
-                        <li><a class="dropdown-item" href="./stajtable.html">Öğrenci Staj-IME İşlemleri</a></li>
-                        <li><a class="dropdown-item" href="./duyurutable.html">Duyuru Oluşturma</a></li>
+                        <li><a class="dropdown-item" href="/admin/kullanicitablosu">Kullanıcı İşlemleri</a></li>
+                        <li><a class="dropdown-item" href="/admin/stajimetablosu">Öğrenci Staj-IME İşlemleri</a></li>
+                        <li><a class="dropdown-item" href="/admin/duyurular">Duyuru Oluşturma</a></li>
                         <li>
                           <hr class="dropdown-divider">
                         </li>
                       </ul>
                     </li>
-                    <li><a class="nav-link" href="../sayfalar/homepage.html">Çıkış</a></li>
+                    <li><a class="nav-link" href="/logout">Çıkış</a></li>
                 </ul>
               </div>
             </div>
         </div>
     </nav>
-    
+
     <nav class="main-menu">
         <ul>
             <li class="has-subnav">
-                <a href="./stajtable.html">
+                <a href="/admin/stajimetablosu">
                     <i class="fa fa-2x bi bi-arrow-right"></i>
                     <span class="nav-text">
                         Staj İme Bilgilerini Görüntüleyin
@@ -63,7 +61,7 @@
                 
             </li>
             <li class="has-subnav">
-                <a href="./stajbasvurudegerlendir.html">
+                <a href="/admin/belgegor">
                     <i class="fa fa-2x bi bi-arrow-right"></i>
                     <span class="nav-text">
                         Başvuru Belgesi Değerlendirin
@@ -72,7 +70,7 @@
                 
             </li>
             <li class="has-subnav">
-                <a href="./stajogretmenbelirle.html">
+                <a href="/admin/ogrtmnbelirle">
                     <i class="fa fa-2x bi bi-arrow-right"></i>
                     <span class="nav-text">
                         Staj/İme Sunum Bilgileri Belirleyin
@@ -81,7 +79,7 @@
                
             </li>
             <li class="has-subnav">
-                <a href="./stajbelgeleri.html">
+                <a href="/admin/belgegor">
                     <i class="fa fa-2x bi bi-arrow-right"></i>
                     <span class="nav-text">
                         Staj/İme Belgelerini Görün
@@ -90,7 +88,7 @@
                
             </li>
             <li>
-                <a href="./stajdegerlendir.html">
+                <a href="/admin/basvurudegerlendir">
                     <i class=" fa fa-2x bi bi-arrow-right"></i>
                     <span class="nav-text">
                         Staj/İme Değerlendirin
@@ -98,6 +96,7 @@
                 </a>
             </li>
     </nav>
+
     <div class="p-5 m-5">
         <table class="table table-bordered  table-hover " id="stajımeTable">
             <h5 class="text-center ">Staj ve İşyeri Eğitimi Bilgilerini Sorgulayın</h5><hr />

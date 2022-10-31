@@ -2,9 +2,14 @@ const mysql = require("mysql2");
 const config = require("../config/config.js");
 
 const Sequelize=require("sequelize");
+
 const sequelize=new Sequelize(config.db.database,config.db.user,config.db.password,{
     dialect:"mysql",
-    host:config.db.host
+    host:config.db.host,
+    define: {
+        timestamps: false
+    },
+    storage:"./session.mysql"
 })
 async function connect(){
     try{
@@ -17,16 +22,3 @@ async function connect(){
 }
 connect();
 module.exports=sequelize; 
-
-
-// let connection = mysql.createConnection(config.db);
-
-// connection.connect(function(err) {
-//     if(err) {
-//         console.log(err);
-//     }
-
-//     console.log("mysql bağlantısı yapıldı");
-// });
-
-// module.exports = connection.promise();
