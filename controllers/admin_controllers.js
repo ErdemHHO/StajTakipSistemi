@@ -147,7 +147,7 @@ const kullaniciekle_get=async function(req, res) {
     const roller=await rol.findAll();
     try {
         res.render("yonetici/kullaniciekle.ejs", {
-            rol:roller,
+            rol:roller
         });
     }
     catch(err) {

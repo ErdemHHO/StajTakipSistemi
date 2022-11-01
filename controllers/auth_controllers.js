@@ -19,7 +19,7 @@ const anasayfa_get=async function(req, res) {
 
 const logout_get=async function(req, res) {
     try {
-        // await req.session.destroy();
+        await req.session.destroy();
         return res.redirect("/giris");
     }
     catch(err) {
@@ -58,7 +58,9 @@ const login_post=async function(req, res){
       //parola kontrolü
       const match=await bcrypt.compare(sifre, user.kullaniciParola);
       if(match){
-        req.session.isAuth=1;
+        req.session.isAuth=true;
+        req.session.kullaniciAd=user.kullaniciAd;
+        req.session.kullaniciSoyad=user.kullaniciSoyad;
         let rol=user.dataValues.rolID;
         //login oldu
         if(rol==1){
@@ -71,7 +73,7 @@ const login_post=async function(req, res){
             return res.redirect("/admin/ogretmenstajtab");
         }
         else{
-            return res.redirect("/");
+            return res.redirect("/ogrenci/anasayfa");
         }
       }
       else{
