@@ -93,23 +93,29 @@
                 <h4 class="mb-4 text-center border-bottom">KULLANICI SİLİN</h4>
             </div>
             
-            <form class="needs-validation pt-5" novalidate>
+            <form class="needs-validation pt-5" method="post" novalidate>
                 <div class="row g-5 mx-5">
                     <div class="col">
                         <div class="row g-3">
                         <div class="col-12">
                             <label for="numara" class="form-label">Silmek İstediğiniz Kullanıcının Numarası:</label>
-                            <input type="text" class="form-control" id="numara" placeholder="" value="" required>
+                            <input name="kullanicinumarasi" type="text" class="form-control" id="numara" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının numarası boş geçilemez.
                             </div>
                         </div>
                         <button class="w-100 btn btn-danger btn-lg mx-2" type="submit">Sil</button> <br>
+                        <% if (typeof message != "undefined") { %>
+                            <div class="alert alert-warning m-3">
+                             <%= message %> 
+                           </div>
+                           <% } %>
                     </div>
                 </div>
             </form>
         </main>
     </div>
+    
     
 
 

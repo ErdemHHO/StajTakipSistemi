@@ -93,7 +93,10 @@
     </nav>
     <div class="p-5 m-5">
         <main>
-            <h4 class="text-center border-bottom">DUYURU GÜNCELLEYİN</h4>
+            <div class="text-center">
+                <h4 class="text-center border-bottom">DUYURU GÜNCELLEYİN</h4>
+            </div>
+            
             <form method="post" class="needs-validation" novalidate>
                 <div class="row g-5 mx-5">
                     <div class="col">
@@ -108,8 +111,8 @@
                         <div class="col-12">
                             <label for="duyuruAciklama" class="form-label">Duyuru Açıklama:</label>
                             <div class="col-12">
-                            <textarea id="editor" name="duyuruAciklaman" class="form-control" rows="10"></textarea>
-                            </div>
+                              <textarea id="editor" name="duyuruAciklama" class="form-control" rows="30" placeholder="" value="" required style="height: 400px;" ></textarea>
+                          </div>
                             <!-- <input name="duyuruAciklama" type="text" class="form-control" id="duyuruAciklama" placeholder="" value="" required style="height: 400px;"> -->
                         </div>
                         <div class="invalid-feedback">
@@ -123,8 +126,13 @@
                           <option>Oğrenci</option>
                           <option>Oğretmen</option>
                           </select>
-                        <br><br>
-                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                          </div>
+                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button><br>
+                        <% if (typeof message != "undefined") { %>
+                            <div class="alert alert-warning m-3">
+                             <%= message %> 
+                           </div>
+                           <% } %>
                     </div>
                 </div>
             </form>

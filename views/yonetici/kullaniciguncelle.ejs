@@ -94,35 +94,34 @@
                 <h4 class="mb-4 text-center border-bottom">KULLANICI GÜNCELLEYİN</h4>
             </div>
             
-            <form class="needs-validation pt-5" novalidate>
+            <form method="post" class="needs-validation pt-5" novalidate>
                 <div class="row g-5 mx-5">
                     <div class="col">
                         <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="kulAdi" class="form-label">Adı:</label>
-                            <input type="text" class="form-control" id="kulAdi" placeholder="" value="" required>
-
+                            <input name="kullaniciAd" type="text" class="form-control" id="kulAdi" placeholder=" " value=" " required>
                             <div class="invalid-feedback">
                             Kullanıcının adı boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulSoyad" class="form-label">Soyadı:</label>
-                            <input type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
+                            <input name="kullaniciSoyad" type="text" class="form-control" id="kulSoyad" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının soyadı boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulNumara" class="form-label">Numara:</label>
-                            <input type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
+                            <input name="kullaniciNumara" type="text" class="form-control" id="kulNumara" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının numarası boş geçilemez.
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <label for="kulSifre" class="form-label">Şifre:</label>
-                            <input type="text" class="form-control" id="kulSifre" placeholder="" value="" required>
+                            <input name="kullaniciParola" type="password" class="form-control" id="kulSifre" placeholder="" value="" required>
                             <div class="invalid-feedback">
                             Kullanıcının şifresi boş geçilemez.
                             </div>
@@ -130,7 +129,7 @@
                         <div class="col-md-6">
                             <label for="kulTelNo" class="form-label">Telefon:</label>
                             <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="kulTelNo" placeholder="" required>
+                            <input name="kullaniciTelNo" type="text" class="form-control" id="kulTelNo" placeholder="" required>
                             <div class="invalid-feedback">
                                 Telefon boş geçilemez.
                             </div>
@@ -139,20 +138,19 @@
                         <div class="col-md-6">
                             <label for="kulEmail" class="form-label">E-Posta:</label>
                             <div class="input-group has-validation">
-                            <input type="email" class="form-control" id="kulEmail" placeholder="" required>
+                            <input name="kullaniciMail" type="email" class="form-control" id="kulEmail" placeholder="" required>
                             <div class="invalid-feedback">
                                 E-Posta boş geçilemez veya düzgün bir E-posta giriniz.
                             </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="kulRol" class="form-label">Rolü:</label>
-                            <select class="form-select" id="country" required>
-                            <option value="">Seçiniz</option>
-                            <option>Öğrenci</option>
-                            <option>Öğretmen</option>
-                            <option>Komisyon</option>
-                            <option>Yönetici</option>
+                            <label for="rolID" class="form-label">Rolü:</label>
+                            <select name="rolID" id="rolID" class="form-select">
+                            <option name="rolID" value="-1" selected>Seçiniz</option>
+                            <% roller.forEach(rol => { %>
+                                <option value="<%= rol.dataValues.rolID %> "><%= rol.dataValues.rolAdi %> 
+                            <% }) %>
                             </select>
                             <div class="invalid-feedback">
                                 Rol boş geçilemez.
@@ -161,7 +159,7 @@
                         <div class="col-md-3">
                             <label for="kulFakulte" class="form-label">Fakültesi:</label>
                             <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="kulFakulte" placeholder="" required>
+                            <input name="kullaniciFakulte" type="text" class="form-control" id="kulFakulte" placeholder="" required>
                             </div>
                             <div class="invalid-feedback">
                                 Fakülte boş geçilemez.
@@ -170,7 +168,7 @@
                             <div class="col-md-3">
                                 <label for="kulBolum" class="form-label">Bölümü:</label>
                                 <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="kulBolum" placeholder="" required>
+                                <input name="kullaniciBolum" type="text" class="form-control" id="kulBolum" placeholder="" required>
                                 </div>
                                 <div class="invalid-feedback">
                                     Bölüm boş geçilemez.
@@ -178,15 +176,20 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="kulSınıf" class="form-label">Sınıfı(Opsiyonel)</label>
-                                <select class="form-select" id="country">
-                                <option value="">Seçiniz</option>
+                                <select name="kullaniciSinif" class="form-select">
+                                <option name="kullaniciSinif" value="">Seçiniz</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 </select>
                             </div>
-                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Güncelle</button> <br>
+                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                        <% if (typeof message != "undefined") { %>
+                            <div class="alert alert-warning m-3">
+                             <%= message %> 
+                           </div>
+                           <% } %>
                     </div>
                 </div>
             </form>

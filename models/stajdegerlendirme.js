@@ -85,4 +85,10 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
     ]
 });
 
+
+// async function sync() {
+//   await stajdegerlendirme.sync({ force: true });
+//   console.log("staj1form tablosu eklendi");
+// }
+// sync();
 module.exports=stajdegerlendirme;

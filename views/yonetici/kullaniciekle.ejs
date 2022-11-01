@@ -183,13 +183,18 @@
                                 <option>4</option>
                                 </select>
                             </div>
-                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                        <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br><br>
+                        <% if (typeof message != "undefined") { %>
+                            <div class="alert alert-warning m-3">
+                             <%= message %> 
+                           </div>
+                        <% } %>
                     </div>
                 </div>
             </form>
         </main> 
     </div>
-    
+
 
 
     <footer class="p-2 bg-light text-dark text-center">

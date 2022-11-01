@@ -1,6 +1,8 @@
 //express
 const express = require("express");
 const app = express();
+const stajdegerlendirme  = require("./models/stajdegerlendirme");
+const sequelize_auto=require("sequelize-auto");
 
 // const cookieParser = require('cookie-parser');
 // const session = require('express-session');
