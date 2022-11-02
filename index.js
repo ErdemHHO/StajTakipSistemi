@@ -1,14 +1,11 @@
 //express
 const express = require("express");
 const app = express();
+
 const cookieParser = require('cookie-parser');   
 const session = require('express-session');
-
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-//custom modules
-const sequelize = require("./data/db");
-const locals = require("./middlewares/locals");
 //routes
 const komisyonRoutes = require("./routes/komisyon");
 const ogretmenRoutes = require("./routes/ogretmen");
@@ -17,7 +14,12 @@ const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
 
 
+//custom modules
+const sequelize = require("./data/db");
+const locals = require("./middlewares/locals");
 
+//templete engine
+app.set("view engine","ejs");
 
 //middleware
 app.use(express.urlencoded({ extended: false }));
@@ -35,7 +37,7 @@ app.use(session({
 }));
 
 app.use(locals);
-app.set("view engine","ejs");
+
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
 app.use("/komisyon",komisyonRoutes);

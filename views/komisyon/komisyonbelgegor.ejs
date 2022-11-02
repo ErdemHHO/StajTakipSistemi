@@ -99,6 +99,8 @@
         <main>
             <h4 class="text-center border-bottom">BELGE SORGULAYIN</h4>
             <form class="d-flex row g-1 pt-5" role="search">
+                <input type="hidden" name="_csrf" value="<%= crfToken %>">
+                <input type="hidden" name="_csrf" value="<%= crfToken %>">
                 <input class="form-control me-2" type="search" placeholder="Staj/IME Kayıt Numarası Giriniz" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Belgeleri Ara</button>
             </form>

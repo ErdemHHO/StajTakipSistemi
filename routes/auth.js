@@ -6,8 +6,13 @@ const authControllers=require("../controllers/auth_controllers.js");
 
 
 
+
 //cikis
 router.get("/cikis",authControllers.logout_get);
+
+//Sifre Sifirlama
+router.get("/sifresifirlama",authControllers.sifreSifirlama_get);
+router.post("/sifresifirlama",authControllers.sifreSifirlama_post);
 
 //giris
 router.get("/giris",authControllers.login_get);

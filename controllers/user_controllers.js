@@ -128,7 +128,6 @@ const profilOgrenci=async function(req, res) {
     }
 }
 
-
 module.exports={
     ogrencihome,ogrenciimebasvur,ogrenciimebasvurubelgesi,ogrenciimedegerlendirme,ogrenciimerapor,ogrencistaj1basvur,ogrencistaj1basvurubelgesi,ogrencistaj1degerlendirme,ogrencistaj1rapor,ogrencistaj2basvur,ogrencistaj2basvurubelgesi,ogrencistaj2degerlendirme,ogrencistaj2rapor,profilOgrenci
 }

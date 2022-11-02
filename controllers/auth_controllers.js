@@ -1,4 +1,6 @@
 const bcrypt=require("bcrypt");
+const emailService=require("../helpers/send-mail");
+const config = require("../config/config.js");
 const kullanici = require("../models/kullanici.js");
 const duyuru = require("../models/duyuru.js");
 
@@ -20,7 +22,7 @@ const anasayfa_get=async function(req, res) {
 const logout_get=async function(req, res) {
     try {
         await req.session.destroy();
-        return res.redirect("/giris");
+        return res.redirect("/");
     }
     catch(err) {
         console.log(err);
@@ -89,10 +91,76 @@ const login_post=async function(req, res){
         console.log(err)
     }
 }
-
+const sifreSifirlama_post=async function(req, res) {
+    const numara=req.body.kullaniciNumarası;
+    console.log(numara);
+    const telNo=req.body.telefonNumarasi;
+    console.log(telNo);
+    const email=req.body.kullaniciMail;
+    console.log(telNo);
+    const yeniSifre=req.body.yeniKullaniciSifre;
+    const hashedPassword=await bcrypt.hash(yeniSifre,10);
+    const yeniSifreTekrar=req.body.yeniKullaniciSifreTekrar;
+    try {
+        const user=await kullanici.findOne({
+            where:{
+                kullaniciNumara:numara,
+                kullaniciTelNo:telNo,
+                kullaniciMail:email
+            }  
+          })
+        if(!user){
+            console.log("user");
+            console.log("Numarası Hatalı");
+            return res.render("home-login/sifreSifirlama.ejs",{
+                message:"Girilen Bilgiler Hatalı!" ,
+                renk:"danger"
+            })    
+            }
+        if(yeniSifre==yeniSifreTekrar){
+            user.kullaniciParola=hashedPassword;
+            emailService.sendMail({
+                from:config.email.from,
+                to:user.kullaniciMail,
+                subject:"Şifreniz Güncellendi.",
+                text:"Şifreniz Başarılı Bir Şekilde Güncellendi. Yeni Şifreniz:" + yeniSifre
+                });
+            await user.save();
+            console.log("------------Sifre Güncellendi--------------");
+            return res.render("home-login/sifreSifirlama.ejs",{
+                message:"Şifreniz Güncellendi Giriş Yapabilirsiniz",
+                renk:"success" 
+            });  
+            
+        }
+        else{
+            console.log("Şifreler Aynı Değil");
+            return res.render("home-login/sifreSifirlama.ejs",{
+                message:"Girdiğiniz Şifreler Aynı Değil",
+                renk:"danger"  
+            });  
+        }
+                 
+        }
+            
+        catch(err) {
+            console.log(err);
+        }
+        }
+const sifreSifirlama_get=async function(req, res) {
+    try {
+        res.render("home-login/sifreSifirlama.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 module.exports={
     anasayfa_get,
     login_get,
     login_post,
     logout_get,
+    sifreSifirlama_get,
+    sifreSifirlama_post
 }

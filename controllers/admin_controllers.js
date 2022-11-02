@@ -164,7 +164,7 @@ const kullaniciekle_post=async function(req, res) {
     const kullaniciTelNo=req.body.kullaniciTelNo;
     const kullaniciMail=req.body.kullaniciMail;
     const rolID=req.body.rolID;
-    // const rolID=req.body.rolID;
+    //const rolID=req.body.rolID;
     const kullaniciFakulte=req.body.kullaniciFakulte;
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
@@ -172,17 +172,14 @@ const kullaniciekle_post=async function(req, res) {
     const roller=await rol.findAll();
     try {
         if(!user){
-            res.render("yonetici/kullaniciekle.ejs", {
-                rol:roller,
-                message:"Kullanıcı Eklendi"
-            });
             const newUser=await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
             emailService.sendMail({
-            from:config.email.from,
-            to:newUser.kullaniciMail,
-            subject:"Hesabınız oluşturuldu.",
-            text:"Hesabınız başarılı bir şekilde oluşturuldu."
-        });
+                from:config.email.from,
+                to:newUser.kullaniciMail,
+                subject:"Hesabınız oluşturuldu.",
+                text:"Hesabınız başarılı bir şekilde oluşturuldu. Şifreniz:" + kullaniciParola + "şifrenizi güncellemek için tıklayın:"
+                });
+            res.redirect("/admin/kullanicitablosu");
         }
         res.render("yonetici/kullaniciekle.ejs", {
             rol:roller,
@@ -391,8 +388,6 @@ const stajogretmenbelirle_get=async function(req, res) {
         console.log(err);
     }
 }
-
-
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
     try {
