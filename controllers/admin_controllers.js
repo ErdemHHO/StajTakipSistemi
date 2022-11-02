@@ -168,20 +168,26 @@ const kullaniciekle_post=async function(req, res) {
     const kullaniciFakulte=req.body.kullaniciFakulte;
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
+    const user = await kullanici.findByPk(kullaniciNumara);
     const roller=await rol.findAll();
     try {
-        const newUser=await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
-        emailService.sendMail({
+        if(!user){
+            res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Kullanıcı Eklendi"
+            });
+            const newUser=await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
+            emailService.sendMail({
             from:config.email.from,
             to:newUser.kullaniciMail,
             subject:"Hesabınız oluşturuldu.",
             text:"Hesabınız başarılı bir şekilde oluşturuldu."
         });
+        }
         res.render("yonetici/kullaniciekle.ejs", {
             rol:roller,
-            message:"Kullanıcı Eklendi"
-        });
-        
+            message:"Kullanıcı Kaydı Zaten Var"
+        });    
     }
     catch(err) {
         console.log(err);
@@ -253,7 +259,7 @@ const kullaniciguncelle_post=async function(req,res){
             where: {
                 kullaniciNumara: kullaniciNumara
             }
-
+        
         });
         if (kullanıcı) {
             kullanıcı.kullaniciNumara = kullaniciNumara;
@@ -287,8 +293,59 @@ const kullaniciguncelle_post=async function(req,res){
 }
 
 const profil_get=async function(req, res) {
+    let kullaniciNumara=req.session.kullaniciNumara;
+    console.log("deneme");
+    console.log(kullaniciNumara);
     try {
         res.render("yonetici/profil.ejs", {
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const profilduzenle_post=async function(req, res) {
+    let kullaniciNumara=req.session.kullaniciNumara;        
+    let sifre=req.session.kullaniciParola;
+    const email=req.body.email;
+    const telNo=req.body.telNo;
+    const eskiSifre=req.body.kullanıcıSifre;
+    const yeniSifre=req.body.yeniSifre;
+    const yeniSifreTekrar=req.body.yeniSifreTekrar;
+    try {
+        const kullanici = await kullanici.findOne({
+            where: {
+                kullaniciNumara: kullaniciNumara
+            }});
+        const match=await bcrypt.compare(sifre, kullanici.kullaniciParola);
+        if(eskiSifre==match){
+            if(yeniSifre==yeniSifreTekrar){
+                kullanici.kullaniciTelNo = telNo;
+                kullanici.kullaniciMail = email;
+                kullanici.kullaniciParola =await bcrypt.hash( yeniSifre,10);
+                await kullanici.save();
+                res.render("yonetici/profilduzenle.ejs", {
+                    message: "Bilgileriniz Güncellendi!"
+                });
+            }else{
+                res.render("yonetici/profilduzenle.ejs", {
+                    message: "Yeni şifreleriniz aynı değil"
+                });
+            }
+        }
+        else{
+            res.render("yonetici/profilduzenle.ejs", {
+                message: "Şifreniz Yanlış!"
+            });
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const profilduzenle_get=async function(req, res) {
+    try {
+        res.render("yonetici/profilduzenle.ejs", {
         });
     }
     catch(err) {
@@ -367,5 +424,7 @@ module.exports={
     kullaniciguncelle_get,
     kullaniciguncelle_post,
     kullanicisil_get,
-    kullanicisil_post
+    kullanicisil_post,
+    profilduzenle_get,
+    profilduzenle_post
 }

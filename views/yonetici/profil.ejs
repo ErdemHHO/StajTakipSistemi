@@ -11,74 +11,43 @@
     <title>Document</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-        <img class="headerImg" src="../img/kocaeli-universitesi-logo-2.png" alt="" style="height:50px;"> 
-        <a class="navbar-brand" href="/admin/kullanicitablosu">Kocaeli Üniversitesi Staj Takip Sistemi</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Kullanıcı Paneli</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item"><a class="nav-link" href="/admin/profil">Profil</a></li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Yetkileriniz
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="/admin/kullanicitablosu">Kullanıcı İşlemleri</a></li>
-                    <li><a class="dropdown-item" href="/admin/stajimetablosu">Öğrenci Staj-IME İşlemleri</a></li>
-                    <li><a class="dropdown-item" href="/admin/duyurular">Duyuru Oluşturma</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                  </ul>
-                </li>
-                <li><a class="nav-link" href="/cikis">Çıkış</a></li>
-            </ul>
-          </div>
-        </div>
-    </div>
-</nav>
+    <%- include("./partials/nav")  %>
     <div class="container pt-5">
         <div class="row pt-5">
             <div class="col-2">
                 <div class="border rounded-circle text-center bg-light" style="width: 150px;height:150px;">
                     <br><br>
-                    <h1>EH</h1>
+                    <h1><%= kullaniciAd[0]%><%=kullaniciSoyad[0]  %></h1>
                 </div>
             </div>
             <div class="col-10">
                 <br>
-                <h3>ERDEM HACIHASANOĞLU</h3> 
+                <h3><% if (isAuth) { %> <%=  kullaniciAd  %>  <%=  kullaniciSoyad  %> <% } %></h3> 
             </div>
             <div class="container bg-light rounded-5 my-3">
             <div class="row">
                 <div class="col-4 pt-3"><h4>Kullanıcı Ayrıntıları</h4></div>
                 <div class="col-6"></div>
-                <div class="col-2 pt-3"><a href="#">Profili Düzenle</a></div>
+                <div class="col-2 pt-3"><a href="/admin/profiliduzenle">Profili Düzenle</a></div>
             </div>
            
             <div class="pt-3">
-                <p><strong>Numara:</strong></p> 
-                <p>201307011</p>
-                <p><strong>E-Posta:</strong></p> 
-                <p>201307011@kocaeli.edu.tr</p>
-                <p><strong>Telefon:</strong></p> 
-                <p>05387436124</p>
-                <p><strong>Bölüm:</strong></p>
-                <p>Bilişim Sistemleri Mühendisliği</p>
-                <p><strong>Sınıf:</strong></p>
-                <p>3.Sınıf</p>
-            </div>
+                <% if (isAuth) { %> 
+                  <p><strong>Numara: </strong><%=  kullaniciNumara  %></p> 
+                  <br>
+                  <p><strong>E-Posta: </strong> <%=  kullaniciMail  %></p> 
+                  <br>
+                  <p><strong>Telefon:</strong> <%=  kullaniciNumara  %></p> 
+                  <br>
+                  <p><strong>Bölüm: </strong> <%=  kullaniciBolum  %></p>
+                  <br>
+              </div><% } %>
             </div>
         </div>
     </div> 
+
+    <%- include("../partials/footer")  %>
+
   <script src="../js/form-validation.js"></script>    
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

@@ -14,40 +14,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <img class="headerImg" src="../img/kocaeli-universitesi-logo-2.png" alt="" style="height:50px;"> 
-            <a class="navbar-brand" href="/admin/kullanicitablosu">Kocaeli Üniversitesi Staj Takip Sistemi</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Kullanıcı Paneli</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item"><a class="nav-link" href="/admin/profil">Profil</a></li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Yetkileriniz
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="/admin/kullanicitablosu">Kullanıcı İşlemleri</a></li>
-                        <li><a class="dropdown-item" href="/admin/stajimetablosu">Öğrenci Staj-IME İşlemleri</a></li>
-                        <li><a class="dropdown-item" href="/admin/duyurular">Duyuru Oluşturma</a></li>
-                        <li>
-                          <hr class="dropdown-divider">
-                        </li>
-                      </ul>
-                    </li>
-                    <li><a class="nav-link" href="/cikis">Çıkış</a></li>
-                </ul>
-              </div>
-            </div>
-        </div>
-    </nav>
+    <%- include("./partials/nav")  %>
     
     <nav class="main-menu">
             <ul>
@@ -91,7 +58,7 @@
     <div class="p-5 m-5">
         <main>
             <div class="text-center border-bottom">
-                <h4>YENİ KULLANICI EKLEYİN</h4>
+                <h4>YENİ KULLANICI EKLEYİN</h4>          
             </div>
             <form method="post" class="needs-validation pt-5" novalidate>
                 <div class="row g-5 mx-5">
@@ -144,7 +111,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="rolID" class="form-label">Sınıfı(Opsiyonel)</label>
+                            <label for="rolID" class="form-label">Rolü:</label>
                             <select name="rolID" id="rolID" class="form-select">
                             <option value="-1" selected>Seçiniz</option>
                             <% rol.forEach(roller => { %>
@@ -194,9 +161,6 @@
             </form>
         </main> 
     </div>
-    <% if (isAuth) { %>
-        <%= kullaniciAd %> <%= kullaniciSoyad %> 
-    <% } %>
 
 
     <footer class="p-2 bg-light text-dark text-center">

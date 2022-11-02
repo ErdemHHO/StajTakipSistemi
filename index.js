@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cookieParser = require('cookie-parser');   
 const session = require('express-session');
+
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 //custom modules
@@ -26,14 +27,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000*60 
+        maxAge: 1000*60*60
     },
     store:new SequelizeStore({
         db:sequelize
     })
 }));
 
-
+app.use(locals);
 app.set("view engine","ejs");
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
@@ -43,11 +44,13 @@ app.use("/admin",adminRoutes);
 app.use("/ogrenci",userRoutes);
 app.use("/",authRoutes);
 
-app.use(locals);
+
 // (async () => {
 //     await sequelize.sync({ alter: true });
 //     await dummyData();
 // })();
+
+
 
 
 app.listen(3000, () => {

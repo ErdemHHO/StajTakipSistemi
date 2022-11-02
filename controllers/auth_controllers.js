@@ -61,10 +61,15 @@ const login_post=async function(req, res){
         req.session.isAuth=true;
         req.session.kullaniciAd=user.kullaniciAd;
         req.session.kullaniciSoyad=user.kullaniciSoyad;
+        req.session.kullaniciNumara=user.kullaniciNumara;
+        req.session.kullaniciMail=user.kullaniciMail;
+        req.session.kullaniciFakulte=user.kullaniciFakulte;
+        req.session.kullaniciBolum=user.kullaniciBolum;
+        req.session.kullaniciSinif=user.kullaniciSinif;
         let rol=user.dataValues.rolID;
         //login oldu
         if(rol==1){
-            return res.redirect("/admin/kullaniciekle");
+            return res.redirect("/admin/kullanicitablosu");
         }
         else if(rol==2){
             return res.redirect("/admin/komisyonstajbilgileri");
