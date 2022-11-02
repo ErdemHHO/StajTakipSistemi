@@ -177,7 +177,7 @@ const kullaniciekle_post=async function(req, res) {
                 from:config.email.from,
                 to:newUser.kullaniciMail,
                 subject:"Hesabınız oluşturuldu.",
-                text:"Hesabınız başarılı bir şekilde oluşturuldu. Şifreniz:" + kullaniciParola + "şifrenizi güncellemek için tıklayın:"
+                html:'<p> Hesabınız başarılı bir şekilde oluşturuldu.</p> <br> <p> Şifreniz: ' + kullaniciParola + '</p><br> Şifrenizi güncellemek için tıklayın: <a href="http://localhost:3000/sifresifirlama">Parola Sıfırla</a>'
                 });
             res.redirect("/admin/kullanicitablosu");
         }
