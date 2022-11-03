@@ -425,7 +425,7 @@ const staj1pdf_get=async function(req, res) {
             }
         );
         const page = await browser.newPage();
-        await page.goto('http://localhost:3000/ogrenci/pdfstaj1', {
+        await page.goto('http://localhost:3000/ogrenci/pdfstaj1?target=https://google.com', {
         waitUntil: 'networkidle2',
         });
         await page.setViewport({ width: 1800, height: 1050 });

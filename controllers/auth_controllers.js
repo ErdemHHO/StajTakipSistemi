@@ -75,10 +75,10 @@ const login_post=async function(req, res){
             return res.redirect("/admin/kullanicitablosu");
         }
         else if(rol==2){
-            return res.redirect("/admin/komisyonstajbilgileri");
+            return res.redirect("/komisyon/kullanicitablosu");
         }
         else if(rol==3){
-            return res.redirect("/admin/ogretmenstajtab");
+            return res.redirect("/ogretmen/ogretmenstajtab");
         }
         else{
             return res.redirect("/ogrenci/anasayfa");
