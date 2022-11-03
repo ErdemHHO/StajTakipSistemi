@@ -357,8 +357,7 @@ const staj1pdf_get=async function(req, res) {
             stajTipiID:1,
             kullaniciNumara:kullaniciNumara
         }
-    });
-    
+    }); 
     const isim=req.session.kullaniciAd;
     const soyisim=req.session.kullaniciSoyad;
     const telNo=req.session.kullaniciTelNo;
@@ -389,7 +388,7 @@ const staj1pdf_get=async function(req, res) {
     const cumartesi= staj1pdf.cumartesi;
 
     try { 
-        res.render("ogrenci/pdfstaj1.ejs", {
+        await res.render("ogrenci/pdfstaj1.ejs", {
             kullaniciNumara:kullaniciNumara,
             isim:isim,
             soyisim:soyisim,
@@ -420,22 +419,24 @@ const staj1pdf_get=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         });
-
-    // (async () => {
-    //     const browser = await puppeteer.launch();
-    //     const page = await browser.newPage();
-    //     await page.goto('http://localhost:3000/ogrenci/pdfstaj1', {
-    //     waitUntil: 'networkidle2',
-    //     });
-    //     await page.setViewport({ width: 1800, height: 1050 });
-    //     await page.pdf({ 
-    //     path: path.join(__dirname,'../../../../Downloads','erdem123.pdf'), 
-    //     format: 'a4',
-    //     fullPage:true,
-    //     });
-    
-    //     await browser.close();
-    // })();
+    (async () => {
+        const browser = await puppeteer.launch({
+                headless: true
+            }
+        );
+        const page = await browser.newPage();
+        await page.goto('http://localhost:3000/ogrenci/pdfstaj1', {
+        waitUntil: 'networkidle2',
+        });
+        await page.setViewport({ width: 1800, height: 1050 });
+        await page.pdf({ 
+        path: path.join(__dirname,'../../../../Downloads','erdem616wer181.pdf'), 
+        format: 'a4',
+        fullPage:true,
+        });
+        await browser.close();
+        res.redirect("/ogrenci/staj1basvur");
+    })();
 
     }
     catch(err) {
@@ -474,7 +475,6 @@ const pdfime_get=async function(req, res) {
     const cumartesi= imepdf.cumartesi;
 
     try {
-        
         res.render("ogrenci/pdfime.ejs", {
             tc:tc,
             iban:iban,
