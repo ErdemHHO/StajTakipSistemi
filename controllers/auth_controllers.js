@@ -65,6 +65,7 @@ const login_post=async function(req, res){
         req.session.kullaniciSoyad=user.kullaniciSoyad;
         req.session.kullaniciNumara=user.kullaniciNumara;
         req.session.kullaniciMail=user.kullaniciMail;
+        req.session.kullaniciTelNo=user.kullaniciTelNo;
         req.session.kullaniciFakulte=user.kullaniciFakulte;
         req.session.kullaniciBolum=user.kullaniciBolum;
         req.session.kullaniciSinif=user.kullaniciSinif;

@@ -5,6 +5,7 @@ module.exports =async function(req, res, next) {
     res.locals.kullaniciNumara=req.session.kullaniciNumara;
     res.locals.kullaniciParola=req.session.kullaniciParola;
     res.locals.kullaniciMail=req.session.kullaniciMail;
+    res.locals.kullaniciTelNo=req.session.kullaniciTelNo;
     res.locals.kullaniciFakulte=req.session.kullaniciFakulte;
     res.locals.kullaniciBolum=req.session.kullaniciBolum;
     res.locals.kullaniciSinif=req.session.kullaniciSinif;

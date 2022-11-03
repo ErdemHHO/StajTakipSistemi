@@ -1,6 +1,7 @@
 //express
 const express = require("express");
 const app = express();
+const puppeteer = require('puppeteer');
 
 const cookieParser = require('cookie-parser');   
 const session = require('express-session');
@@ -51,9 +52,6 @@ app.use("/",authRoutes);
 //     await sequelize.sync({ alter: true });
 //     await dummyData();
 // })();
-
-
-
 
 app.listen(3000, () => {
     console.log("listening on port 3000");
