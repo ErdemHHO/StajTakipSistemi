@@ -28,6 +28,26 @@ const stajkayit=sequelize.define("stajkayit",{
       type: DataTypes.STRING(11),
       allowNull: true,
     },
+    kullaniciAd: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+    },
+    kullaniciSoyad: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+    },
+    kullaniciTelNo: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+    },
+    isgunu: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+    },
+    kullaniciMail: {
+      type: DataTypes.STRING(11),
+      allowNull: true,
+    },
     iban: {
       type: DataTypes.STRING(32),
       allowNull: true,
@@ -153,4 +173,7 @@ const stajkayit=sequelize.define("stajkayit",{
       },
     ]
 });
+// (async () => {
+//   await sequelize.sync({ alter: true });
+// })();
 module.exports = stajkayit;
