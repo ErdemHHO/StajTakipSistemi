@@ -89,7 +89,7 @@ const ogrenciimebasvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.render("ogrenci/ogrencistaj1basvur.ejs", {
+        res.render("ogrenci/ogrenciimebasvur.ejs", {
         });
     }
     catch(err) {
@@ -105,6 +105,49 @@ const ogrenciimebasvurubelgesi_get=async function(req, res) {
         console.log(err);
     }
 }
+const ogrenciimebasvurubelgesi_post=async function(req, res) {
+    let dosya = req.body.basvuruform;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.basvuruform, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
+        console.log(form);
+        if(form){
+            form.basvuruForm = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,basvuruForm:dosya})
+            return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
+            message: "Başvuru Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+}
 const ogrenciimedegerlendirme_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrenciimedegerlendirme.ejs", {      
@@ -114,6 +157,49 @@ const ogrenciimedegerlendirme_get=async function(req, res) {
         console.log(err);
     }
 }
+const ogrenciimedegerlendirme_post=async function(req, res) {
+    let dosya = req.body.degerlendirmeFormu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.degerlendirmeFormu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
+        console.log(form);
+        if(form){
+            form.degerlendirmeFormu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrenciimedegerlendirme.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,degerlendirmeFormu:dosya})
+            return res.render("ogrenci/ogrenciimedegerlendirme.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrenciimedegerlendirme.ejs",{
+            message: "Değerlendirme Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+}
 const ogrenciimerapor_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrenciimerapor.ejs", {      
@@ -121,6 +207,49 @@ const ogrenciimerapor_get=async function(req, res) {
     }
     catch(err) {
         console.log(err);
+    }
+}
+const ogrenciimerapor_post=async function(req, res) {
+    let dosya = req.body.stajRaporu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.stajRaporu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
+        console.log(form);
+        if(form){
+            form.stajRaporu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrenciimerapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,stajRaporu:dosya})
+            return res.render("ogrenci/ogrenciimerapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrenciimerapor.ejs",{
+            message: "Raporunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
     }
 }
 
@@ -303,20 +432,20 @@ const ogrencistaj1degerlendirme_post=async function(req, res) {
             form.degerlendirmeFormu = dosya;
             await form.save();
             console.log("başarılı")
-            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+            return res.render("ogrenci/ogrencistaj1degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success"
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,degerlendirmeFormu:dosya})
-            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+            return res.render("ogrenci/ogrencistaj1degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success"
             });
         }
         
     } catch (error) {
-        return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+        return res.render("ogrenci/ogrencistaj1degerlendirme.ejs",{
             message: "Değerlendirme Formunuz Gönderilemedi",
             renk:"danger"
         });
@@ -332,6 +461,50 @@ const ogrencistaj1rapor_get=async function(req, res) {
         console.log(err);
     }
 }
+const ogrencistaj1rapor_post=async function(req, res) {
+    let dosya = req.body.stajRaporu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.stajRaporu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
+        console.log(form);
+        if(form){
+            form.stajRaporu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj1rapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,stajRaporu:dosya})
+            return res.render("ogrenci/ogrencistaj1rapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj1rapor.ejs",{
+            message: "Raporunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+}
+
 
 const ogrencistaj2basvur_get=async function(req, res) {
     const kullaniciNumara=req.session.kullaniciNumara;
@@ -407,14 +580,13 @@ const ogrencistaj2basvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.render("ogrenci/ogrencistaj1basvur.ejs", {
+        res.render("ogrenci/ogrencistaj2basvur.ejs", {
         });
     }
     catch(err) {
         console.log(err);
     }
 }
-//STAJ 2 BASVURU BELGESİ
 const ogrencistaj2basvurubelgesi_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs", {      
@@ -424,7 +596,49 @@ const ogrencistaj2basvurubelgesi_get=async function(req, res) {
         console.log(err);
     }
 }
-//STAJ 2 DEĞERLENDİRME
+const ogrencistaj2basvurubelgesi_post=async function(req, res) {
+    let dosya = req.body.basvuruform;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.basvuruform, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
+        console.log(form);
+        if(form){
+            form.basvuruForm = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,basvuruForm:dosya})
+            return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
+            message: "Başvuru Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+}
 const ogrencistaj2degerlendirme_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrencistaj2degerlendirme.ejs", {      
@@ -434,7 +648,49 @@ const ogrencistaj2degerlendirme_get=async function(req, res) {
         console.log(err);
     }
 }
-//STAJ2 RAPOR
+const ogrencistaj2degerlendirme_post=async function(req, res) {
+    let dosya = req.body.degerlendirmeFormu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.degerlendirmeFormu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
+        console.log(form);
+        if(form){
+            form.degerlendirmeFormu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj2degerlendirme.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,degerlendirmeFormu:dosya})
+            return res.render("ogrenci/ogrencistaj2degerlendirme.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj2degerlendirme.ejs",{
+            message: "Değerlendirme Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+}
 const ogrencistaj2rapor_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrencistaj2rapor.ejs", {      
@@ -442,6 +698,49 @@ const ogrencistaj2rapor_get=async function(req, res) {
     }
     catch(err) {
         console.log(err);
+    }
+}
+const ogrencistaj2rapor_post=async function(req, res) {
+    let dosya = req.body.stajRaporu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.stajRaporu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
+        console.log(form);
+        if(form){
+            form.stajRaporu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj2rapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,degerlendirmeFormu:dosya})
+            return res.render("ogrenci/ogrencistaj2rapor.ejs",{
+                message: "Raporunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj2rapor.ejs",{
+            message: "Raporunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
     }
 }
 //PROFİL
@@ -596,5 +895,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post
 }

@@ -56,7 +56,7 @@
         </ul>
       </nav>
 
-    <div class="p-5 m-5">
+      <div class="p-5 m-5">
                 
         <h3 class="text-center border-bottom">Staj 2</h3>
         <br>
@@ -65,11 +65,19 @@
                 <div class="card-body">
                     <br><br>
                   <h5 class="card-title">Başvuru Formunuzu Yükleyiniz</h5><br>
-                  <button type="button" class="btn btn-dark">Belge seç</button>
+                  <form method="post" enctype="multipart/form-data">
+                  <input type="file" accept="application/pdf" name="basvuruform" class="btn btn-dark">
+                  <button type="submit" class="btn btn-dark">Gönder</button>
+                  </form>
                   <p class="card-text fw-lighter"><i>veya belgeyi buraya bırakın.(belgeniz pdf formatında olmalıdır.)</i></p>
                 </div>
             </div>
-        </div>         
+        </div>   
+        <% if (typeof message != "undefined") { %> 
+            <div class="alert alert-<%= renk %> m-3">
+             <%= message %> 
+           </div>
+        <% } %>      
     </div>
 
     </div>
