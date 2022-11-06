@@ -43,9 +43,9 @@ const sequelize = require('../data/db');
       },
     ]
   });
-async function sync(){
-  await sorumluluk.sync({force:true});
-  console.log("sorumluluk tablosu eklendi");
-} 
-sync();
+// async function sync(){
+//   await sorumluluk.sync({force:true});
+//   console.log("sorumluluk tablosu eklendi");
+// } 
+// sync();
 module.exports=sorumluluk;

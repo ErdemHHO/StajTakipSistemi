@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const isAuth=require("../middlewares/auth");
 const userControllers=require("../controllers/user_controllers.js");
+const fileUpload = require("../helpers/file-upload");
 
 router.get("/anasayfa",isAuth,userControllers.ogrencihome_get);
 
@@ -14,7 +15,9 @@ router.get("/imerapor",isAuth,userControllers.ogrenciimerapor_get);
 router.get("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_get);
 router.post("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_post);
 router.get("/staj1basvurubelgesi",isAuth,userControllers.ogrencistaj1basvurubelgesi_get);
+router.post("/staj1basvurubelgesi", fileUpload.upload.single("basvuruform"), isAuth, userControllers.ogrencistaj1basvurubelgesi_post);
 router.get("/staj1degerlendirme",isAuth,userControllers.ogrencistaj1degerlendirme_get);
+router.post("/staj1degerlendirme", fileUpload.upload.single("degerlendirmeFormu"), isAuth, userControllers.ogrencistaj1degerlendirme_post);
 router.get("/staj1rapor",isAuth,userControllers.ogrencistaj1rapor_get);
 
 router.get("/staj2basvur",isAuth,userControllers.ogrencistaj2basvur_get);

@@ -25,6 +25,10 @@ const stajbelgeler=sequelize.define("stajbelgeler",{
     stajRaporu: {
       type: DataTypes.BLOB,
       allowNull: true
+    },
+    basvuruForm: {
+      type: DataTypes.BLOB,
+      allowNull: true
     }
   }, {
     sequelize,
@@ -47,5 +51,7 @@ const stajbelgeler=sequelize.define("stajbelgeler",{
       },
     ]
 });
-
+// (async () => {
+//   await sequelize.sync({ alter: true });
+// })();
 module.exports=stajbelgeler;

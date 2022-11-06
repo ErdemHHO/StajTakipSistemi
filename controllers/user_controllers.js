@@ -1,6 +1,10 @@
 const stajkayit = require("../models/stajkayit.js");
 const puppeteer = require('puppeteer');
 const path = require('path');
+const fs = require("fs");
+const stajbelgeler = require("../models/stajbelgeler.js");
+
+
 const ogrencihome_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrencihome.ejs", {      
@@ -140,7 +144,12 @@ const ogrencistaj1basvur_get=async function(req, res) {
     }
 }
 const ogrencistaj1basvur_post=async function(req, res) {
-    const stajTipiID = 1;   
+    const stajTipiID = 1;
+    const kullaniciNumara = req.body.kullaniciNumara;
+    const kullaniciAd = req.body.kullaniciAd;
+    const kullaniciSoyad = req.body.kullaniciSoyad;
+    const kullaniciTelNo = req.body.kullaniciTelNo; 
+    const kullaniciMail= req.body.kullaniciMail;     
     const tc = req.body.tc;
     const uyruk = req.body.uyruk;
     const ogrenciadres = req.body.ogrenciadres;
@@ -168,6 +177,11 @@ const ogrencistaj1basvur_post=async function(req, res) {
 
     try {
         await stajkayit.create({
+            kullaniciNumara:kullaniciNumara,
+            kullaniciAd:kullaniciAd,
+            kullaniciSoyad:kullaniciSoyad,
+            kullaniciTelNo:kullaniciTelNo,
+            kullaniciMail:kullaniciMail,
             stajTipiID:stajTipiID,
             tc:tc,
             uyruk:uyruk,
@@ -194,7 +208,10 @@ const ogrencistaj1basvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.redirect("/ogrenci/pdfstaj1");
+        res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+            kullaniciNumara:kullaniciNumara
+
+        });
     }
     catch(err) {
         console.log(err);
@@ -209,6 +226,51 @@ const ogrencistaj1basvurubelgesi_get=async function(req, res) {
         console.log(err);
     }
 }
+const ogrencistaj1basvurubelgesi_post = async function(req,res){
+    let dosya = req.body.basvuruform;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.basvuruform, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
+        console.log(form);
+        if(form){
+            form.basvuruForm = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,basvuruForm:dosya})
+            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+                message: "Başvuru Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+            message: "Başvuru Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
+    }
+
+}
+
 const ogrencistaj1degerlendirme_get=async function(req, res) {
     try {
         res.render("ogrenci/ogrencistaj1degerlendirme.ejs", {      
@@ -216,6 +278,49 @@ const ogrencistaj1degerlendirme_get=async function(req, res) {
     }
     catch(err) {
         console.log(err);
+    }
+}
+const ogrencistaj1degerlendirme_post=async function(req, res) {
+    let dosya = req.body.degerlendirmeFormu;
+
+    if(req.file){
+        dosya = req.file.filename;
+        fs.unlink("./public/file/" + req.body.degerlendirmeFormu, err => {
+            console.log(err);
+        })
+    }
+
+    try {
+        const kullaniciNumara=req.session.kullaniciNumara;
+        const form = await stajbelgeler.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
+        console.log(form);
+        if(form){
+            form.degerlendirmeFormu = dosya;
+            await form.save();
+            console.log("başarılı")
+            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }else{
+            await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,degerlendirmeFormu:dosya})
+            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+                message: "Değerlendirme Formunuz Başarıyla Gönderildi",
+                renk:"success"
+            });
+        }
+        
+    } catch (error) {
+        return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
+            message: "Değerlendirme Formunuz Gönderilemedi",
+            renk:"danger"
+        });
+        console.log(error)
     }
 }
 const ogrencistaj1rapor_get=async function(req, res) {
@@ -351,17 +456,17 @@ const profilOgrenci_get=async function(req, res) {
 }
 //PDF GET 
 const staj1pdf_get=async function(req, res) {
-    const kullaniciNumara=req.session.kullaniciNumara;
     const staj1pdf = await stajkayit.findOne({
         where:{
             stajTipiID:1,
-            kullaniciNumara:kullaniciNumara
+            kullaniciNumara:201307011
         }
     }); 
-    const isim=req.session.kullaniciAd;
-    const soyisim=req.session.kullaniciSoyad;
-    const telNo=req.session.kullaniciTelNo;
-    const eposta=req.session.kullaniciMail;
+    const kullaniciNumara=staj1pdf.kullaniciNumara;
+    const isim=staj1pdf.kullaniciAd;
+    const soyisim=staj1pdf.kullaniciSoyad;
+    const telNo=staj1pdf.kullaniciTelNo;
+    const eposta=staj1pdf.kullaniciMail;
     const tc = staj1pdf.tc;
     const uyruk = staj1pdf.uyruk;
     const ogrenciadres = staj1pdf.ogrenciadres;
@@ -419,24 +524,7 @@ const staj1pdf_get=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         });
-    (async () => {
-        const browser = await puppeteer.launch({
-                headless: true
-            }
-        );
-        const page = await browser.newPage();
-        await page.goto('http://localhost:3000/ogrenci/pdfstaj1?target=https://google.com', {
-        waitUntil: 'networkidle2',
-        });
-        await page.setViewport({ width: 1800, height: 1050 });
-        await page.pdf({ 
-        path: path.join(__dirname,'../../../../Downloads','erdem616wer181.pdf'), 
-        format: 'a4',
-        fullPage:true,
-        });
-        await browser.close();
-        res.redirect("/ogrenci/staj1basvur");
-    })();
+    // 3
 
     }
     catch(err) {
@@ -508,5 +596,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post
 }

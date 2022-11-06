@@ -48,10 +48,7 @@ app.use("/ogrenci",userRoutes);
 app.use("/",authRoutes);
 
 
-// (async () => {
-//     await sequelize.sync({ alter: true });
-//     await dummyData();
-// })();
+
 
 app.listen(3000, () => {
     console.log("listening on port 3000");
