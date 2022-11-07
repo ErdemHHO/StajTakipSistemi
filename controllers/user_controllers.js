@@ -347,9 +347,40 @@ const ogrencistaj1basvur_post=async function(req, res) {
     } 
 }
 const ogrencistaj1basvurubelgesi_get=async function(req, res) {
+    const kullaniciNumara=req.session.kullaniciNumara;
+    const form = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:1
+        }
+    })
+    if(form){
+            const basvuru=form.basvuruForm;
+            return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs", {     
+                bilgi:basvuru
+            });
+    }
     try {
-        res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs", {      
+        return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs", {      
         });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const download=async function(req, res) {
+    const kullaniciNumara=req.session.kullaniciNumara;
+    const form = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:1
+        }
+    })
+    const basvuru=form.basvuruForm;
+    try {
+        if(basvuru){
+            res.download("./public/file/"+basvuru);
+        }
     }
     catch(err) {
         console.log(err);
@@ -357,7 +388,8 @@ const ogrencistaj1basvurubelgesi_get=async function(req, res) {
 }
 const ogrencistaj1basvurubelgesi_post = async function(req,res){
     let dosya = req.body.basvuruform;
-
+    
+    console.log(dosya);
     if(req.file){
         dosya = req.file.filename;
         fs.unlink("./public/file/" + req.body.basvuruform, err => {
@@ -380,13 +412,15 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
             console.log("başarılı")
             return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
-                renk:"success"
+                renk:"success",
+                bilgi:dosya
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,basvuruForm:dosya})
             return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
-                renk:"success"
+                renk:"success",
+                bilgi:dosya
             });
         }
         
@@ -418,7 +452,7 @@ const ogrencistaj1degerlendirme_post=async function(req, res) {
             console.log(err);
         })
     }
-
+    console.log(dosya)
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
         const form = await stajbelgeler.findOne({
@@ -895,5 +929,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,download
 }

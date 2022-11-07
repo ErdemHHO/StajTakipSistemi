@@ -19,17 +19,17 @@ const stajbelgeler=sequelize.define("stajbelgeler",{
       }
     },
     degerlendirmeFormu: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true
     },
     stajRaporu: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true
     },
     basvuruForm: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true
-    }
+    },
   }, {
     sequelize,
     tableName: 'stajbelgeler',
@@ -51,7 +51,7 @@ const stajbelgeler=sequelize.define("stajbelgeler",{
       },
     ]
 });
-// (async () => {
+//  (async () => {
 //   await sequelize.sync({ alter: true });
 // })();
 module.exports=stajbelgeler;
