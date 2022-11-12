@@ -65,7 +65,7 @@
                     <br><br>
                   <h5 class="card-title">Başvuru Formunuzu Yükleyiniz</h5><br>
                   <form method="post" enctype="multipart/form-data">
-                  <input type="file" accept="application/pdf" name="basvuruform" class="btn btn-dark">
+                  <input type="file" accept="application/pdf" name="basvuruform" class="btn btn-dark" style="width:250px;">
                   <button type="submit" class="btn btn-dark">Gönder</button>
                   </form>
                   <p class="card-text fw-lighter"><i>veya belgeyi buraya bırakın.(belgeniz pdf formatında olmalıdır.)</i></p>
@@ -73,8 +73,8 @@
             </div>
         </div>   <br>
         <% if (typeof bilgi != "undefined") { %>    
-        <div class="container d-flex justify-content-center">       
-            <h5 >Gönderilmiş Başvuru Belgeniz:  <a class="text-center" href="/ogrenci/download-file"><%= bilgi %></a></h5>     
+        <div class="container d-flex justify-content-center bg-light p-2 border border-2">       
+            <h5>Gönderilmiş Başvuru Belgeniz:  <a class="text-center" href="/ogrenci/download-staj1basvuru"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= bilgi %></a></h5>     
         </div><% } %> 
 
         <% if (typeof message != "undefined") { %> 

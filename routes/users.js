@@ -20,7 +20,7 @@ router.post("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_post);
 
 router.get("/staj1basvurubelgesi",isAuth,userControllers.ogrencistaj1basvurubelgesi_get);
 router.post("/staj1basvurubelgesi", fileUpload.upload.single("basvuruform"), isAuth, userControllers.ogrencistaj1basvurubelgesi_post);
-router.get("/download-file",isAuth,userControllers.download);
+router.get("/download-staj1basvuru",isAuth,userControllers.downloadstaj1basvuru);
 
 router.get("/staj1degerlendirme",isAuth,userControllers.ogrencistaj1degerlendirme_get);
 router.post("/staj1degerlendirme", fileUpload.upload.single("degerlendirmeFormu"), isAuth, userControllers.ogrencistaj1degerlendirme_post);

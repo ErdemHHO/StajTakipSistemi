@@ -368,7 +368,7 @@ const ogrencistaj1basvurubelgesi_get=async function(req, res) {
         console.log(err);
     }
 }
-const download=async function(req, res) {
+const downloadstaj1basvuru=async function(req, res) {
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -929,5 +929,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,download
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,downloadstaj1basvuru,
 }
