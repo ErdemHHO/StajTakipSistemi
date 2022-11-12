@@ -72,7 +72,11 @@
                   <p class="card-text fw-lighter"><i>veya belgeyi buraya bırakın.(belgeniz pdf formatında olmalıdır.)</i></p>
                 </div>
             </div>
-        </div>   
+        </div>   <br>
+        <% if (typeof bilgi != "undefined") { %>    
+            <div class="container d-flex justify-content-center bg-light p-2 border border-2">       
+                <h5>Gönderilmiş Başvuru Belgeniz:  <a class="text-center" href="/ogrenci/download-staj1basvuru"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= bilgi %></a></h5>     
+            </div><% } %> <br>
         <% if (typeof message != "undefined") { %> 
             <div class="alert alert-<%= renk %> m-3">
              <%= message %> 
