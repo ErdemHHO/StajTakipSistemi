@@ -28,9 +28,15 @@ const ogrencihome_get=async function(req, res) {
     let disable1="disabled";
     let disable2="disabled";
     let disable3="disabled";
-    if(sorumluStaj1.sorumluMu==1){disable1="";}
-    if(sorumluStaj2.sorumluMu==1){disable2="";}
-    if(sorumluStaj3.sorumluMu==1){disable3="";}
+    if(sorumluStaj1){    
+        if(sorumluStaj1.sorumluMu==1){disable1="";}
+    }
+    if(sorumluStaj2){
+        if(sorumluStaj2.sorumluMu==1){disable2="";}
+    }
+    if(sorumluStaj3){
+        if(sorumluStaj3.sorumluMu==1){disable3="";}
+    }
     try {
         res.render("ogrenci/ogrencihome.ejs", {      
             disable1,disable2,disable3
