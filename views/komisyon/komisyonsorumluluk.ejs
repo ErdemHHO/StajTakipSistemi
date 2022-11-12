@@ -105,42 +105,75 @@
 
     <div class="p-5 m-5">
         <main>
-            <h4 class="text-center border-bottom">BELGE SORGULAYIN</h4>
-            <form class="d-flex row g-1 pt-5" role="search">
-                <input class="form-control me-2" type="search" placeholder="Staj/IME Kayıt Numarası Giriniz" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Belgeleri Ara</button>
-            </form>
-            <div class="row pt-5 d-flex justify-content-center">
-               <div class="col-lg-4 d-flex justify-content-center text-white belge">
-                <div class="card text-center border border-success border-2 rounded-3">
-                    <div class="card-body">
-                      <br><br>
-                      <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Başvuru Belgesi</h5><br>
-                      <button type="button" class="btn btn-light border-success">Pdf İndir</button>
-                    </div>
-                </div>
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center text-white belge">
-                    <div class="card text-center border border-success border-2 rounded-3">
-                        <div class="card-body">
-                        <br><br>
-                        <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Değerlendirme Belgesi</h5><br>
-                        <button type="button" class="btn btn-light border-success">Pdf İndir</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center text-white belge">
-                    <div class="card text-center border border-success border-2 rounded-3">
-                        <div class="card-body">
-                        <br><br>
-                        <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Raporu </h5><br>
-                        <button type="button" class="btn btn-light border-success">Pdf İndir</button>
-                        </div>
-                    </div>
-                </div> 
+            <div class="text-center border-bottom">
+                <h4>Sorumlu Olan Öğrencileri Belirleyin</h4>
             </div>
-            <br><br><br>
-    </main>      
+            
+            <form method="post" class="needs-validation pt-5" novalidate>
+                <div class="row g-5 mx-5">
+                    <div class="col">
+                        <div class="row g-3">                  
+                            <div class="col-lg-6">
+                                <label for="kullaniciNumarasi" class="form-label">Öğrencinin Numarası:</label>
+                                <input type="text" name="kullaniciNumarasi" class="form-control" id="kullaniciNumarasi" >
+                                <div class="invalid-feedback">
+                                    Öğencinin numarası boş geçilemez.
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                                <select name="stajTipiSecim" id="rolID" class="form-select">
+                                <option value="-1" selected>Seçiniz</option>
+                                <% stajTipi.forEach(stajTipi => { %>
+                                    <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                                <% }) %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Staj Tipi boş geçilemez.
+                                </div>
+                            </div>
+                            <div class="col-8 pt-4">
+                                Sorumlu mu?
+                              </div>
+                              <div class="col-2 pt-4">
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="sorumlu"
+                                    value="1"
+                                    id="sorumlu"
+                                  />
+                                  <label class="form-check-label" for="devKatYes">
+                                    Evet
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="col-2 pt-4">
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="sorumlu"
+                                    value="0"
+                                    id="sorumlu"
+                                  />
+                                  <label class="form-check-label" for="devKatNo">
+                                    Hayır
+                                  </label>
+                                </div>
+                              </div>
+                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                        </div>
+                </div>
+            </form>
+
+            <% if (typeof message != "undefined") { %>
+                <div class="alert alert-<%= renk %> m-3 text-center">  
+                 <%= message %> 
+               </div>
+            <% } %>
+        </main> 
     </div>
     
 

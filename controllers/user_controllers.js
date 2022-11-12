@@ -3,11 +3,37 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require("fs");
 const stajbelgeler = require("../models/stajbelgeler.js");
-
+const sorumluluk = require("../models/sorumluluk.js");
 
 const ogrencihome_get=async function(req, res) {
+    const kullaniciNumarasi=req.session.kullaniciNumara;
+    const sorumluStaj1 = await sorumluluk.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:1
+        }
+    });
+    const sorumluStaj2 = await sorumluluk.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:2
+        }
+    });
+    const sorumluStaj3 = await sorumluluk.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:3
+        }
+    });
+    let disable1="disabled";
+    let disable2="disabled";
+    let disable3="disabled";
+    if(sorumluStaj1.sorumluMu==1){disable1="";}
+    if(sorumluStaj2.sorumluMu==1){disable2="";}
+    if(sorumluStaj3.sorumluMu==1){disable3="";}
     try {
         res.render("ogrenci/ogrencihome.ejs", {      
+            disable1,disable2,disable3
         });
     }
     catch(err) {

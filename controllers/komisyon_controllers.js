@@ -1,5 +1,7 @@
 const db = require("../data/db.js");
 const stajkayit = require("../models/stajkayit.js");
+const sorumluluk = require("../models/sorumluluk.js");
+const stajtipi = require("../models/stajtipi.js");
 const kullanici = require("../models/kullanici.js");
 
 
@@ -24,6 +26,58 @@ const komisyonkullanicitablosu_get=async function(req, res) {
         });
     }
     catch(err) {
+        console.log(err);
+    }
+}
+const komisyonsorumluluk_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
+    try {
+        res.render("komisyon/komisyonsorumluluk.ejs", {
+            stajTipi:stajTipi
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const komisyonsorumluluk_post=async function(req, res) {
+    const kullaniciNumarasi=req.body.kullaniciNumarasi;
+    const stajTipiSecim=req.body.stajTipiSecim;
+    let sorumluMu=req.body.sorumlu;
+    console.log(sorumluMu);
+    const sorumluKontrol = await sorumluluk.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
+    const stajTipi=await stajtipi.findAll();
+    try {
+        if(sorumluKontrol){
+            sorumluKontrol.kullaniciNumara = kullaniciNumarasi;
+            sorumluKontrol.stajTipiID = stajTipiSecim;
+            sorumluKontrol.sorumluMu = sorumluMu;
+            await sorumluKontrol.save();
+            console.log("başarılı")
+            return res.render("komisyon/komisyonsorumluluk.ejs",{
+                stajTipi:stajTipi,
+                message:"Kullanıcının staj sorumluluk bilgisi güncellendi.",
+                renk:"success"
+            });
+        }
+        await sorumluluk.create({kullaniciNumara:kullaniciNumarasi,stajTipiID:stajTipiSecim,sorumluMu:sorumluMu});  
+        res.render("komisyon/komisyonsorumluluk.ejs", {
+            stajTipi:stajTipi,
+            message:"Kullanıcının staj sorumluluk bilgisi oluşturuldu.",
+            renk:"success"
+        });
+    }
+    catch(err) {
+        res.render("komisyon/komisyonsorumluluk.ejs", {
+            stajTipi:stajTipi,
+            message:"Hatalı işlem!!!",
+            renk:"danger"
+        });
         console.log(err);
     }
 }
@@ -80,6 +134,8 @@ module.exports={
     komisyondegerlendirme_get,
     komisyonstajogrbelirle_get,
     profilKomisyon_get,
-    komisyonbelgegor_get
+    komisyonbelgegor_get,
+    komisyonsorumluluk_get,
+    komisyonsorumluluk_post
 
 }

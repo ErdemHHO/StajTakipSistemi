@@ -7,6 +7,9 @@ router.get("/kullanicitablosu",isAuth,komisyonControllers.komisyonkullanicitablo
 
 router.get("/stajtablosu",isAuth,komisyonControllers.komisyonstajtablosu_get);
 
+router.get("/sorumluluk",isAuth,komisyonControllers.komisyonsorumluluk_get);
+router.post("/sorumluluk",isAuth,komisyonControllers.komisyonsorumluluk_post);
+
 router.get("/basvurubelgeleri",isAuth,komisyonControllers.komisyonbasvurubelge_get);
 
 router.get("/degerlendir",isAuth,komisyonControllers.komisyondegerlendirme_get);
