@@ -19,6 +19,17 @@ router.get("/ogrbelirle",isAuth,komisyonControllers.komisyonstajogrbelirle_get);
 router.get("/profil",isAuth,komisyonControllers.profilKomisyon_get);
 
 router.get("/belgegor",isAuth,komisyonControllers.komisyonbelgegor_get);
+router.post("/belgegor",isAuth,komisyonControllers.komisyonbelgegor_post);
+
+router.get("/download-3rapor",isAuth,komisyonControllers.download3rapor);
+router.get("/download-3degerlendirme",isAuth,komisyonControllers.download3degerlendirme);
+router.get("/download-3basvuru",isAuth,komisyonControllers.download3basvuru);
+router.get("/download-2rapor",isAuth,komisyonControllers.download2rapor);
+router.get("/download-2degerlendirme",isAuth,komisyonControllers.download2degerlendirme);
+router.get("/download-2basvuru",isAuth,komisyonControllers.download2basvuru);
+router.get("/download-1rapor",isAuth,komisyonControllers.download1rapor);
+router.get("/download-1degerlendirme",isAuth,komisyonControllers.download1degerlendirme);
+router.get("/download-1basvuru",isAuth,komisyonControllers.download1basvuru);
 
 
 module.exports=router;

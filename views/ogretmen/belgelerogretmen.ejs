@@ -76,42 +76,84 @@
     
     <div class="p-5 m-5">
         <main>
-                <h4 class="text-center border-bottom">BELGE SORGULAYIN</h4>
-                <form class="d-flex row g-1 pt-5" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Staj/IME Kayıt Numarası Giriniz" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Belgeleri Ara</button>
-                </form>
-                <div class="row pt-5 d-flex justify-content-center">
-                   <div class="col-lg-4 d-flex justify-content-center text-white belge">
+            <h4 class="text-center border-bottom">BELGE SORGULAYIN</h4>
+            <form method="post" class="d-flex row g-1 pt-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
+                        <input name="kullaniciNumarasi" class="form-control me-2" placeholder="Kullanıcı Numarası Girin">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                        <select name="stajTipiSecim" id="rolID" class="form-select">
+                        <option value="-1" selected>Seçiniz</option>
+                        <% stajTipi.forEach(stajTipi => { %>
+                            <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                        <% }) %>
+                        </select>
+                        <div class="invalid-feedback">
+                            Staj Tipi boş geçilemez.
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline-success mt-3" type="submit">Belgeleri Ara</button>
+            </form>
+
+            <% if (typeof message != "undefined") { %>
+                <div class="alert alert-<%= renk %> m-3 text-center">  
+                 <%= message %> 
+               </div>
+            <% } %>
+
+            <div class="row pt-5 d-flex justify-content-center">
+               <div class="col-lg-4 d-flex justify-content-center text-white belge">
+                <div class="card text-center border border-success border-2 rounded-3">
+                    <div class="card-body">
+                      <br><br>
+                      <h5 class="card-title"><% if (typeof kullaniciNumarasi != "undefined") { %>   
+                        <%= kullaniciNumarasi %> 
+                    <% } %> Numaralı Öğrencinin Staj/IME Başvuru Belgesi</h5><br> 
+                      <% if (typeof basvuruForm != "undefined") { %>    
+                        <div class="container d-flex justify-content-center bg-success p-2 border border-2">       
+                            <a class="text-center text-white" href="/ogretmen/download-<%= secim %>basvuru"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= basvuruForm %></a>  
+                    </div><% } %>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 d-flex justify-content-center text-white belge">
                     <div class="card text-center border border-success border-2 rounded-3">
                         <div class="card-body">
-                          <br><br>
-                          <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Başvuru Belgesi</h5><br>
-                          <button type="button" class="btn btn-light border-success"><i class="fa fa-download"></i>Pdf İndir</button>
+                        <br><br>
+                        <h5 class="card-title">
+                            <% if (typeof kullaniciNumarasi != "undefined") { %>   
+                                <%= kullaniciNumarasi %> 
+                            <% } %>  
+                            Numaralı Öğrencinin Staj/IME Değerlendirme Belgesi</h5><br>
+                        <% if (typeof degerlendirmeFormu != "undefined") { %>    
+                            <div class="container d-flex justify-content-center bg-success p-2 border border-2">       
+                                <a class="text-center text-white" href="/ogretmen/download-<%= secim %>degerlendirme"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= degerlendirmeFormu %></a>
+                        </div><% } %>  
                         </div>
                     </div>
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center text-white belge">
-                        <div class="card text-center border border-success border-2 rounded-3">
-                            <div class="card-body">
-                            <br><br>
-                            <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Değerlendirme Belgesi</h5><br>
-                            <button type="button" class="btn btn-light border-success">Pdf İndir</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center text-white belge">
-                        <div class="card text-center border border-success border-2 rounded-3">
-                            <div class="card-body">
-                            <br><br>
-                            <h5 class="card-title">201307011 Numaralı Öğrencinin Staj/IME Raporu </h5><br>
-                            <button type="button" class="btn btn-light border-success">Pdf İndir</button>
-                            </div>
-                        </div>
-                    </div> 
                 </div>
-                <br><br><br>
-        </main> 
+                <div class="col-lg-4 d-flex justify-content-center text-white belge">
+                    <div class="card text-center border border-success border-2 rounded-3">
+                        <div class="card-body">
+                        <br><br>
+                        <h5 class="card-title"><% if (typeof kullaniciNumarasi != "undefined") { %>   
+                            <%= kullaniciNumarasi %> 
+                        <% } %> Numaralı Öğrencinin Staj/IME Raporu </h5><br>
+                        <% if (typeof stajRaporu != "undefined") { %>    
+                            <div class="container d-flex justify-content-center bg-success p-2 border border-2">       
+                                <a class="text-center text-white" href="/ogretmen/download-<%= secim %>rapor"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= stajRaporu %></a>
+                        </div><% } %>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <br><br><br>
+    </main>      
     </div>
     
 

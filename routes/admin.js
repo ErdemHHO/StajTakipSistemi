@@ -36,7 +36,20 @@ router.post("/kullanicisil",isAuth, adminControllers.kullanicisil_post);
 //------------------STAJ------------------
 router.get("/ogrtmnbelirle",isAuth,adminControllers.stajogretmenbelirle_get);
 
-router.get("/belgegor", isAuth,adminControllers.stajbelgeleri_get);
+router.get("/belgegor", isAuth,adminControllers.yoneticibelgegor_get);
+router.post("/belgegor", isAuth,adminControllers.yoneticibelgegor_post);
+
+router.get("/download-3rapor",isAuth,adminControllers.download3rapor);
+router.get("/download-3degerlendirme",isAuth,adminControllers.download3degerlendirme);
+router.get("/download-3basvuru",isAuth,adminControllers.download3basvuru);
+router.get("/download-2rapor",isAuth,adminControllers.download2rapor);
+router.get("/download-2degerlendirme",isAuth,adminControllers.download2degerlendirme);
+router.get("/download-2basvuru",isAuth,adminControllers.download2basvuru);
+router.get("/download-1rapor",isAuth,adminControllers.download1rapor);
+router.get("/download-1degerlendirme",isAuth,adminControllers.download1degerlendirme);
+router.get("/download-1basvuru",isAuth,adminControllers.download1basvuru);
+
+
 
 router.get("/basvurudegerlendir",isAuth,adminControllers.stajbasvurudegerlendir_get);
 
