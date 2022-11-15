@@ -2,6 +2,7 @@ const db = require("../data/db.js");
 const stajkayit = require("../models/stajkayit.js");
 const sorumluluk = require("../models/sorumluluk.js");
 const stajtipi = require("../models/stajtipi.js");
+const sunum = require("../models/sunum.js");
 const kullanici = require("../models/kullanici.js");
 const stajbelgeler = require("../models/stajbelgeler.js");
 
@@ -190,7 +191,7 @@ const OnayBasvuruBelge=async function(req, res) {
             from:config.email.from,
             to:kullaniciMail,
             subject:"Staj Başvurunuz",
-            html:'<p"> Staj Başvurunuz ' + reddedenAdi +' '+reddedenSoyadi+ ' Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
+            html:'<p> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
             });
         return res.redirect("/komisyon/basvurubelgeleri");
     }
@@ -225,7 +226,7 @@ const RetBasvuruBelge=async function(req, res) {
             from:config.email.from,
             to:kullaniciMail,
             subject:"Staj Başvurunuz",
-            html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden ' +reddedenAdi+' '+reddedenSoyadi+' Tarafından Reddedildi.</p> <br> <p> ' +reddedenAdi+' '+reddedenSoyadi+' Hocanızla İletişime Geçiniz.</p>'
+            html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
             });
         return res.redirect("/komisyon/basvurubelgeleri");
     }
@@ -255,12 +256,102 @@ const komisyonstajogrbelirle_get=async function(req, res) {
     }
 }
 const komisyonstajogrbelirle_post=async function(req, res) {
+    const belirleyenAdi=req.session.kullaniciAd;
+    const belirleyenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciNumara=req.body.kullaniciNumara;
+    const stajTipiID=req.body.stajTipiID;
+    const sunumTarihi=req.body.sunumTarihi;
+    const kullaniciNumaraOgretmen=req.body.kullaniciNumaraOgretmen;
+
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+        }
+    });
+    const ogretmenAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumaraOgretmen,
+        }
+    });
+    const sunumAra = await sunum.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:stajTipiID
+        }
+    });
     const stajTipi=await stajtipi.findAll();
+    const stajTipiAdi = await stajtipi.findOne({
+        where:{
+            stajTipiID:stajTipiID
+        }
+    });
+    const stajTipiAdi2=stajTipiAdi.stajTipiAdi;
     try {
-        res.render("komisyon/komisyonstajogrbelirle.ejs", {
-            stajTipi:stajTipi
+        if(!kullaniciAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Öğrenci Bulunamadı",
+                renk:"danger"
+            });
+        }
+        else if(!ogretmenAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Öğretmen Bulunamadı",
+                renk:"danger"
+            });
+        }
+        else if(ogretmenAra.rolID==4){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Seçilen kişinin rolü öğretmen,komisyon veya yönetici olmalıdır.",
+                renk:"warning"
+            });
+        }
+        else if(sunumAra){
+            const kullaniciMail=kullaniciAra.kullaniciMail;
+            let ogretmenAdi=ogretmenAra.kullaniciAd;
+            let ogretmenSoyadi=ogretmenAra.kullaniciSoyad;
+            let ogretmen=ogretmenAra.kullaniciNumara;
+            let ogrenci=kullaniciAra.kullaniciNumara;
+            sunumAra.kullaniciNumara = ogrenci;
+            sunumAra.stajTipiID = stajTipiID;
+            sunumAra.sunumTarihi = sunumTarihi;
+            sunumAra.kullaniciNumaraOgretmen = ogretmen;
+            await sunumAra.save();
+            emailService.sendMail({
+                from:config.email.from,
+                to:kullaniciMail,
+                subject:"Staj Sunumunuz Değiştirildi",
+                html:'<p>' +stajTipiAdi2+ ' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Yeni Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
+                });
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Sunum Tarihi Daha Önce Belirlenmiş. ",
+                message2:"Sunum Tarihi Güncellendi",
+                renk:"warning",
+                renk2:"success"
+            });
+        }
+        else {
+            const kullaniciMail=kullaniciAra.kullaniciMail;
+            let ogretmen=ogretmenAra.kullaniciNumara;
+            let ogrenci=kullaniciAra.kullaniciNumara;
+            let ogretmenAdi=ogretmenAra.kullaniciAd;
+            let ogretmenSoyadi=ogretmenAra.kullaniciSoyad;
+            await sunum.create({kullaniciNumara:ogrenci,stajTipiID:stajTipiID,sunumTarihi:sunumTarihi,kullaniciNumaraOgretmen:ogretmen}); 
+            emailService.sendMail({
+                from:config.email.from,
+                to:kullaniciMail,
+                subject:"Staj Sunumunuz Belirlendi",
+                html:'<p>' +stajTipiAdi2+' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Belirlendi.</p> <br> <p> Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
+                }); 
+        return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi,
+            message:"Sunum Oluşturuldu",
+            renk:"success"
         });
-    }
+    }}
     catch(err) {
         console.log(err);
     }
@@ -268,7 +359,7 @@ const komisyonstajogrbelirle_post=async function(req, res) {
 const profilKomisyon_get=async function(req, res) {
     const stajTipi=await stajtipi.findAll();
     try {
-        res.render("komisyon/komisyonstajogrbelirle.ejs", {
+        res.render("komisyon/profilKomisyon.ejs", {
             stajTipi:stajTipi
         });
     }

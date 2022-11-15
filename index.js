@@ -48,8 +48,6 @@ app.use("/ogrenci",userRoutes);
 app.use("/",authRoutes);
 
 
-
-
 app.listen(3000, () => {
     console.log("listening on port 3000");
 });

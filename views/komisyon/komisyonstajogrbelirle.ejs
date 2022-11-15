@@ -112,12 +112,15 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
-                                <input name="kullaniciNumarasi" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin">
+                                <input name="kullaniciNumara" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin" required>
+                                <div class="invalid-feedback">
+                                    Kullanıcı numarası boş geçilemez.
+                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <label for="stajTipi" class="form-label">Staj Tipi:</label>
-                                <select name="stajTipiSecim" id="rolID" class="form-select">
-                                <option value="-1" selected>Seçiniz</option>
+                                <select name="stajTipiID" class="form-select" required>
+                                <option value="" selected>Seçiniz</option>
                                 <% stajTipi.forEach(stajTipi => { %>
                                     <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
                                 <% }) %>
@@ -127,22 +130,32 @@
                                 </div>
                             </div> 
                             <br> 
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mt-3">
                                 <label for="degerlendirmeTarih" class="form-label">Degerlendirme Tarihi Belirleyin:</label>
-                                <input type="date" class="form-control" id="degerlendirmeTarih" placeholder="" value="" required>
+                                <input name="sunumTarihi" type="date" class="form-control" id="degerlendirmeTarih" placeholder="" value="" required>
                                 <div class="invalid-feedback">
                                     Değerlendirme tarihi boş geçilemez.
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mt-3">
                                 <label for="degerlendirenKisi" class="form-label">Değerlendirecek Öğretmenin Numarasını Girin:</label>
-                                <input type="text" class="form-control" id="degerlendirenKisi" placeholder="" value="" required>
+                                <input name="kullaniciNumaraOgretmen" type="text" class="form-control" id="degerlendirenKisi" placeholder="Sorumlu Öğretmenin Numarasını Girin" value="" required>
                                 <div class="invalid-feedback">
                                     Öğretmen boş geçilemez.
                                 </div>
                                 <br>
                             </div> <br><br>
-                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br> <br> <br>
+                            <% if (typeof message != "undefined") { %>
+                                <div class="alert alert-<%= renk %> m-3 text-center">  
+                                 <%= message %> 
+                               </div>
+                            <% } %>
+                            <% if (typeof message2 != "undefined") { %>
+                                <div class="alert alert-<%= renk2 %> m-3 text-center">  
+                                 <%= message2 %> 
+                               </div>
+                            <% } %>
                         </div>
                 </div>
             </form>

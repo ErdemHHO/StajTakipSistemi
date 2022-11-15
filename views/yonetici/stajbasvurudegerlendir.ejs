@@ -65,27 +65,59 @@
 
     <div class="p-5 m-5">
         <main>
-            <form class="d-flex row g-1 mx-5 my-5" role="search">
-                <input class="form-control me-2" type="search" placeholder="Staj Kayıt Numarası Giriniz" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Staj Başvuru Belgesi Ara</button>
+            <form method="post" class="d-flex row g-1 pt-5" role="search">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
+                        <input name="kullaniciNumarasi" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                        <select name="stajTipiSecim" id="rolID" class="form-select">
+                        <option value="-1" selected>Seçiniz</option>
+                        <% stajTipi.forEach(stajTipi => { %>
+                            <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                        <% }) %>
+                        </select>
+                        <div class="invalid-feedback">
+                            Staj Tipi boş geçilemez.
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-success mt-3" type="submit">Belgeleri Ara</button>
             </form>
+            <br>
+            <% if (typeof message != "undefined") { %>
+                <div class="alert alert-<%= renk %> m-3 text-center">  
+                 <%= message %> 
+               </div>
+            <% } %>
+            <br>
             <div class="container d-flex justify-content-center text-white">
                 <div class="card text-center border border-success border-2 rounded-3">
                     <div class="card-body">
                       <br><br>
-                      <h5 class="card-title">201307011 Numaralı Öğrencinin Staj Başvuru Belgesi</h5><br>
-                      <button type="button" class="btn btn-light border-success">Pdf İndir</button>
+                      <h5 class="card-title">
+                        <% if (typeof kullaniciNumarasi != "undefined") { %>   
+                        <%= kullaniciNumarasi %> 
+                        <% } %>
+                         Numaralı Öğrencinin Staj Başvuru Belgesi</h5><br>
+                         <% if (typeof basvuruForm != "undefined") { %>    
+                            <div class="container d-flex justify-content-center bg-success p-2 border border-2">       
+                                <a class="text-center text-white" href="/admin/download-basvuruBelge"><i class="bi bi-file-earmark-pdf-fill text-danger"></i><%= basvuruForm %></a>  
+                        </div><% } %>
                     </div>
                 </div>
             </div>
             <br><br>
-            <h5 class="text-center">201307011 Numaralı Öğrencinin</h5>
+            <h5 class="text-center"><% if (typeof kullaniciNumarasi != "undefined") { %>   
+                <%= kullaniciNumarasi %> 
+                <% } %> Numaralı Öğrencinin</h5>
             <div class="container onay d-flex justify-content-center"> 
-                <button type="button" class="btn btn-success">Staj/İşyerinde Mesleki Eğitim Belgesini Onaylayın</button>
-                <button type="button" class="btn btn-danger">Staj/İşyerinde Mesleki Eğitim Belgesini Reddedin</button>
-            </div>
-            
-        </main>    
+                <button type="button" class="btn btn-success"><a href="/admin/basvuruBelgeOnay" class="text-white text-decoration-none">Staj/İşyerinde Mesleki Eğitim Belgesini Onaylayın</a> </button>
+                <button type="button" class="btn btn-danger"><a href="/admin/basvuruBelgeRet" class="text-white text-decoration-none"> Staj/İşyerinde Mesleki Eğitim Belgesini Reddedin</a></button>
+            </div>  
+        </main>         
     </div>
     
 

@@ -51,7 +51,11 @@ router.get("/download-1basvuru",isAuth,adminControllers.download1basvuru);
 
 
 
-router.get("/basvurudegerlendir",isAuth,adminControllers.stajbasvurudegerlendir_get);
+router.get("/basvurudegerlendir",isAuth,adminControllers.yoneticibasvurubelge_get);
+router.post("/basvurudegerlendir",isAuth,adminControllers.yoneticibasvurubelge_post);
+router.get("/download-basvuruBelge",isAuth,adminControllers.downloadBasvuruBelge);
+router.get("/basvuruBelgeOnay",isAuth,adminControllers.OnayBasvuruBelge);
+router.get("/basvuruBelgeRet",isAuth,adminControllers.RetBasvuruBelge);
 
 //yönetici stajtable işlemleri
 router.get("/stajimetablosu",isAuth,adminControllers.stajtable_get);

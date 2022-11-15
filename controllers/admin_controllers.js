@@ -162,18 +162,69 @@ const kullaniciekle_post=async function(req, res) {
     console.log(kullaniciAd);
     const kullaniciSoyad=req.body.kullaniciSoyad;
     const kullaniciNumara=req.body.kullaniciNumara;
+
     const kullaniciParola=req.body.kullaniciParola;
     const hashedPassword=await bcrypt.hash(kullaniciParola,10);
     const kullaniciTelNo=req.body.kullaniciTelNo;
     const kullaniciMail=req.body.kullaniciMail;
     const rolID=req.body.rolID;
+    console.log(rolID);
     //const rolID=req.body.rolID;
     const kullaniciFakulte=req.body.kullaniciFakulte;
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
     const user = await kullanici.findByPk(kullaniciNumara);
     const roller=await rol.findAll();
+    const kullaniciMailKontrol = await kullanici.findOne({
+        where: {
+            kullaniciMail: kullaniciMail
+        }
+    });
+    const kullaniciTelKontrol = await kullanici.findOne({
+        where: {
+            kullaniciTelNo: kullaniciTelNo
+        }
+    });
     try {
+        if(rolID==3 || rolID==2 || rolID==1){
+            if(kullaniciNumara<=999 || kullaniciNumara>9999){
+                return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Yönetici,komisyon ve öğretmen numaraları 4 haneli bir sayı olmalıdır.",
+                renk:"danger"
+                });
+            }  
+        }
+        if(rolID==4){
+            if(kullaniciNumara<=99999999 || kullaniciNumara>999999999){
+                return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Öğrenci Numarası 11 haneli bir sayı olmalıdır.",
+                renk:"danger"
+                });
+            }  
+        }
+        if(kullaniciTelNo<=999999999 || kullaniciTelNo>=9999999999){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Geçerli bir telefon numarası giriniz.",
+                renk:"danger"
+            });  
+        }
+        if(kullaniciMailKontrol){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Mail adresinizle kayıtlı bir kullanıcı var.",
+                renk:"danger"
+            });  
+        }
+        if(kullaniciTelKontrol){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
+                renk:"danger"
+            });  
+        }
         if(!user){
             const newUser=await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
             emailService.sendMail({
@@ -378,10 +429,149 @@ const stajtable_get=async function(req, res) {
         console.log(err);
     }
 }
-const stajbasvurudegerlendir_get=async function(req, res) {
+const yoneticibasvurubelge_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
+    let kullaniciNumarasi="---------";
+    let none;
+    if(typeof renkRet == "undefined"){
+        renkRet="";
+        messageRet="";
+        none="none";
+    }
     try {
         res.render("yonetici/stajbasvurudegerlendir.ejs", {
+            stajTipi:stajTipi,
+            kullaniciNumarasi:kullaniciNumarasi,
+            renk:renkRet,
+            message:messageRet,
+            none:none
         });
+        renkRet="";
+        messageRet="";
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const yoneticibasvurubelge_post=async function(req, res) {
+    const basvuruBelgekullaniciNumarasi=req.body.kullaniciNumarasi;
+    global.basvuruBelgekullaniciNumarasi=basvuruBelgekullaniciNumarasi;
+    const stajTipiSecim=req.body.stajTipiSecim;
+    global.stajTipiSecim=stajTipiSecim;
+
+    const stajbelgelerara = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    });
+    const stajTipi=await stajtipi.findAll();
+    try {
+        if(stajbelgelerara){
+            const basvuruForm=stajbelgelerara.basvuruForm;
+            if(basvuruForm){
+                return res.render("yonetici/stajbasvurudegerlendir.ejs", {
+                stajTipi:stajTipi,
+                kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+                basvuruForm:basvuruForm,
+            });
+            }
+            return res.render("yonetici/stajbasvurudegerlendir.ejs", {
+                stajTipi:stajTipi,
+                kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+                message:"Belge Bulunamadı",
+                renk:"danger"
+            });
+        }
+        return res.render("yonetici/stajbasvurudegerlendir.ejs", {
+            stajTipi:stajTipi,
+            kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+            message:"Belge Bulunamadı",
+            renk:"danger"
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const downloadBasvuruBelge=async function(req, res) {
+    const form = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
+    const basvuru=form.basvuruForm;
+    try {
+        if(basvuru){
+            res.download("./public/file/"+basvuru);
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const OnayBasvuruBelge=async function(req, res) {
+
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+        }
+    });
+    console.log(kullaniciAra);
+    const reddedenAdi=req.session.kullaniciAd;
+    const reddedenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciMail=kullaniciAra.kullaniciMail;
+
+    let messageRet="Başvuru Onaylandı";
+    global.messageRet=messageRet;
+    let renkRet="success";
+    global.renkRet=renkRet;
+    const stajTipi=await stajtipi.findAll();
+
+    try {
+        emailService.sendMail({
+            from:config.email.from,
+            to:kullaniciMail,
+            subject:"Staj Başvurunuz",
+            html:'<p"> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
+            });
+        return res.redirect("/admin/basvurudegerlendir");
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const RetBasvuruBelge=async function(req, res) {
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+        }
+    });
+    console.log(kullaniciAra);
+    const reddedenAdi=req.session.kullaniciAd;
+    const reddedenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciMail=kullaniciAra.kullaniciMail;
+
+    let messageRet="Başvuru Reddedildi";
+    global.messageRet=messageRet;
+    let renkRet="warning";
+    global.renkRet=renkRet;
+    const stajTipi=await stajtipi.findAll();
+    await stajbelgeler.destroy({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    });
+    try {
+        emailService.sendMail({
+            from:config.email.from,
+            to:kullaniciMail,
+            subject:"Staj Başvurunuz",
+            html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
+            });
+        return res.redirect("/admin/basvurudegerlendir");
     }
     catch(err) {
         console.log(err);
@@ -685,7 +875,11 @@ module.exports={
     stajogretmenbelirle_get,
     yoneticibelgegor_get,
     yoneticibelgegor_post,
-    stajbasvurudegerlendir_get,
+    yoneticibasvurubelge_get,
+    yoneticibasvurubelge_post,
+    downloadBasvuruBelge,
+    OnayBasvuruBelge,
+    RetBasvuruBelge,
     profil_get,
     kullaniciguncelle_get,
     kullaniciguncelle_post,

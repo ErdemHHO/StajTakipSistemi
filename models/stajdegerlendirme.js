@@ -26,6 +26,18 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
         key: 'stajKayitID'
       }
     },
+    durumID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'stajdurum',
+        key: 'durumID'
+      }
+    },
+    degerlendirmeTarihi: {
+      type: DataTypes.DATEONLY,
+      allowNull: true,
+    },
     degerlendirmeID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -86,8 +98,9 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
 });
 
 
+
 // async function sync() {
-//   await stajdegerlendirme.sync({ force: true });
+//   await stajbelgeler.sync({ alter: true });
 //   console.log("staj1form tablosu eklendi");
 // }
 // sync();
