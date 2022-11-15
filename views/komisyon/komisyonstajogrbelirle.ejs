@@ -108,15 +108,25 @@
             <div class="text-center border-bottom">
                 <h4>STAJ/İME SUNUM BİLGİLERİ BELİRLEYİN</h4>
             </div>
-            
-            <form class="needs-validation pt-5" novalidate>
-                <div class="row g-5 mx-5">
-                    <div class="col">
-                        <div class="row g-3">                  
-                            <div class="col-12">
-                                <label for="stajkayıtno" class="form-label"><strong>Staj/İme Kayıt Numarası</strong> </label>
-                                <input type="text" class="form-control" id="stajTipiId" >
+            <form method="post" class="needs-validation pt-5" novalidate>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
+                                <input name="kullaniciNumarasi" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin">
                             </div>
+                            <div class="col-lg-6">
+                                <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                                <select name="stajTipiSecim" id="rolID" class="form-select">
+                                <option value="-1" selected>Seçiniz</option>
+                                <% stajTipi.forEach(stajTipi => { %>
+                                    <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                                <% }) %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Staj Tipi boş geçilemez.
+                                </div>
+                            </div> 
+                            <br> 
                             <div class="col-lg-6">
                                 <label for="degerlendirmeTarih" class="form-label">Degerlendirme Tarihi Belirleyin:</label>
                                 <input type="date" class="form-control" id="degerlendirmeTarih" placeholder="" value="" required>
@@ -130,7 +140,8 @@
                                 <div class="invalid-feedback">
                                     Öğretmen boş geçilemez.
                                 </div>
-                            </div> 
+                                <br>
+                            </div> <br><br>
                             <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
                         </div>
                 </div>
