@@ -322,16 +322,6 @@ const kullaniciguncelle_post=async function(req,res){
         }
     
     });
-    const kullaniciMailKontrol = await kullanici.findOne({
-        where: {
-            kullaniciMail: kullaniciMail
-        }
-    });
-    const kullaniciTelKontrol = await kullanici.findOne({
-        where: {
-            kullaniciTelNo: kullaniciTelNo
-        }
-    });
     try {
         if(!kullanıcı){
             return res.render("yonetici/kullaniciguncelle.ejs",{
@@ -362,20 +352,6 @@ const kullaniciguncelle_post=async function(req,res){
             return res.render("yonetici/kullaniciekle.ejs", {
                 rol:roller,
                 message:"Geçerli bir telefon numarası giriniz.",
-                renk:"danger"
-            });  
-        }
-        if(kullaniciMailKontrol){
-            return res.render("yonetici/kullaniciekle.ejs", {
-                rol:roller,
-                message:"Mail adresinizle kayıtlı bir kullanıcı var.",
-                renk:"danger"
-            });  
-        }
-        if(kullaniciTelKontrol){
-            return res.render("yonetici/kullaniciekle.ejs", {
-                rol:roller,
-                message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
                 renk:"danger"
             });  
         }
