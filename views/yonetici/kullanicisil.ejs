@@ -73,10 +73,10 @@
                         </div>
                         <button class="w-100 btn btn-danger btn-lg mx-2" type="submit">Sil</button> <br>
                         <% if (typeof message != "undefined") { %>
-                            <div class="alert alert-warning m-3">
+                            <div class="alert alert-<%= renk %> m-3 text-center">  
                              <%= message %> 
                            </div>
-                           <% } %>
+                        <% } %>
                     </div>
                 </div>
             </form>

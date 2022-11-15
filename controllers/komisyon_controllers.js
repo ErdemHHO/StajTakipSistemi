@@ -5,6 +5,9 @@ const stajtipi = require("../models/stajtipi.js");
 const kullanici = require("../models/kullanici.js");
 const stajbelgeler = require("../models/stajbelgeler.js");
 
+const emailService=require("../helpers/send-mail");
+const config = require("../config/config.js");
+
 //komisyon kullanıcı tablosu
 const komisyonstajtablosu_get=async function(req, res) {
     const stajkayittable=await stajkayit.findAll();
@@ -81,15 +84,156 @@ const komisyonsorumluluk_post=async function(req, res) {
         console.log(err);
     }
 }
+
 const komisyonbasvurubelge_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
+    let kullaniciNumarasi="---------";
+    let none;
+    if(typeof renkRet == "undefined"){
+        renkRet="";
+        messageRet="";
+        none="none";
+    }
     try {
         res.render("komisyon/komisyonbasvurubelge.ejs", {
+            stajTipi:stajTipi,
+            kullaniciNumarasi:kullaniciNumarasi,
+            renk:renkRet,
+            message:messageRet,
+            none:none
+        });
+        renkRet="";
+        messageRet="";
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const komisyonbasvurubelge_post=async function(req, res) {
+    const basvuruBelgekullaniciNumarasi=req.body.kullaniciNumarasi;
+    global.basvuruBelgekullaniciNumarasi=basvuruBelgekullaniciNumarasi;
+    const stajTipiSecim=req.body.stajTipiSecim;
+    global.stajTipiSecim=stajTipiSecim;
+
+    const stajbelgelerara = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    });
+    const stajTipi=await stajtipi.findAll();
+    try {
+        if(stajbelgelerara){
+            const basvuruForm=stajbelgelerara.basvuruForm;
+            if(basvuruForm){
+                return res.render("komisyon/komisyonbasvurubelge.ejs", {
+                stajTipi:stajTipi,
+                kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+                basvuruForm:basvuruForm,
+            });
+            }
+            return res.render("komisyon/komisyonbasvurubelge.ejs", {
+                stajTipi:stajTipi,
+                kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+                message:"Belge Bulunamadı",
+                renk:"danger"
+            });
+        }
+        return res.render("komisyon/komisyonbasvurubelge.ejs", {
+            stajTipi:stajTipi,
+            kullaniciNumarasi:basvuruBelgekullaniciNumarasi,
+            message:"Belge Bulunamadı",
+            renk:"danger"
         });
     }
     catch(err) {
         console.log(err);
     }
 }
+const downloadBasvuruBelge=async function(req, res) {
+    const form = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
+    const basvuru=form.basvuruForm;
+    try {
+        if(basvuru){
+            res.download("./public/file/"+basvuru);
+        }
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const OnayBasvuruBelge=async function(req, res) {
+
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+        }
+    });
+    console.log(kullaniciAra);
+    const reddedenAdi=req.session.kullaniciAd;
+    const reddedenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciMail=kullaniciAra.kullaniciMail;
+
+    let messageRet="Başvuru Onaylandı";
+    global.messageRet=messageRet;
+    let renkRet="success";
+    global.renkRet=renkRet;
+    const stajTipi=await stajtipi.findAll();
+
+    try {
+        emailService.sendMail({
+            from:config.email.from,
+            to:kullaniciMail,
+            subject:"Staj Başvurunuz",
+            html:'<p"> Staj Başvurunuz ' + reddedenAdi +' '+reddedenSoyadi+ ' Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
+            });
+        return res.redirect("/komisyon/basvurubelgeleri");
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const RetBasvuruBelge=async function(req, res) {
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+        }
+    });
+    console.log(kullaniciAra);
+    const reddedenAdi=req.session.kullaniciAd;
+    const reddedenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciMail=kullaniciAra.kullaniciMail;
+
+    let messageRet="Başvuru Reddedildi";
+    global.messageRet=messageRet;
+    let renkRet="warning";
+    global.renkRet=renkRet;
+    const stajTipi=await stajtipi.findAll();
+    await stajbelgeler.destroy({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    });
+    try {
+        emailService.sendMail({
+            from:config.email.from,
+            to:kullaniciMail,
+            subject:"Staj Başvurunuz",
+            html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden ' +reddedenAdi+' '+reddedenSoyadi+' Tarafından Reddedildi.</p> <br> <p> ' +reddedenAdi+' '+reddedenSoyadi+' Hocanızla İletişime Geçiniz.</p>'
+            });
+        return res.redirect("/komisyon/basvurubelgeleri");
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 const komisyondegerlendirme_get=async function(req, res) {
     try {
         res.render("komisyon/komisyondegerlendirme.ejs", {
@@ -100,8 +244,21 @@ const komisyondegerlendirme_get=async function(req, res) {
     }
 }
 const komisyonstajogrbelirle_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
     try {
         res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const komisyonstajogrbelirle_post=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
+    try {
+        res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi
         });
     }
     catch(err) {
@@ -109,8 +266,10 @@ const komisyonstajogrbelirle_get=async function(req, res) {
     }
 }
 const profilKomisyon_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
     try {
-        res.render("komisyon/profilKomisyon.ejs", {
+        res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi
         });
     }
     catch(err) {
@@ -382,8 +541,13 @@ module.exports={
     komisyonkullanicitablosu_get,
     komisyonstajtablosu_get,
     komisyonbasvurubelge_get,
+    komisyonbasvurubelge_post,
+    downloadBasvuruBelge,
+    OnayBasvuruBelge,
+    RetBasvuruBelge,
     komisyondegerlendirme_get,
     komisyonstajogrbelirle_get,
+    komisyonstajogrbelirle_post,
     profilKomisyon_get,
     komisyonbelgegor_get,
     komisyonbelgegor_post,
@@ -398,4 +562,5 @@ module.exports={
     download1basvuru,
     download1degerlendirme,
     download1rapor,
+    
 }

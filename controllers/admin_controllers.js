@@ -119,12 +119,10 @@ const duyurusil_post=async function(req,res){
                 }
             });
             return res.render("yonetici/duyurusil.ejs",{
-
                 message: "Duyuru Silindi"
             });
         }else{
             return res.render("yonetici/duyurusil.ejs",{
-
                 message: " Duyuru Bulunamadı"
             });
         }
@@ -151,7 +149,7 @@ const kullanicitablosu_get=async function(req, res) {
 const kullaniciekle_get=async function(req, res) {
     const roller=await rol.findAll();
     try {
-        res.render("yonetici/kullaniciekle.ejs", {
+        return res.render("yonetici/kullaniciekle.ejs", {
             rol:roller
         });
     }
@@ -184,16 +182,28 @@ const kullaniciekle_post=async function(req, res) {
                 subject:"Hesabınız oluşturuldu.",
                 html:'<p> Hesabınız başarılı bir şekilde oluşturuldu.</p> <br> <p> Şifreniz: ' + kullaniciParola + '</p><br> Şifrenizi güncellemek için tıklayın: <a href="http://localhost:3000/sifresifirlama">Parola Sıfırla</a>'
                 });
-            res.redirect("/admin/kullanicitablosu");
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Kullanıcı Eklendi.",
+                renk:"success"
+            });    
         }
-        res.render("yonetici/kullaniciekle.ejs", {
+        return res.render("yonetici/kullaniciekle.ejs", {
             rol:roller,
-            message:"Kullanıcı Kaydı Zaten Var"
+            message:"Kullanıcı Kaydı Zaten Var",
+            renk:"danger"
         });    
     }
     catch(err) {
         console.log(err);
         console.log("hatalı ekleme");
+        return res.render("yonetici/kullaniciekle.ejs", {
+            rol:roller,
+            message:"Hatalı Ekleme",
+            renk:"danger"
+        });    
+        
+        
     }
 }
 const kullanicisil_get=async function(req, res) {
@@ -214,12 +224,12 @@ const kullanicisil_post=async function(req,res){
         if(Kullanici) {
             await Kullanici.destroy();
             return res.render("yonetici/kullanicisil.ejs",{
-
+                renk:"success",
                 message: "Kullanıcı Silindi"
             });
         }else{
             return res.render("yonetici/kullanicisil.ejs",{
-
+                renk:"danger",
                 message: " Kullanıcı Bulunamadı"
             });
         }
@@ -279,11 +289,13 @@ const kullaniciguncelle_post=async function(req,res){
             console.log("başarılı")
             return res.render("yonetici/kullaniciguncelle.ejs",{
                 roller:roller,
+                renk:"success",
                 message :"Kullanıcı Güncellendi"
             });
         }else{
             return res.render("yonetici/kullaniciguncelle.ejs",{
                 roller:roller,
+                renk:"warning",
                 message: " Kullanıcı Bulunamadı"
             });
         }

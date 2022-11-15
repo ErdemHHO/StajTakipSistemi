@@ -24,6 +24,7 @@ router.get("/download-3rapor",isAuth,userControllers.downloadimerapor);
 
 router.get("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_get);
 router.post("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_post);
+router.get("/staj1pdf",isAuth,userControllers.staj1pdf_get);
 
 router.get("/staj1basvurubelgesi",isAuth,userControllers.ogrencistaj1basvurubelgesi_get);
 router.post("/staj1basvurubelgesi", fileUpload.upload.single("basvuruform"), isAuth, userControllers.ogrencistaj1basvurubelgesi_post);

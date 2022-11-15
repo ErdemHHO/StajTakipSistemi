@@ -11,10 +11,15 @@ router.get("/sorumluluk",isAuth,komisyonControllers.komisyonsorumluluk_get);
 router.post("/sorumluluk",isAuth,komisyonControllers.komisyonsorumluluk_post);
 
 router.get("/basvurubelgeleri",isAuth,komisyonControllers.komisyonbasvurubelge_get);
+router.post("/basvurubelgeleri",isAuth,komisyonControllers.komisyonbasvurubelge_post);
+router.get("/download-basvuruBelge",isAuth,komisyonControllers.downloadBasvuruBelge);
+router.get("/basvuruBelgeOnay",isAuth,komisyonControllers.OnayBasvuruBelge);
+router.get("/basvuruBelgeRet",isAuth,komisyonControllers.RetBasvuruBelge);
 
 router.get("/degerlendir",isAuth,komisyonControllers.komisyondegerlendirme_get);
 
 router.get("/ogrbelirle",isAuth,komisyonControllers.komisyonstajogrbelirle_get);
+router.post("/ogrbelirle",isAuth,komisyonControllers.komisyonstajogrbelirle_post);
 
 router.get("/profil",isAuth,komisyonControllers.profilKomisyon_get);
 
