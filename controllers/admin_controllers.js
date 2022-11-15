@@ -316,14 +316,69 @@ const kullaniciguncelle_post=async function(req,res){
     const kullaniciFakulte=req.body.kullaniciFakulte;
     const kullaniciBolum=req.body.kullaniciBolum;
     const kullaniciSinif=req.body.kullaniciSinif;
-
+    const kullanıcı = await kullanici.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumara
+        }
+    
+    });
+    const kullaniciMailKontrol = await kullanici.findOne({
+        where: {
+            kullaniciMail: kullaniciMail
+        }
+    });
+    const kullaniciTelKontrol = await kullanici.findOne({
+        where: {
+            kullaniciTelNo: kullaniciTelNo
+        }
+    });
     try {
-        const kullanıcı = await kullanici.findOne({
-            where: {
-                kullaniciNumara: kullaniciNumara
-            }
-        
-        });
+        if(!kullanıcı){
+            return res.render("yonetici/kullaniciguncelle.ejs",{
+                roller:roller,
+                renk:"danger",
+                message: " Kullanıcı Bulunamadı"
+            });
+        }
+        if(rolID==3 || rolID==2 || rolID==1){
+            if(kullaniciNumara<=999 || kullaniciNumara>9999){
+                return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Yönetici,komisyon ve öğretmen numaraları 4 haneli bir sayı olmalıdır.",
+                renk:"danger"
+                });
+            }  
+        }
+        if(rolID==4){
+            if(kullaniciNumara<=99999999 || kullaniciNumara>999999999){
+                return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Öğrenci Numarası 11 haneli bir sayı olmalıdır.",
+                renk:"danger"
+                });
+            }  
+        }
+        if(kullaniciTelNo<=999999999 || kullaniciTelNo>=9999999999){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Geçerli bir telefon numarası giriniz.",
+                renk:"danger"
+            });  
+        }
+        if(kullaniciMailKontrol){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Mail adresinizle kayıtlı bir kullanıcı var.",
+                renk:"danger"
+            });  
+        }
+        if(kullaniciTelKontrol){
+            return res.render("yonetici/kullaniciekle.ejs", {
+                rol:roller,
+                message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
+                renk:"danger"
+            });  
+        }
         if (kullanıcı) {
             kullanıcı.kullaniciNumara = kullaniciNumara;
             kullanıcı.kullaniciAd = kullaniciAd;
