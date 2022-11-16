@@ -62,6 +62,7 @@ router.get("/stajimetablosu",isAuth,adminControllers.stajtable_get);
 
 //staj ime işlemleri get-post
 router.get("/stajdegerlendir",isAuth,adminControllers.stajimeislemleri_get);
+router.post("/stajdegerlendir",isAuth,adminControllers.stajimeislemleri_post);
 
 
 router.get("/profil", isAuth, adminControllers.profil_get);

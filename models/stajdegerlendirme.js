@@ -10,7 +10,7 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
   },
   kullaniciNumara: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'kullanici',
         key: 'kullaniciNumara'
@@ -18,7 +18,7 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
     },
     stajTipiID: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'stajtipi',
         key: 'stajTipiID'
@@ -26,7 +26,7 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
     },
     durumID: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'stajdurum',
         key: 'durumID'

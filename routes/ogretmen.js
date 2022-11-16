@@ -5,7 +5,10 @@ const ogretmenControllers=require("../controllers/ogretmen_controllers.js");
 
 
 router.get("/stajtablosu",isAuth,ogretmenControllers.stajogretmentable_get);
+
 router.get("/degerlendirme",isAuth,ogretmenControllers.degerlendirogretmen_get);
+router.post("/degerlendirme",isAuth,ogretmenControllers.degerlendirogretmen_post);
+
 router.get("/profilOgretmen",isAuth,ogretmenControllers.profilOgretmen_get);
 
 router.get("/belgegor", isAuth,ogretmenControllers.ogretmenbelgegor_get);

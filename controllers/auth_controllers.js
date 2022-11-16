@@ -70,6 +70,7 @@ const login_post=async function(req, res){
         req.session.kullaniciFakulte=user.kullaniciFakulte;
         req.session.kullaniciBolum=user.kullaniciBolum;
         req.session.kullaniciSinif=user.kullaniciSinif;
+        req.session.rolID=user.rolID;
         let rol=user.dataValues.rolID;
         //login oldu
         if(rol==1){

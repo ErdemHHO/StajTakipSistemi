@@ -3,15 +3,18 @@ const bcrypt=require("bcrypt");
 const db = require("../data/db.js");
 const duyuru = require("../models/duyuru.js");
 const kullanici = require("../models/kullanici.js");
-
 const stajkayit = require("../models/stajkayit.js");
 const rol = require("../models/rol.js");
 const sorumluluk = require("../models/sorumluluk.js");
 const stajtipi = require("../models/stajtipi.js");
 const stajbelgeler = require("../models/stajbelgeler.js");
 const sunum = require("../models/sunum.js");
+const stajdegerlendirme = require("../models/stajdegerlendirme.js");
+const stajdurum = require("../models/stajdurum");
+
 const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
+
 
 
 //******DUYURU SAYFALARI******/
@@ -929,8 +932,6 @@ const download1rapor=async function(req, res) {
     }
 }
 
-
-
 const yoneticistajogrbelirle_get=async function(req, res) {
     const stajTipi=await stajtipi.findAll();
     try {
@@ -1058,17 +1059,179 @@ const yoneticistajogrbelirle_post=async function(req, res) {
 
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
+    const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
+    const sunumAra1=await sunum.findAll({
+        where:{
+            kullaniciNumaraOgretmen:kullaniciNumaraOgretmen,
+        }
+    });
+    const stajTipi=await stajtipi.findAll();
     try {
-        res.render("yonetici/stajdegerlendir.ejs", {
+        return res.render("komisyon/komisyondegerlendirme.ejs", {
+            stajTipi:stajTipi,
+            sunum:sunumAra1
         });
     }
     catch(err) {
         console.log(err);
     }
 }
+const stajimeislemleri_post=async function(req, res) {
+    //Burası sayfanın getinde kullanılanlar !!!
+    const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
+    const stajTipi=await stajtipi.findAll();
+    const sunumAra1=await sunum.findAll({
+        where:{
+            kullaniciNumaraOgretmen:kullaniciNumaraOgretmen,
+        }
+    });
+
+    const kullaniciNumarasi=req.body.kullaniciNumara;
+    const stajTipiID=req.body.stajTipiID;
+    const durum=req.body.durum;
+    const onaylananGun=req.body.onaylananGun;
+    const eksikGun=req.body.eksikGun;
+    const kullaniciNumara2=kullaniciNumarasi;
+    console.log("dsfdsfsdfdsfsdfsdf "+kullaniciNumara2);
+    const kullaniciKontrol=await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+        }
+    });
+    const kullaniciAdiOgretmen=await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumaraOgretmen,
+        }
+    });
+    const ogrAdi=kullaniciAdiOgretmen.kullaniciAd;
+    const ogrSoyadi=kullaniciAdiOgretmen.kullaniciSoyad;
+    const mail=kullaniciKontrol.kullaniciMail;
+    const stajTipiAdi=await stajtipi.findOne({
+        where:{
+            stajTipiID:stajTipiID,
+        }
+    });
+    const durumAdi=await stajdurum.findOne({
+        where:{
+            durumID:durum,
+        }
+    });
+    const durumAdi2=durumAdi.durum;
+    const stajTuru=stajTipiAdi.stajTipiAdi;
+    const sunumAra2=await sunum.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:stajTipiID,
+            kullaniciNumaraOgretmen:kullaniciNumaraOgretmen,
+        }
+    });
+    const degerlendirmeAra=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:stajTipiID,
+        }
+    });
+
+    try {
+        if(kullaniciKontrol=="undefined"){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Kullanıcı numarasına ait kayıt bulunamadı !",
+                renk:"danger"
+            })
+        }
+        if(sunumAra2=="undefined"){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Bu kullanıcıdan sorumlu öğretmen siz değilsiniz !",
+                renk:"danger"
+            })
+        }
+        if(eksikGun>0 && durum==7){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Eksik gün var ise staj durum geçti olamaz !",
+                renk:"danger"
+            })
+        }
+        if(eksikGun>onaylananGun){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Eksik gün sayısı onaylanan gün sayısından büyük olamaz !",
+                renk:"danger"
+            })
+        }
+        if(eksikGun==0){
+            if(durum!=7){
+                return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Eksik yok ise staj durumu; kaldı veya eksik gün var olamaz !",
+                renk:"danger"
+            })
+            }  
+        }
+        if(degerlendirmeAra){
+            console.log("girdi degerlendirmeAra");
+            degerlendirmeAra.kullaniciNumara = kullaniciNumara2;
+            degerlendirmeAra.stajTipiID = stajTipiID;
+            degerlendirmeAra.durumID = durum;
+            degerlendirmeAra.onaylananGun = onaylananGun;
+            degerlendirmeAra.eksikGun = eksikGun;
+            await degerlendirmeAra.save();
+            emailService.sendMail({
+                from:config.email.from,
+                to:mail,
+                subject:"Staj Değerlendirmeniz Güncellendi",
+                html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
+                }); 
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                sunum:sunumAra1,
+                message:"Bu kullanıcının daha önceden değerlendirmesi yapılmış !",
+                renk:"warning",
+                message2:"Değerlendirme Güncellendi",
+                renk2:"success"
+            })
+        }
+        await stajdegerlendirme.create({
+            kullaniciNumara:kullaniciNumara2,
+            stajTipiID:stajTipiID,
+            durumID:durum,
+            onaylananGun:onaylananGun,
+            eksikGun:eksikGun
+            });
+        emailService.sendMail({
+            from:config.email.from,
+            to:mail,
+            subject:"Staj Değerlendirmeniz Yapıldı",
+            html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Yapıldı.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
+            }); 
+        return res.render("komisyon/komisyondegerlendirme.ejs", {
+            stajTipi:stajTipi,
+            sunum:sunumAra1,
+            message:"Değerlendirme Başarılı !",
+            renk:"success",
+        })  
+    } 
+    catch(err) {
+        return res.render("komisyon/komisyondegerlendirme.ejs", {
+            stajTipi:stajTipi,
+            sunum:sunumAra1,
+            message:"Hatalı İşlem!",
+            renk:"danger",
+        })
+        console.log(err);
+    }
+}
 
 module.exports={
     stajimeislemleri_get,
+    stajimeislemleri_post,
     duyuruolustur_get,
     duyuruolustur_post,
     duyurusil_post,

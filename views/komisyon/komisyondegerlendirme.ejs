@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css"/>
     <link rel="stylesheet" href="../css/sablonn.css">
     <link rel="stylesheet" href="../css/sablon.css">
     <link rel="stylesheet" href="../css/form-validation.css">
@@ -105,6 +106,31 @@
 
     <div class="p-5 m-5">
         <main>
+            <table class="table table-bordered  table-hover p-5 m-5" id="myTable">
+                <h4 class="text-center pt-3">Değerlendirmesi Size Atanan Öğrenciler</h4><hr/>
+                    <thead class="table-success">
+                        <tr>
+                            <th class="text-center">Kullanıcı Numara</th>
+                            <th class="text-center">Staj Tipi</th>
+                            <th class="text-center">Sunum Tarihi</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <% sunum.forEach(sunumAra => { %>
+                             <tr>
+                                <td>
+                                    <%= sunumAra.dataValues.kullaniciNumara%>
+                                </td>
+                                <td>
+                                    <%= sunumAra.dataValues.stajTipiID%>
+                                </td>
+                                <td>
+                                    <%= sunumAra.dataValues.sunumTarihi%>
+                                </td>
+                            </tr><% }) %>
+                        </tbody>
+            </table>
+            <br><br>
             <div class="border-bottom text-center">
                 <h4>Staj/İş Yerinde Mesleki Eğitim Değerlendirin</h4>
             </div>           
@@ -114,7 +140,7 @@
                         <div class="row g-3">                  
                             <div class="col-lg-6">
                                 <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
-                                <input name="kullaniciNumara" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin" required>
+                                <input name="kullaniciNumara" class="form-control me-2" type="number" placeholder="Kullanıcı Numarası Girin" required>
                                 <div class="invalid-feedback">
                                     Kullanıcı numarası boş geçilemez.
                                 </div>
@@ -206,6 +232,21 @@
 
 
     <script src="../js/form-validation.js"></script>   
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script>
+        $('#myTable').DataTable({
+            lengthMenu:[5,10,20],
+            language:{
+                url:'https://cdn.datatables.net/plug-ins/1.12.1/i18n/tr.json',
+                "info": "Toplam _TOTAL_ Kayıt",
+                "lengthMenu":" Kayıt : _MENU_ ",
+                "paginate": {
+                    "first":      "First",
+                    "last":       "Last",
+                    "next":       ">",
+                    "previous":   "<"
+                }} }); 
+    </script>
 </body>
 </html>

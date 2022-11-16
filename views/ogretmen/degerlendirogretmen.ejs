@@ -76,46 +76,108 @@
     
 
 
-    <div class="pt-5 ms-5">
-
-            <main>
-                <div class="pt-5 border-bottom text-center">
-                    <h4>Staj/İş Yerinde Mesleki Eğitim Değerlendirin</h4>
-                </div>           
-                <form class="needs-validation pt-5" novalidate>
-                    <div class="row g-5 mx-5">
-                        <div class="col">
-                            <div class="row g-3">                  
-                                <div class="col-12">
-                                    <label for="stajnumara" class="form-label"><strong>Staj/İme Kayıt Numarası</strong></label>
-                                    <input type="text" class="form-control" id="stajnumara">
+    
+    <div class="p-5 m-5">
+        <main>
+            <table class="table table-bordered  table-hover p-5 m-5" id="myTable">
+                <h4 class="text-center pt-3">Değerlendirmesi Size Atanan Öğrenciler</h4><hr/>
+                    <thead class="table-success">
+                        <tr>
+                            <th class="text-center">Kullanıcı Numara</th>
+                            <th class="text-center">Staj Tipi</th>
+                            <th class="text-center">Sunum Tarihi</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <% sunum.forEach(sunumAra => { %>
+                             <tr>
+                                <td>
+                                    <%= sunumAra.dataValues.kullaniciNumara%>
+                                </td>
+                                <td>
+                                    <%= sunumAra.dataValues.stajTipiID%>
+                                </td>
+                                <td>
+                                    <%= sunumAra.dataValues.sunumTarihi%>
+                                </td>
+                            </tr><% }) %>
+                        </tbody>
+            </table>
+            <br><br>
+            <div class="border-bottom text-center">
+                <h4>Staj/İş Yerinde Mesleki Eğitim Değerlendirin</h4>
+            </div>           
+            <form method="post" class="needs-validation pt-5" novalidate>
+                <div class="row g-5 mx-5">
+                    <div class="col">
+                        <div class="row g-3">                  
+                            <div class="col-lg-6">
+                                <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
+                                <input name="kullaniciNumara" class="form-control me-2" type="number" placeholder="Kullanıcı Numarası Girin" required>
+                                <div class="invalid-feedback">
+                                    Kullanıcı numarası boş geçilemez.
                                 </div>
-                                <div class="col-lg-6">
-                                    <label for="onaylananGun" class="form-label">Onaylanan Gün(Yok ise '0' giriniz.):</label>
-                                    <div class="input-group has-validation">
-                                    <input type="number" class="form-control" id="onaylananGun" placeholder="Onaylanan Gün Sayısını Giriniz" required>
-                                    <div class="invalid-feedback">
-                                        Onaylanan gün boş geçilemez.
-                                    </div>
-                                    </div>
-                                    
-                                </div> 
-                                <div class="col-lg-6">
-                                    <label for="eksikGun" class="form-label">Eksik Gün:(Yok ise '0' giriniz.):</label>
-                                    <input type="number" class="form-control" id="eksikGun" placeholder="Eksik Gün Sayısını Giriniz" required>
-                                    <div class="invalid-feedback">
-                                        Eksik gün boş geçilemez.
-                                    </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                                <select name="stajTipiID" class="form-select" required>
+                                <option value="" selected>Seçiniz</option>
+                                <% stajTipi.forEach(stajTipi => { %>
+                                    <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                                <% }) %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Staj Tipi boş geçilemez.
                                 </div>
                             </div> 
-                            <div class="my-3">
-                                <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                            <div class="col-lg-4">
+                                <label for="stajTipi" class="form-label">Staj Durum:</label>
+                                <select name="durum" class="form-select" required>
+                                    <option value="" selected>Seçiniz</option>
+                                    <option value="5">Eksik Günler Var</option>
+                                    <option value="6">Staj Reddedildi</option>
+                                    <option value="7">Geçti</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Staj Tipi boş geçilemez.
+                                </div>
+                            </div> 
+                            <div class="col-lg-4">
+                                <label for="onaylananGun" class="form-label">Onaylanan Gün(Yok ise '0' giriniz):</label>
+                                <div class="input-group has-validation">
+                                <input name="onaylananGun" type="number" class="form-control" id="onaylananGun" placeholder="Onaylanan Gün Sayısını Giriniz" required>
+                                <div class="invalid-feedback">
+                                    Onaylanan gün boş geçilemez.
+                                </div>
+                                </div>
+                                
+                            </div> 
+                            <div class="col-lg-4">
+                                <label for="eksikGun" class="form-label">Eksik Gün:(Yok ise '0' giriniz):</label>
+                                <input name="eksikGun" type="number" class="form-control" id="eksikGun" placeholder="Eksik Gün Sayısını Giriniz" required>
+                                <div class="invalid-feedback">
+                                    Eksik gün boş geçilemez.
+                                </div>
                             </div>
-                    </div>
-                </form>
-            </main> 
-   
+                        </div> 
+                        <div class="my-3">
+                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                            <% if (typeof message != "undefined") { %>
+                                <div class="alert alert-<%= renk %> m-3 text-center">  
+                                 <%= message %> 
+                               </div>
+                            <% } %>
+                            <% if (typeof message2 != "undefined") { %>
+                                <div class="alert alert-<%= renk2 %> m-3 text-center">  
+                                 <%= message2 %> 
+                               </div>
+                            <% } %>
+                        </div>
+                </div>
+            </form>
+        </main>      
     </div>
+    
     
 
 

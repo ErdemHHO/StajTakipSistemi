@@ -9,5 +9,6 @@ module.exports =async function(req, res, next) {
     res.locals.kullaniciFakulte=req.session.kullaniciFakulte;
     res.locals.kullaniciBolum=req.session.kullaniciBolum;
     res.locals.kullaniciSinif=req.session.kullaniciSinif;
+    res.locals.rolID=req.session.rolID;
     await next();
 }  
