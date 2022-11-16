@@ -268,7 +268,6 @@ const kullanicisil_get=async function(req, res) {
 }
 const kullanicisil_post=async function(req,res){
     const kullaniciNumarasi = req.body.kullanicinumarasi;
-
     console.log(kullaniciNumarasi);
     try {
         const Kullanici = await kullanici.findByPk(kullaniciNumarasi);
@@ -302,6 +301,8 @@ const kullaniciguncelle_get=async function(req,res){
     }
 }
 const kullaniciguncelle_post=async function(req,res){
+    const yoneticiAdi=req.session.kullaniciAd;
+    const yoneticiSoyadi=req.session.kullaniciSoyad;
     const roller=await rol.findAll();
     const kullaniciAd=req.body.kullaniciAd;
     console.log(kullaniciAd);
@@ -322,6 +323,16 @@ const kullaniciguncelle_post=async function(req,res){
         }
     
     });
+    const kullaniciMailKontrol = await kullanici.findOne({
+        where: {
+            kullaniciMail: kullaniciMail
+        }
+    });
+    const kullaniciTelKontrol = await kullanici.findOne({
+        where: {
+            kullaniciTelNo: kullaniciTelNo
+        }
+    });
     try {
         if(!kullanıcı){
             return res.render("yonetici/kullaniciguncelle.ejs",{
@@ -330,31 +341,30 @@ const kullaniciguncelle_post=async function(req,res){
                 message: " Kullanıcı Bulunamadı"
             });
         }
-        if(rolID==3 || rolID==2 || rolID==1){
-            if(kullaniciNumara<=999 || kullaniciNumara>9999){
-                return res.render("yonetici/kullaniciekle.ejs", {
-                rol:roller,
-                message:"Yönetici,komisyon ve öğretmen numaraları 4 haneli bir sayı olmalıdır.",
-                renk:"danger"
-                });
-            }  
-        }
-        if(rolID==4){
-            if(kullaniciNumara<=99999999 || kullaniciNumara>999999999){
-                return res.render("yonetici/kullaniciekle.ejs", {
-                rol:roller,
-                message:"Öğrenci Numarası 11 haneli bir sayı olmalıdır.",
-                renk:"danger"
-                });
-            }  
-        }
         if(kullaniciTelNo<=999999999 || kullaniciTelNo>=9999999999){
-            return res.render("yonetici/kullaniciekle.ejs", {
+            return res.render("yonetici/kullaniciguncelle.ejs", {
                 rol:roller,
                 message:"Geçerli bir telefon numarası giriniz.",
                 renk:"danger"
             });  
         }
+        if(kullaniciMailKontrol){
+            if(kullaniciMailKontrol.kullaniciMail!=kullaniciMail){
+               return res.render("yonetici/kullaniciguncelle.ejs", {
+                rol:roller,
+                message:"Mail adresinizle kayıtlı bir kullanıcı var.",
+                renk:"danger"
+            });  
+            }   
+        }
+        if(kullaniciTelKontrol){
+            if(kullaniciMailKontrol.kullaniciTelNo!=kullaniciMail){
+                return res.render("yonetici/kullaniciguncelle.ejs", {
+                    rol:roller,
+                    message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
+                    renk:"danger"
+                }); 
+            }}
         if (kullanıcı) {
             kullanıcı.kullaniciNumara = kullaniciNumara;
             kullanıcı.kullaniciAd = kullaniciAd;
@@ -366,8 +376,13 @@ const kullaniciguncelle_post=async function(req,res){
             kullanıcı.kullaniciBolum = kullaniciBolum;
             kullanıcı.kullaniciSinif = kullaniciSinif;
             kullanıcı.rolID = rolID;
-
             await kullanıcı.save();
+            emailService.sendMail({
+                from:config.email.from,
+                to:kullanıcı.kullaniciMail,
+                subject:"Hesap Bilgileriniz Güncellendi",
+                html:'<p> Hesabınız bilgileriniz '+yoneticiAdi+' '+yoneticiSoyadi+' tarafından güncellendi.</p> <br> <p> Numaranız: ' + kullaniciNumara + '</p><br> <p> Şifreniz: ' + kullaniciParola + '<br> <p> Sistemde kayıtlı adınız ve soyadınız: ' + kullaniciAd + ' ' + kullaniciSoyad + '<br> <p> Sistemde Kayıtlı Mail Adresiniz: ' + kullaniciMail + '<p>Sistemde Kayıtlı Telefon Numaranız: ' + kullaniciTelNo + '</p></p><br> Şifrenizi güncellemek için tıklayın: <a href="http://localhost:3000/sifresifirlama">Parola Sıfırla</a>'
+                });
             console.log("başarılı")
             return res.render("yonetici/kullaniciguncelle.ejs",{
                 roller:roller,
@@ -384,6 +399,11 @@ const kullaniciguncelle_post=async function(req,res){
 
         
     } catch (err) {
+        return res.render("yonetici/kullaniciguncelle.ejs",{
+            roller:roller,
+            renk:"danger",
+            message: "Hatalı Güncelleme"
+        });
         console.log(err);
     }
 }
