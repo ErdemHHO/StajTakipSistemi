@@ -9,7 +9,7 @@ const rol = require("../models/rol.js");
 const sorumluluk = require("../models/sorumluluk.js");
 const stajtipi = require("../models/stajtipi.js");
 const stajbelgeler = require("../models/stajbelgeler.js");
-
+const sunum = require("../models/sunum.js");
 const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
 
@@ -269,15 +269,56 @@ const kullanicisil_get=async function(req, res) {
 const kullanicisil_post=async function(req,res){
     const kullaniciNumarasi = req.body.kullanicinumarasi;
     console.log(kullaniciNumarasi);
+    const stajkayitSil = await stajkayit.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi
+        }
+    
+    });
+    const sorumlulukSil = await sorumluluk.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi
+        }
+    
+    });
+    const belgeSil = await stajbelgeler.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi
+        }
+    
+    });
+    const sunumSil = await sunum.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi
+        }
+    
+    });
     try {
         const Kullanici = await kullanici.findByPk(kullaniciNumarasi);
         if(Kullanici) {
+            if(stajkayitSil){
+                await stajkayitSil.destroy();
+                console.log("stajkayitSilindi")
+            }
+            if(sorumlulukSil){
+                await sorumlulukSil.destroy();
+                console.log("sorumlulukSilindi")
+            }
+            if(belgeSil){
+                await belgeSil.destroy();
+                console.log("belgelerSilindi")
+            }
+            if(sunumSil){
+                await sunumSil.destroy();
+                console.log("sunumSilindi")
+            }
             await Kullanici.destroy();
             return res.render("yonetici/kullanicisil.ejs",{
                 renk:"success",
                 message: "Kullanıcı Silindi"
             });
-        }else{
+        }
+        else{
             return res.render("yonetici/kullanicisil.ejs",{
                 renk:"danger",
                 message: " Kullanıcı Bulunamadı"
@@ -890,15 +931,131 @@ const download1rapor=async function(req, res) {
 
 
 
-const stajogretmenbelirle_get=async function(req, res) {
+const yoneticistajogrbelirle_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
     try {
-        res.render("yonetici/stajogretmenbelirle.ejs", {
+        res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi
         });
     }
     catch(err) {
         console.log(err);
     }
 }
+const yoneticistajogrbelirle_post=async function(req, res) {
+    const belirleyenAdi=req.session.kullaniciAd;
+    const belirleyenSoyadi=req.session.kullaniciSoyad;
+    const kullaniciNumara=req.body.kullaniciNumara;
+    const stajTipiID=req.body.stajTipiID;
+    const sunumTarihi=req.body.sunumTarihi;
+    const kullaniciNumaraOgretmen=req.body.kullaniciNumaraOgretmen;
+
+    const belgeAra = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+        }
+    });
+    const kullaniciAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+        }
+    });
+    const ogretmenAra = await kullanici.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumaraOgretmen,
+        }
+    });
+    const sunumAra = await sunum.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:stajTipiID
+        }
+    });
+    const stajTipi=await stajtipi.findAll();
+    const stajTipiAdi = await stajtipi.findOne({
+        where:{
+            stajTipiID:stajTipiID
+        }
+    });
+    const stajTipiAdi2=stajTipiAdi.stajTipiAdi;
+    try {
+        if(!kullaniciAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Öğrenci Bulunamadı",
+                renk:"danger"
+            });
+        }
+        else if(!ogretmenAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Öğretmen Bulunamadı",
+                renk:"danger"
+            });
+        }
+        if(!belgeAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Staj kaydı bulunamadı",
+                renk:"danger"
+            });
+        }
+        else if(ogretmenAra.rolID==4){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Seçilen kişinin rolü öğretmen,komisyon veya yönetici olmalıdır.",
+                renk:"warning"
+            });
+        }
+        else if(sunumAra){
+            const kullaniciMail=kullaniciAra.kullaniciMail;
+            let ogretmenAdi=ogretmenAra.kullaniciAd;
+            let ogretmenSoyadi=ogretmenAra.kullaniciSoyad;
+            let ogretmen=ogretmenAra.kullaniciNumara;
+            let ogrenci=kullaniciAra.kullaniciNumara;
+            sunumAra.kullaniciNumara = ogrenci;
+            sunumAra.stajTipiID = stajTipiID;
+            sunumAra.sunumTarihi = sunumTarihi;
+            sunumAra.kullaniciNumaraOgretmen = ogretmen;
+            await sunumAra.save();
+            emailService.sendMail({
+                from:config.email.from,
+                to:kullaniciMail,
+                subject:"Staj Sunumunuz Değiştirildi",
+                html:'<p>' +stajTipiAdi2+ ' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Yeni Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
+                });
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Sunum Tarihi Daha Önce Belirlenmiş. ",
+                message2:"Sunum Tarihi Güncellendi",
+                renk:"warning",
+                renk2:"success"
+            });
+        }
+        else {
+            const kullaniciMail=kullaniciAra.kullaniciMail;
+            let ogretmen=ogretmenAra.kullaniciNumara;
+            let ogrenci=kullaniciAra.kullaniciNumara;
+            let ogretmenAdi=ogretmenAra.kullaniciAd;
+            let ogretmenSoyadi=ogretmenAra.kullaniciSoyad;
+            await sunum.create({kullaniciNumara:ogrenci,stajTipiID:stajTipiID,sunumTarihi:sunumTarihi,kullaniciNumaraOgretmen:ogretmen}); 
+            emailService.sendMail({
+                from:config.email.from,
+                to:kullaniciMail,
+                subject:"Staj Sunumunuz Belirlendi",
+                html:'<p>' +stajTipiAdi2+' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Belirlendi.</p> <br> <p> Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
+                }); 
+        return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            stajTipi:stajTipi,
+            message:"Sunum Oluşturuldu",
+            renk:"success"
+        });
+    }}
+    catch(err) {
+        console.log(err);
+    }
+}
+
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
     try {
@@ -923,7 +1080,6 @@ module.exports={
     duyurutablosu_get,
     duyuruguncelle_get,
     duyuruguncelle_post,
-    stajogretmenbelirle_get,
     yoneticibelgegor_get,
     yoneticibelgegor_post,
     yoneticibasvurubelge_get,
@@ -947,4 +1103,6 @@ module.exports={
     download1basvuru,
     download1degerlendirme,
     download1rapor,
+    yoneticistajogrbelirle_get,
+    yoneticistajogrbelirle_post,
 }

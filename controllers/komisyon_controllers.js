@@ -24,7 +24,11 @@ const komisyonstajtablosu_get=async function(req, res) {
 //komisyon staj tablosu
 const komisyonkullanicitablosu_get=async function(req, res) {
     try {
-        const kullaniciTable=await kullanici.findAll();
+        const kullaniciTable=await kullanici.findAll({
+            where:{
+                rolID:4
+            }
+        });
         res.render("komisyon/komisyonkullanıcıtable.ejs", {
             kullaniciTable: kullaniciTable
         });
@@ -263,6 +267,11 @@ const komisyonstajogrbelirle_post=async function(req, res) {
     const sunumTarihi=req.body.sunumTarihi;
     const kullaniciNumaraOgretmen=req.body.kullaniciNumaraOgretmen;
 
+    const belgeAra = await stajbelgeler.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+        }
+    });
     const kullaniciAra = await kullanici.findOne({
         where:{
             kullaniciNumara:kullaniciNumara,
@@ -298,6 +307,13 @@ const komisyonstajogrbelirle_post=async function(req, res) {
             return res.render("komisyon/komisyonstajogrbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Öğretmen Bulunamadı",
+                renk:"danger"
+            });
+        }
+        if(!belgeAra){
+            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+                stajTipi:stajTipi,
+                message:"Staj kaydı bulunamadı",
                 renk:"danger"
             });
         }
@@ -356,6 +372,7 @@ const komisyonstajogrbelirle_post=async function(req, res) {
         console.log(err);
     }
 }
+
 const profilKomisyon_get=async function(req, res) {
     const stajTipi=await stajtipi.findAll();
     try {

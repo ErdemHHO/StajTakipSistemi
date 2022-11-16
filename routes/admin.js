@@ -23,6 +23,7 @@ router.get("/kullanicitablosu", isAuth,adminControllers.kullanicitablosu_get);
 //ekle
 router.post("/kullaniciekle",isAuth,adminControllers.kullaniciekle_post);
 router.get("/kullaniciekle", isAuth,adminControllers.kullaniciekle_get);
+
 //guncelle
 router.get("/kullaniciguncelle",isAuth,adminControllers.kullaniciguncelle_get);
 router.post("/kullaniciguncelle",isAuth, adminControllers.kullaniciguncelle_post);
@@ -32,7 +33,8 @@ router.post("/kullanicisil",isAuth, adminControllers.kullanicisil_post);
 
 
 //------------------STAJ------------------
-router.get("/ogrtmnbelirle",isAuth,adminControllers.stajogretmenbelirle_get);
+router.get("/ogrtmnbelirle",isAuth,adminControllers.yoneticistajogrbelirle_get);
+router.post("/ogrtmnbelirle",isAuth,adminControllers.yoneticistajogrbelirle_post);
 
 router.get("/belgegor", isAuth,adminControllers.yoneticibelgegor_get);
 router.post("/belgegor", isAuth,adminControllers.yoneticibelgegor_post);

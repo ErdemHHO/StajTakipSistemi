@@ -66,34 +66,57 @@
     <div class="p-5 m-5">
         <main>
             <div class="text-center border-bottom">
-                <h4>STAJ/İME SUNUM BELİRLEYİN</h4>
+                <h4>STAJ/İME SUNUM BİLGİLERİ BELİRLEYİN</h4>
             </div>
-            
-            <form class="needs-validation pt-5" novalidate>
-                <div class="row g-5 mx-5">
-                    <div class="col">
-                        <div class="row g-3">                  
-                            <div class="col-12">
-                                <label for="stajkayıtno" class="form-label"><strong>Staj/İme Kayıt Numarası</strong> </label>
-                                <input type="text" class="form-control" id="stajTipiId" >
+            <form method="post" class="needs-validation pt-5" novalidate>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="kullaniciNumarasi" class="form-label">Kullanıcı Numarası:</label>
+                                <input name="kullaniciNumara" class="form-control me-2" type="search" placeholder="Kullanıcı Numarası Girin" required>
+                                <div class="invalid-feedback">
+                                    Kullanıcı numarası boş geçilemez.
+                                </div>
                             </div>
                             <div class="col-lg-6">
+                                <label for="stajTipi" class="form-label">Staj Tipi:</label>
+                                <select name="stajTipiID" class="form-select" required>
+                                <option value="" selected>Seçiniz</option>
+                                <% stajTipi.forEach(stajTipi => { %>
+                                    <option value="<%= stajTipi.dataValues.stajTipiID %> "><%= stajTipi.dataValues.stajTipiAdi %> 
+                                <% }) %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Staj Tipi boş geçilemez.
+                                </div>
+                            </div> 
+                            <br> 
+                            <div class="col-lg-6 mt-3">
                                 <label for="degerlendirmeTarih" class="form-label">Degerlendirme Tarihi Belirleyin:</label>
-                                <input type="date" class="form-control" id="degerlendirmeTarih" placeholder="" value="" required>
+                                <input name="sunumTarihi" type="date" class="form-control" id="degerlendirmeTarih" placeholder="" value="" required>
                                 <div class="invalid-feedback">
                                     Değerlendirme tarihi boş geçilemez.
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 mt-3">
                                 <label for="degerlendirenKisi" class="form-label">Değerlendirecek Öğretmenin Numarasını Girin:</label>
-                                <input type="text" class="form-control" id="degerlendirenKisi" placeholder="" value="" required>
+                                <input name="kullaniciNumaraOgretmen" type="text" class="form-control" id="degerlendirenKisi" placeholder="Sorumlu Öğretmenin Numarasını Girin" value="" required>
                                 <div class="invalid-feedback">
                                     Öğretmen boş geçilemez.
                                 </div>
-                            </div> 
-                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br>
+                                <br>
+                            </div> <br><br>
+                            <button class="w-100 btn btn-success btn-lg mx-2" type="submit">Kaydet</button> <br> <br> <br>
+                            <% if (typeof message != "undefined") { %>
+                                <div class="alert alert-<%= renk %> m-3 text-center">  
+                                 <%= message %> 
+                               </div>
+                            <% } %>
+                            <% if (typeof message2 != "undefined") { %>
+                                <div class="alert alert-<%= renk2 %> m-3 text-center">  
+                                 <%= message2 %> 
+                               </div>
+                            <% } %>
                         </div>
-                </div>
             </form>
         </main> 
     </div>
