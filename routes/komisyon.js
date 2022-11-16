@@ -17,6 +17,7 @@ router.get("/basvuruBelgeOnay",isAuth,komisyonControllers.OnayBasvuruBelge);
 router.get("/basvuruBelgeRet",isAuth,komisyonControllers.RetBasvuruBelge);
 
 router.get("/degerlendir",isAuth,komisyonControllers.komisyondegerlendirme_get);
+router.post("/degerlendir",isAuth,komisyonControllers.komisyondegerlendirme_post);
 
 router.get("/ogrbelirle",isAuth,komisyonControllers.komisyonstajogrbelirle_get);
 router.post("/ogrbelirle",isAuth,komisyonControllers.komisyonstajogrbelirle_post);

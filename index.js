@@ -6,7 +6,6 @@ const puppeteer = require('puppeteer');
 const cookieParser = require('cookie-parser');   
 const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-
 //routes
 const komisyonRoutes = require("./routes/komisyon");
 const ogretmenRoutes = require("./routes/ogretmen");
@@ -36,6 +35,8 @@ app.use(session({
         db:sequelize
     })
 }));
+
+
 
 app.use(locals);
 

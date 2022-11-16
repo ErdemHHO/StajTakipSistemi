@@ -2,40 +2,16 @@ const {DataTypes, BelongsTo} = require('sequelize');
 const sequelize = require('../data/db');
 
 const stajdurum=sequelize.define("stajdurum",{
-  durumID: {
+      durumID: {
         autoIncrement: true,
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      kullaniciNumara: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'kullanici',
-          key: 'kullaniciNumara'
-        }
-      },
-      stajTipiID: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'stajtipi',
-          key: 'stajTipiID'
-        }
-      },
       durum: {
-        type: DataTypes.STRING(200),
-        allowNull: true
+        type: DataTypes.STRING(45),
+        allowNull: false
       },
-      stajKayitID: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'stajkayit',
-          key: 'stajKayitID'
-        }
-      }
     }, {
       sequelize,
       tableName: 'stajdurum',
@@ -48,29 +24,16 @@ const stajdurum=sequelize.define("stajdurum",{
           fields: [
             { name: "durumID" },
           ]
-        },
-        {
-          name: "stajTipiID",
-          using: "BTREE",
-          fields: [
-            { name: "stajTipiID" },
-          ]
-        },
-        {
-          name: "kullaniciNumara",
-          using: "BTREE",
-          fields: [
-            { name: "kullaniciNumara" },
-          ]
-        },
-        {
-          name: "stajKayitID",
-          using: "BTREE",
-          fields: [
-            { name: "stajKayitID" },
-          ]
-        },
+        }
       ]
   });
+
+
+
+// async function sync() {
+//   await stajdegerlendirme.sync({ alter: true });
+//   console.log("staj1form tablosu eklendi");
+// }
+// sync();
 
 module.exports = stajdurum;

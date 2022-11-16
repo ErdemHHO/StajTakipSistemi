@@ -5,6 +5,9 @@ const stajtipi = require("../models/stajtipi.js");
 const sunum = require("../models/sunum.js");
 const kullanici = require("../models/kullanici.js");
 const stajbelgeler = require("../models/stajbelgeler.js");
+const stajdegerlendirme = require("../models/stajdegerlendirme.js");
+const stajdurum = require("../models/stajdurum");
+
 
 const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
@@ -240,14 +243,71 @@ const RetBasvuruBelge=async function(req, res) {
 }
 
 const komisyondegerlendirme_get=async function(req, res) {
+    const stajTipi=await stajtipi.findAll();
     try {
         res.render("komisyon/komisyondegerlendirme.ejs", {
+            stajTipi:stajTipi,
         });
     }
     catch(err) {
         console.log(err);
     }
 }
+const komisyondegerlendirme_post=async function(req, res) {
+    const kullaniciNumara=req.body.kullaniciNumara;
+    const stajTipiID=req.body.stajTipiID;
+    const durum2=req.body.durum;
+    console.log(durum2);
+    const eksikGun=req.body.eksikGun;
+    const onaylananGun=req.body.onaylananGun;
+    const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
+    const stajTipi=await stajtipi.findAll();
+
+    const stajdegerlendirmeAra=await stajdegerlendirme.findOne({
+        kullaniciNumara:kullaniciNumara,
+        stajTipiID:stajTipiID,
+    });
+    const sunumAra=await sunum.findOne({
+        kullaniciNumara:kullaniciNumara,
+        stajTipiID:stajTipiID,
+        kullaniciNumaraOgretmen:kullaniciNumaraOgretmen
+    });
+    console.log(stajdegerlendirmeAra);
+    try {
+        if(stajdegerlendirmeAra){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                message:"Değerlendirme Daha Önceden Yapılmış.",
+                message2:"Değerlendirme Güncellendi",
+                renk:"warning",
+                renk2:"success"
+            });
+        }
+        if(stajdegerlendirmeAra){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                message:"Değerlendirme Daha Önceden Yapılmış.",
+                message2:"Değerlendirme Güncellendi",
+                renk:"warning",
+                renk2:"success"
+            });
+        }
+        if(!sunumAra){
+            return res.render("komisyon/komisyondegerlendirme.ejs", {
+                stajTipi:stajTipi,
+                message:"Bu stajın değerlendirmesi size ait değil",
+                renk:"danger",
+            });
+        }
+        return res.render("komisyon/komisyondegerlendirme.ejs", {
+            stajTipi:stajTipi,
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 const komisyonstajogrbelirle_get=async function(req, res) {
     const stajTipi=await stajtipi.findAll();
     try {
@@ -654,6 +714,7 @@ module.exports={
     OnayBasvuruBelge,
     RetBasvuruBelge,
     komisyondegerlendirme_get,
+    komisyondegerlendirme_post,
     komisyonstajogrbelirle_get,
     komisyonstajogrbelirle_post,
     profilKomisyon_get,

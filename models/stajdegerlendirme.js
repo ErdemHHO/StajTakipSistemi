@@ -2,9 +2,15 @@ const {DataTypes, BelongsTo} = require('sequelize');
 const sequelize = require('../data/db');
 
 const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
+  degerlendirmeID: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
   kullaniciNumara: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'kullanici',
         key: 'kullaniciNumara'
@@ -12,18 +18,10 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
     },
     stajTipiID: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'stajtipi',
         key: 'stajTipiID'
-      }
-    },
-    stajKayitID: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'stajkayit',
-        key: 'stajKayitID'
       }
     },
     durumID: {
@@ -34,20 +32,6 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
         key: 'durumID'
       }
     },
-    degerlendirmeTarihi: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-    },
-    degerlendirmeID: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    degerlendirme: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
     onaylananGun: {
       type: DataTypes.INTEGER,
       allowNull: true
@@ -56,10 +40,6 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    stajDonemi: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    }
   }, {
     sequelize,
     tableName: 'stajdegerlendirme',
@@ -88,10 +68,10 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
         ]
       },
       {
-        name: "stajKayitID",
+        name: "durumID",
         using: "BTREE",
         fields: [
-          { name: "stajKayitID" },
+          { name: "durumID" },
         ]
       },
     ]
@@ -99,9 +79,4 @@ const stajdegerlendirme=sequelize.define("stajdegerlendirme",{
 
 
 
-// async function sync() {
-//   await stajbelgeler.sync({ alter: true });
-//   console.log("staj1form tablosu eklendi");
-// }
-// sync();
 module.exports=stajdegerlendirme;

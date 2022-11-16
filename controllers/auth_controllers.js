@@ -59,6 +59,7 @@ const login_post=async function(req, res){
       
       //parola kontrolü
       const match=await bcrypt.compare(sifre, user.kullaniciParola);
+      
       if(match){
         req.session.isAuth=true;
         req.session.kullaniciAd=user.kullaniciAd;
@@ -78,7 +79,7 @@ const login_post=async function(req, res){
             return res.redirect("/komisyon/kullanicitablosu");
         }
         else if(rol==3){
-            return res.redirect("/ogretmen/ogretmenstajtab");
+            return res.redirect("/ogretmen/stajtablosu");
         }
         else{
             return res.redirect("/ogrenci/anasayfa");
