@@ -35,7 +35,7 @@ const degerlendirogretmen_get=async function(req, res) {
     });
     const stajTipi=await stajtipi.findAll();
     try {
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("ogretmen/degerlendirogretmen.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1
         });
@@ -102,7 +102,7 @@ const degerlendirogretmen_post=async function(req, res) {
 
     try {
         if(kullaniciKontrol=="undefined"){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Kullanıcı numarasına ait kayıt bulunamadı !",
@@ -110,7 +110,7 @@ const degerlendirogretmen_post=async function(req, res) {
             })
         }
         if(sunumAra2=="undefined"){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Bu kullanıcıdan sorumlu öğretmen siz değilsiniz !",
@@ -118,7 +118,7 @@ const degerlendirogretmen_post=async function(req, res) {
             })
         }
         if(eksikGun>0 && durum==7){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik gün var ise staj durum geçti olamaz !",
@@ -126,7 +126,7 @@ const degerlendirogretmen_post=async function(req, res) {
             })
         }
         if(eksikGun>onaylananGun){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik gün sayısı onaylanan gün sayısından büyük olamaz !",
@@ -135,7 +135,7 @@ const degerlendirogretmen_post=async function(req, res) {
         }
         if(eksikGun==0){
             if(durum!=7){
-                return res.render("komisyon/komisyondegerlendirme.ejs", {
+                return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik yok ise staj durumu; kaldı veya eksik gün var olamaz !",
@@ -157,7 +157,7 @@ const degerlendirogretmen_post=async function(req, res) {
                 subject:"Staj Değerlendirmeniz Güncellendi",
                 html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
                 }); 
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("ogretmen/degerlendirogretmen.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Bu kullanıcının daha önceden değerlendirmesi yapılmış !",
@@ -179,7 +179,7 @@ const degerlendirogretmen_post=async function(req, res) {
             subject:"Staj Değerlendirmeniz Yapıldı",
             html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Yapıldı.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
             }); 
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("ogretmen/degerlendirogretmen.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1,
             message:"Değerlendirme Başarılı !",
@@ -187,7 +187,7 @@ const degerlendirogretmen_post=async function(req, res) {
         })  
     } 
     catch(err) {
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("ogretmen/degerlendirogretmen.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1,
             message:"Hatalı İşlem!",

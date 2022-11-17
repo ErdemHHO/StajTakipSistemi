@@ -631,7 +631,7 @@ const OnayBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p"> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
             });
-        return res.redirect("/admin/basvurudegerlendir");
+        return res.redirect("/yonetici/basvurudegerlendir");
     }
     catch(err) {
         console.log(err);
@@ -666,7 +666,7 @@ const RetBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
             });
-        return res.redirect("/admin/basvurudegerlendir");
+        return res.redirect("/yonetici/basvurudegerlendir");
     }
     catch(err) {
         console.log(err);
@@ -935,7 +935,7 @@ const download1rapor=async function(req, res) {
 const yoneticistajogrbelirle_get=async function(req, res) {
     const stajTipi=await stajtipi.findAll();
     try {
-        res.render("komisyon/komisyonstajogrbelirle.ejs", {
+        res.render("yonetici/stajogretmenbelirle.ejs", {
             stajTipi:stajTipi
         });
     }
@@ -981,28 +981,28 @@ const yoneticistajogrbelirle_post=async function(req, res) {
     const stajTipiAdi2=stajTipiAdi.stajTipiAdi;
     try {
         if(!kullaniciAra){
-            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            return res.render("yonetici/stajogretmenbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Öğrenci Bulunamadı",
                 renk:"danger"
             });
         }
         else if(!ogretmenAra){
-            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            return res.render("yonetici/stajogretmenbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Öğretmen Bulunamadı",
                 renk:"danger"
             });
         }
         if(!belgeAra){
-            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            return res.render("yonetici/stajogretmenbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Staj kaydı bulunamadı",
                 renk:"danger"
             });
         }
         else if(ogretmenAra.rolID==4){
-            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            return res.render("yonetici/stajogretmenbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Seçilen kişinin rolü öğretmen,komisyon veya yönetici olmalıdır.",
                 renk:"warning"
@@ -1025,7 +1025,7 @@ const yoneticistajogrbelirle_post=async function(req, res) {
                 subject:"Staj Sunumunuz Değiştirildi",
                 html:'<p>' +stajTipiAdi2+ ' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Yeni Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
                 });
-            return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+            return res.render("yonetici/stajogretmenbelirle.ejs", {
                 stajTipi:stajTipi,
                 message:"Sunum Tarihi Daha Önce Belirlenmiş. ",
                 message2:"Sunum Tarihi Güncellendi",
@@ -1046,7 +1046,7 @@ const yoneticistajogrbelirle_post=async function(req, res) {
                 subject:"Staj Sunumunuz Belirlendi",
                 html:'<p>' +stajTipiAdi2+' Sunum Bilgileriniz <ins><strong>' +belirleyenAdi+' '+belirleyenSoyadi+'</ins></strong> Tarafından Belirlendi.</p> <br> <p> Sunum Tarihiniz:' +sunumTarihi+ '<br> Sunum Yapacağınız Öğretmen: ' +ogretmenAdi+' '+ogretmenSoyadi+' </p>'
                 }); 
-        return res.render("komisyon/komisyonstajogrbelirle.ejs", {
+        return res.render("yonetici/stajogretmenbelirle.ejs", {
             stajTipi:stajTipi,
             message:"Sunum Oluşturuldu",
             renk:"success"
@@ -1067,7 +1067,7 @@ const stajimeislemleri_get=async function(req, res) {
     });
     const stajTipi=await stajtipi.findAll();
     try {
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("yonetici/stajdegerlendir.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1
         });
@@ -1134,7 +1134,7 @@ const stajimeislemleri_post=async function(req, res) {
 
     try {
         if(kullaniciKontrol=="undefined"){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Kullanıcı numarasına ait kayıt bulunamadı !",
@@ -1142,7 +1142,7 @@ const stajimeislemleri_post=async function(req, res) {
             })
         }
         if(sunumAra2=="undefined"){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Bu kullanıcıdan sorumlu öğretmen siz değilsiniz !",
@@ -1150,7 +1150,7 @@ const stajimeislemleri_post=async function(req, res) {
             })
         }
         if(eksikGun>0 && durum==7){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik gün var ise staj durum geçti olamaz !",
@@ -1158,7 +1158,7 @@ const stajimeislemleri_post=async function(req, res) {
             })
         }
         if(eksikGun>onaylananGun){
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik gün sayısı onaylanan gün sayısından büyük olamaz !",
@@ -1167,7 +1167,7 @@ const stajimeislemleri_post=async function(req, res) {
         }
         if(eksikGun==0){
             if(durum!=7){
-                return res.render("komisyon/komisyondegerlendirme.ejs", {
+                return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Eksik yok ise staj durumu; kaldı veya eksik gün var olamaz !",
@@ -1189,7 +1189,7 @@ const stajimeislemleri_post=async function(req, res) {
                 subject:"Staj Değerlendirmeniz Güncellendi",
                 html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Güncellendi.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
                 }); 
-            return res.render("komisyon/komisyondegerlendirme.ejs", {
+            return res.render("yonetici/stajdegerlendir.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
                 message:"Bu kullanıcının daha önceden değerlendirmesi yapılmış !",
@@ -1211,7 +1211,7 @@ const stajimeislemleri_post=async function(req, res) {
             subject:"Staj Değerlendirmeniz Yapıldı",
             html:'<p>' +stajTuru+ ' Değerlendirmeniz <ins><strong>' +ogrAdi+' '+ogrSoyadi+'</ins></strong> Tarafından Yapıldı.</p> <br> <p> Staj Durumunuz: ' +durumAdi2+ '<br> Onaylanan Gün Sayınız: ' +onaylananGun+' <br> Eksik Gün Sayınız: '+eksikGun+'</p>'
             }); 
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("yonetici/stajdegerlendir.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1,
             message:"Değerlendirme Başarılı !",
@@ -1219,7 +1219,7 @@ const stajimeislemleri_post=async function(req, res) {
         })  
     } 
     catch(err) {
-        return res.render("komisyon/komisyondegerlendirme.ejs", {
+        return res.render("yonetici/stajdegerlendir.ejs", {
             stajTipi:stajTipi,
             sunum:sunumAra1,
             message:"Hatalı İşlem!",
