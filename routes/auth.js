@@ -5,7 +5,7 @@ const authControllers=require("../controllers/auth_controllers.js");
 
 
 
-
+router.get("/loading",authControllers.loading_get);
 
 //cikis
 router.get("/cikis",authControllers.logout_get);

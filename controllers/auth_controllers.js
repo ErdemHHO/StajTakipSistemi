@@ -4,13 +4,34 @@ const config = require("../config/config.js");
 const kullanici = require("../models/kullanici.js");
 const duyuru = require("../models/duyuru.js");
 
+const loading_get=async function(req, res) {
+    try {
+        setTimeout(function(){     
+            if(rol==1){
+                return res.redirect("/admin/kullanicitablosu");
+            }
+            else if(rol==2){
+                return res.redirect("/komisyon/kullanicitablosu");
+            }
+            else if(rol==3){
+                return res.redirect("/ogretmen/stajtablosu");
+            }
+            if(rol==4){
+                return res.redirect("/ogrenci/anasayfa");
+            }
+            }, 1000);
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 
 
 const anasayfa_get=async function(req, res) {
     try {
         const duyurular=await duyuru.findAll();
         console.log(duyurular);
-        res.render("home-login/homepage.ejs", {
+        return res.render("home-login/homepage.ejs", {
             duyurular:duyurular,
         });
     }
@@ -72,19 +93,9 @@ const login_post=async function(req, res){
         req.session.kullaniciSinif=user.kullaniciSinif;
         req.session.rolID=user.rolID;
         let rol=user.dataValues.rolID;
+        global.rol=rol;
         //login oldu
-        if(rol==1){
-            return res.redirect("/admin/kullanicitablosu");
-        }
-        else if(rol==2){
-            return res.redirect("/komisyon/kullanicitablosu");
-        }
-        else if(rol==3){
-            return res.redirect("/ogretmen/stajtablosu");
-        }
-        else{
-            return res.redirect("/ogrenci/anasayfa");
-        }
+        return res.redirect("/loading");
       }
       else{
         return res.render("home-login/login.ejs",{message:"Şifre Hatalı!" });   
@@ -165,5 +176,6 @@ module.exports={
     login_post,
     logout_get,
     sifreSifirlama_get,
-    sifreSifirlama_post
+    sifreSifirlama_post,
+    loading_get
 }

@@ -693,7 +693,7 @@ const OnayBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p"> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
             });
-        return res.redirect("/yonetici/basvurudegerlendir");
+        return res.redirect("/admin/basvurudegerlendir");
     }
     catch(err) {
         console.log(err);
@@ -728,7 +728,7 @@ const RetBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
             });
-        return res.redirect("/yonetici/basvurudegerlendir");
+        return res.redirect("/admin/basvurudegerlendir");
     }
     catch(err) {
         console.log(err);
