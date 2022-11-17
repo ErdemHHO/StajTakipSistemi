@@ -2,6 +2,8 @@
 const express = require("express");
 const app = express();
 const puppeteer = require('puppeteer');
+const path = require('path');
+const fs = require("fs");
 
 const cookieParser = require('cookie-parser');   
 const session = require('express-session');

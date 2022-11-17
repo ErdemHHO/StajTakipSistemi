@@ -65,7 +65,7 @@
           </li>
       </ul>
     </nav>
-
+    <br><br>
     <div class="p-2">
       <main>
         <div class="py-5 text-center border-bottom">
@@ -84,13 +84,10 @@
                     type="text"
                     class="form-control"
                     id="kullaniciAd"
-                    name="kullaniciad"
+                    name="kullaniciAd"
                     placeholder=""
                     value="<%= isim %>"
-                    required
-                    disabled
-                  />
-                  <!-- <div class="invalid-feedback">Adınız boş geçilemez.</div> -->
+                    required/>
                 </div>
 
                 <div class="col-sm-6">
@@ -99,11 +96,10 @@
                     type="text"
                     class="form-control"
                     id="kullaniciSoyad"
-                    name="kullanicisoyad"
+                    name="kullaniciSoyad"
                     placeholder=""
                     value="<%= soyisim %>"
                     required
-                    disabled
                   />
                   <!-- <div class="invalid-feedback">Firma adı boş geçilemez.</div> -->
                 </div>
@@ -128,17 +124,16 @@
                     type="text"
                     class="form-control"
                     id="kullaniciTelNo"
-                    name="kullanicitelno"
+                    name="kullaniciTelNo"
                     placeholder=""
                     value="<%= telNo %>"
                     required
-                    disabled
                   />
                   <!-- <div class="invalid-feedback">Firma adı boş geçilemez.</div> -->
                 </div>
 
-                <div class="col-sm-6">
-                  <label for="uyruk" class="form-label">IBAN:</label>
+                <div class="col-sm-4">
+                  <label for="iban" class="form-label">IBAN:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -148,20 +143,31 @@
                     value=""
                     required
                   />
+                  <div class="invalid-feedback">İban boş geçilemez.</div>
+                </div>
+                <div class="col-sm-4">
+                  <label for="uyruk" class="form-label">Uyruk:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="uyruk"
+                    name="uyruk"
+                    placeholder=""
+                    value=""
+                    required
+                  />
                   <div class="invalid-feedback">Uyruk boş geçilemez.</div>
                 </div>
-
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <label for="kullaniciMail" class="form-label">E-posta:</label>
                   <input
                     type="text"
                     class="form-control"
                     id="kullaniciMail"
-                    name="kullanicimail"
+                    name="kullaniciMail"
                     placeholder=""
                     value="<%= eposta %>"
                     required
-                    disabled
                   />
                   <!-- <div class="invalid-feedback">Firma adı boş geçilemez.</div> -->
                 </div>
@@ -408,7 +414,7 @@
                   </div>
                 </div>
                 <h4>Staj Bilgileri</h4>
-                <div class="col-6">
+                <div class="col-sm-5">
                   <label for="basTarih" class="form-label"
                     >Başlangıç Tarihi</label
                   >
@@ -424,7 +430,7 @@
                   </div>
                   <div class="invalid-feedback">Tarih boş geçilemez.</div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-5">
                   <label for="bitTarih" class="form-label">Bitiş Tarihi:</label>
                   <div class="input-group has-validation">
                     <input
@@ -436,6 +442,20 @@
                       required
                     />
                     <div class="invalid-feedback">Tarih boş geçilemez.</div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <label for="isgunu" class="form-label">İş Günü:</label>
+                  <div class="input-group has-validation">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="isgunu"
+                      name="isgunu"
+                      placeholder=""
+                      required
+                    />
+                    <div class="invalid-feedback">İş günü boş geçilemez.</div>
                   </div>
                 </div>
                 <div class="col-8 pt-4">
@@ -563,6 +583,14 @@
                 Gönder
               </button>
               <br />
+              <div class="text-center">
+                <h4><a href="/ogrenci/pdfime"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a></h4> 
+              </div> 
+              <% if (typeof message != "undefined") { %> 
+                <div class="alert alert-<%= renk %> text-center m-3">
+                 <%= message %> 
+               </div>
+              <% } %> 
             </form>
           </div>
         </div>

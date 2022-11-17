@@ -5,358 +5,373 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body{
-            font-size:xx-small;
+            transform: translateY(-120px);
+            margin-top: 0;
+            font-size:7px;
         }
     </style>
     <title>Document</title>
 </head>
 <body>
-    <div class="mt-1">
-      <div class="container baslik">
-    <div class="row p-1">
-        <div class="col-sm-4 d-none d-sm-flex justify-content-center">
-            <img src="/img/kocaeli-universitesi-logo-2.png" alt="" style="height: 110px;">
-        </div>
-        <div class="col-sm-4 text-center">
-            <h6>TC</h6>
-            <h6>KOCAELİ ÜNİVERSİTESİ</h6>
-            <h6>Teknoloji Fakültesi</h6>
-            <h6><i>(Staj Başvuru ve Kabul Formu)</i> </h6>
-        </div>
-        <div class="col-sm-4 d-none d-sm-flex justify-content-center">
-            <img src="/img/kocaeli-universitesi-logo-2.png" alt="" style="height: 110px;">
-        </div>  
-    </div>
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4 text-center"><p><b>İlgili Makama</b></p></div>
-        <div class="col-4 text-center"> Tarih:</div>
-    </div>
-    <div class="container border border-dark p-2">
-        <p>
-            Teknoloji Fakültesi Bilişim Sistemleri Mühendisliği Bölümü <%= kullaniciNumara %> numaralı öğrencisiyim.Kurumunuzda staj yapmamın uygun görülmesi halinde bu formun alttaki kısmını doldurularak fakültemiz ilgili bölüm başkanlığına gönderilmesini saygılarımla arz ederim. <br>
-            İşyeri uygulaması süresi içerisinde alınan rapor, istirahat vb. belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.
-        </p>
-        <div class="container border border-dark">
-            <div class="row border-bottom border-dark">
-                <div class="col-3 border-end border-dark">
-                    Ad Soyad:
-                </div>
-                <div class="col-9 ">
-                    <%= kullaniciAd %> <%=kullaniciSoyad %>
-                </div>
-            </div>
-            <div class="row border-bottom border-dark">
-                <div class="col-3 border-end border-dark">
-                    Tc Kimlik Numarası:
-                </div>
-                <div class="col-3 border-end  border-dark">
-                    <%= tc %>
-                </div>
-                <div class="col-3 border-end  border-dark">
-                    Uyruğu:
-                </div>
-                <div class="col-3 ">
-                    <%= uyruk %>
-                </div>
-            </div>
-            <div class="row border-bottom border-dark">
-                <div class="col-3 border-end border-dark">
-                    Ev Tel/GSM:
-                </div>
-                <div class="col-3 border-end border-dark">
-                    <%= kullaniciTelNo %> 
-                </div>
-                <div class="col-3 border-end border-dark">
-                    E-Posta:
-                </div>
-                <div class="col-3 ">
-                    <%= kullaniciMail %> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3 border-end border-dark">Adres:</div>
-                <div class="col-9 border-bottom border-dark"><%= ogrenciadres %></div>
-                <div class="col-3 border-end border-dark"></div>
-                <div class="col-3">İl: <%= ogrenciil %> </div>
-                <div class="col-3">İlçe: <%= ogrenciilce %></div>
-                <div class="col-3">Posta Kodu: <%= ogrencipostakodu %></div>
-            </div>
-        </div>
-        <div class="container border border-dark mt-2">
-            <div class="row border-bottom border-dark d-flex justify-content-center">
-                Staj Bilgileri
-            </div>
-            <div class="row  border-dark">
-                <div class="col-6 border-bottom border-end border-dark d-flex justify-content-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="staj1radio" id="staj1radio" checked>
-                        <label class="form-check-label" for="flexRadioCheckedDisabled">
-                          Staj 1
-                        </label>
+        <div class="elem">
+            <div class="container baslik">
+          <div class="row p-1">
+              <div class="col-sm-4 d-none d-sm-flex justify-content-center">
+                  <img src="/img/kocaeli-universitesi-logo-2.png" alt="" style="height: 110px;">
+              </div>
+              <div class="col-sm-4 text-center">
+                  <h6>TC</h6>
+                  <h6>KOCAELİ ÜNİVERSİTESİ</h6>
+                  <h6>Teknoloji Fakültesi</h6>
+                  <h6><i>(Staj Başvuru ve Kabul Formu)</i> </h6>
+              </div>
+              <div class="col-sm-4 d-none d-sm-flex justify-content-center">
+                  <img src="/img/kocaeli-universitesi-logo-2.png" alt="" style="height: 110px;">
+              </div>  
+          </div>
+          <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4 text-center"><p><b>İlgili Makama</b></p></div>
+              <div class="col-4 text-center"> Tarih:</div>
+          </div>
+          <div class="container border border-dark p-2">
+              <p>
+                  Teknoloji Fakültesi Bilişim Sistemleri Mühendisliği Bölümü <%= kullaniciNumara %> numaralı öğrencisiyim.Kurumunuzda staj yapmamın uygun görülmesi halinde bu formun alttaki kısmını doldurularak fakültemiz ilgili bölüm başkanlığına gönderilmesini saygılarımla arz ederim. <br>
+                  İşyeri uygulaması süresi içerisinde alınan rapor, istirahat vb. belgelerin aslını alınan gün içerisinde bölüm başkanlığına bildireceğimi beyan ve taahhüt ederim.
+              </p>
+              <div class="container border border-dark">
+                  <div class="row border-bottom border-dark">
+                      <div class="col-3 border-end border-dark">
+                          Ad Soyad:
                       </div>
-                </div>
-                <div class="col-6 border-bottom border-dark d-flex justify-content-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="staj2radio" id="staj2radio">
-                        <label class="form-check-label" for="staj2radio">
-                          Staj 2
-                        </label>
-                    </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3 text-lg-center">Başlama Tarihi:<%= baslangictarihi %></div>
-                    <div class="col-sm-3">Bitiş Tarihi:<%= bitistarihi %></div>
-                    <div class="col-sm-3">İş Günü:</div>
-                    <div class="col-sm-3">
-                        Cumartesi Çalışıyor:
-                        <input type="checkbox" name="cumartesi" id="" <% if (cumartesi==1) { %>
-                        <%="checked"%>   
-                        <% } %>>
-                    </div>
-                </div>
-            </div>  
-        </div>
-        </div>
-        <div class="container border border-dark mt-2">
-            <div class="row">
-                <div class="col-8 border-bottom border-dark border-end">
-                    Ailemden,  Kendimden veya  Anne-Baba Üzarinden Genel Sağlık Sigortası Kapsamında Sağlık Hizmeti Alıyorum.
-                </div>
-                <div class="col-4 border-bottom border-dark">
-                    <div class="row">
-                        <div class="col-6 border-end border-dark">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="aile" id="aileYes" <% if (aile==1) { %>
-                                 <%= "checked" %> 
-                                <% } %>>
-                                <label class="form-check-label" for="aileYes">
-                                  Evet
-                                </label>
+                      <div class="col-9 ">
+                          <%= kullaniciAd %> <%=kullaniciSoyad %>
+                      </div>
+                  </div>
+                  <div class="row border-bottom border-dark">
+                      <div class="col-3 border-end border-dark">
+                          Tc Kimlik Numarası:
+                      </div>
+                      <div class="col-3 border-end  border-dark">
+                          <%= tc %>
+                      </div>
+                      <div class="col-3 border-end  border-dark">
+                          Uyruğu:
+                      </div>
+                      <div class="col-3 ">
+                          <%= uyruk %>
+                      </div>
+                  </div>
+                  <div class="row border-bottom border-dark">
+                      <div class="col-3 border-end border-dark">
+                          Ev Tel/GSM:
+                      </div>
+                      <div class="col-3 border-end border-dark">
+                          <%= kullaniciTelNo %> 
+                      </div>
+                      <div class="col-3 border-end border-dark">
+                          E-Posta:
+                      </div>
+                      <div class="col-3 ">
+                          <%= kullaniciMail %> 
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-3 border-end border-dark">Adres:</div>
+                      <div class="col-9 border-bottom border-dark"><%= ogrenciadres %></div>
+                      <div class="col-3 border-end border-dark"></div>
+                      <div class="col-3">İl: <%= ogrenciil %> </div>
+                      <div class="col-3">İlçe: <%= ogrenciilce %></div>
+                      <div class="col-3">Posta Kodu: <%= ogrencipostakodu %></div>
+                  </div>
+              </div>
+              <div class="container border border-dark mt-2">
+                  <div class="row border-bottom border-dark d-flex justify-content-center">
+                      Staj Bilgileri
+                  </div>
+                  <div class="row  border-dark">
+                      <div class="col-6 border-bottom border-end border-dark d-flex justify-content-center">
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="staj1radio" id="staj1radio" checked>
+                              <label class="form-check-label" for="flexRadioCheckedDisabled">
+                                Staj 1
+                              </label>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="aile" id="aileNo" <% if (aile==0) { %>
-                                    <%= "checked" %> 
-                                   <% } %>>
-                                <label class="form-check-label" for="aileNo">
-                                  Hayır
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8 border-bottom border-dark border-end">
-                    Genel Sağlık Sigortası (GSS) (Gelir Testi Yaptırdım Prim Ödüyorum).
-                </div>
-                <div class="col-4 border-bottom border-dark">
-                    <div class="row">
-                        <div class="col-6 border-end border-dark">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="genelsaglik" id="genelsagYes" <% if (genelsaglik==1) { %>
-                                    <%= "checked" %> 
-                                   <% } %>>
-                                <label class="form-check-label" for="genelsagYes">
-                                  Evet
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="genelsaglik" id="genelsagNo" <% if (genelsaglik==0) { %>
-                                    <%= "checked" %> 
-                                   <% } %>>
-                                <label class="form-check-label" for="genelsagNo">
-                                  Hayır
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8 border-dark border-end">
-                    25 Yaşını Doldurdum.
-                </div>
-                <div class="col-4 border-dark">
-                    <div class="row">
-                        <div class="col-6 border-end border-dark">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="yas25" id="25yasYes" <% if (yas25==1) { %>
-                                    <%= "checked" %> 
-                                   <% } %>>
-                                <label class="form-check-label" for="25yasYes">
-                                  Evet
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="yas25" id="25yasNo" <% if (yas25==0) { %>
-                                    <%= "checked" %> 
-                                   <% } %>>
-                                <label class="form-check-label" for="25yasNo">
-                                  Hayır
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-        <div class="container mt-1">
-            <div class="row">
-                <div class="col-8"></div>
-                <div class="col-4">
-                    Tarih: <br>
-                    Ad Soyad: <br>
-                    İmza:
-                </div>
-            </div>
-        </div>     
-        </div>       
-    </div>
-
-    <div class="container ps-3 mt-1 bgresim">
-        <div class="container container border border-dark">
-        <div class="row border-bottom border-dark">
-            <div class="col-12 text-center border-bottom border-dark">
-                <b>Staj Yapılacak Kurum Bilgileri</b> 
-            </div>
-            <div class="col-3 border-end border-dark">
-                Resmi Adı:
-            </div>
-            <div class="col-9">
-                <%= firmaadi %> 
-            </div>
+                      </div>
+                      <div class="col-6 border-bottom border-dark d-flex justify-content-center">
+                          <div class="form-check">
+                              <input class="form-check-input" type="radio" name="staj2radio" id="staj2radio">
+                              <label class="form-check-label" for="staj2radio">
+                                Staj 2
+                              </label>
+                          </div>
+                  </div>
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-3 text-lg-center">Başlama Tarihi:<%= baslangictarihi %></div>
+                          <div class="col-sm-3">Bitiş Tarihi:<%= bitistarihi %></div>
+                          <div class="col-sm-3">İş Günü: <%= isgunu %></div> 
+                          <div class="col-sm-3">
+                              Cumartesi Çalışıyor:
+                              <input type="checkbox" name="cumartesi" id="" <% if (cumartesi==1) { %>
+                              <%="checked"%>   
+                              <% } %>>
+                          </div>
+                      </div>
+                  </div>  
+              </div>
+              </div>
+              <div class="container border border-dark mt-2">
+                  <div class="row">
+                      <div class="col-8 border-bottom border-dark border-end">
+                          Ailemden,  Kendimden veya  Anne-Baba Üzarinden Genel Sağlık Sigortası Kapsamında Sağlık Hizmeti Alıyorum.
+                      </div>
+                      <div class="col-4 border-bottom border-dark">
+                          <div class="row">
+                              <div class="col-6 border-end border-dark">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="aile" id="aileYes" <% if (aile==1) { %>
+                                       <%= "checked" %> 
+                                      <% } %>>
+                                      <label class="form-check-label" for="aileYes">
+                                        Evet
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="aile" id="aileNo" <% if (aile==0) { %>
+                                          <%= "checked" %> 
+                                         <% } %>>
+                                      <label class="form-check-label" for="aileNo">
+                                        Hayır
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-8 border-bottom border-dark border-end">
+                          Genel Sağlık Sigortası (GSS) (Gelir Testi Yaptırdım Prim Ödüyorum).
+                      </div>
+                      <div class="col-4 border-bottom border-dark">
+                          <div class="row">
+                              <div class="col-6 border-end border-dark">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="genelsaglik" id="genelsagYes" <% if (genelsaglik==1) { %>
+                                          <%= "checked" %> 
+                                         <% } %>>
+                                      <label class="form-check-label" for="genelsagYes">
+                                        Evet
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="genelsaglik" id="genelsagNo" <% if (genelsaglik==0) { %>
+                                          <%= "checked" %> 
+                                         <% } %>>
+                                      <label class="form-check-label" for="genelsagNo">
+                                        Hayır
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-8 border-dark border-end">
+                          25 Yaşını Doldurdum.
+                      </div>
+                      <div class="col-4 border-dark">
+                          <div class="row">
+                              <div class="col-6 border-end border-dark">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="yas25" id="25yasYes" <% if (yas25==1) { %>
+                                          <%= "checked" %> 
+                                         <% } %>>
+                                      <label class="form-check-label" for="25yasYes">
+                                        Evet
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="yas25" id="25yasNo" <% if (yas25==0) { %>
+                                          <%= "checked" %> 
+                                         <% } %>>
+                                      <label class="form-check-label" for="25yasNo">
+                                        Hayır
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div> 
+              <div class="container mt-1">
+                  <div class="row">
+                      <div class="col-8"></div>
+                      <div class="col-4">
+                          Tarih: <br>
+                          Ad Soyad: <br>
+                          İmza:
+                      </div>
+                  </div>
+              </div>     
+              </div>       
+          </div>
+      
+          <div class="container ps-3 mt-1 bgresim">
+              <div class="container container border border-dark">
+              <div class="row border-bottom border-dark">
+                  <div class="col-12 text-center border-bottom border-dark">
+                      <b>Staj Yapılacak Kurum Bilgileri</b> 
+                  </div>
+                  <div class="col-3 border-end border-dark">
+                      Resmi Adı:
+                  </div>
+                  <div class="col-9">
+                      <%= firmaadi %> 
+                  </div>
+              </div>
+              <div class="row border-bottom border-dark">
+                  <div class="col-3 border-end border-dark">
+                      Faaliyet Alanı
+                  </div>
+                  <div class="col-9">
+                      <%= faaliyetalani %> 
+                  </div>
+              </div>
+              <div class="row border-bottom border-dark">
+                  <div class="col-3 border-end border-dark">Adres:</div>
+                  <div class="col-9 border-bottom border-dark"><%= firmaadres %></div>
+                  <div class="col-3 border-end border-dark"></div>
+                  <div class="col-3">İl:  <%= firmail %> </div>
+                  <div class="col-3">İlçe:  <%= firmailce %></div>
+                  <div class="col-3">Posta Kodu: <%= firmapostakodu %></div>
+              </div>
+              <div class="row border-bottom border-dark">
+                  <div class="col-3 border-end border-dark">İletişim Bilgileri:</div>
+                  <div class="col-3">Telefon: <%= firmatelno %> </div>
+                  <div class="col-3">Fax: <%= firmafax %> </div>
+                  <div class="col-3">E-Posta: <%= firmaeposta %> </div>
+              </div>
+              <div class="row border-bottom border-dark">
+                  <div class="col-3 border-end border-dark ">Staj Sorumlusunun Ünvanı:</div>
+                  <div class="col-3">
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="unvan" id="unvanMuh" <% if (unvan=="Mühendis") { %>
+                              <%= "checked" %> 
+                             <% } %>>
+                          <label class="form-check-label" for="unvanMuh">
+                            Mühendis
+                          </label>
+                      </div>
+                  </div>
+                  <div class="col-3">
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="unvan" id="unvanTknkOgr" <% if (unvan=="Teknik Öğretmen") { %>
+                              <%= "checked" %> 
+                             <% } %>>
+                          <label class="form-check-label" for="unvanTknkOgr">
+                            Teknik Öğretmen
+                          </label>
+                      </div>
+                  </div>
+                  <div class="col-3">
+                      <div class="form-check">
+                      <input class="form-check-input" type="radio" name="unvan" id="unvanHekim" <% if (unvan=="Hekim") { %>
+                          <%= "checked" %> 
+                         <% } %>>
+                          <label class="form-check-label" for="unvanHekim">
+                            Hekim
+                          </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-8">
+                      Kurum olarak 3308 sayılı kanundaki devlet katkısından yararlanmak istiyor musunuz?
+                  </div>
+                  <div class="col-4">
+                      <div class="row">
+                          <div class="col-6">
+                              <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="devletkatki" id="devKatYes" <% if (devletkatki==1) { %>
+                                      <%= "checked" %> 
+                                     <% } %>>
+                                  <label class="form-check-label" for="devKatYes">
+                                    Evet
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="col-6">
+                              <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="devletkatki" id="devKatNo" <% if (devletkatki==0) { %>
+                                      <%= "checked" %> 
+                                     <% } %>>
+                                  <label class="form-check-label" for="devKatNo"> 
+                                    Hayır
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <p class="text-center mt-1">Yukarıda adı geçen öğrencinin ilgili tarihlerde staj uygulamasını kurumumuzda yapması uygun görülmüştür.</p>
+          <div class="container ">
+              <div class="row">
+                  <div class="col-8"></div>
+                  <div class="col-4">
+                      Firma Yetkilisinin Adı Soyadı: <br>
+                      Ünvanı: <br>
+                      Kaşe ve İmza:
+                  </div>
+              </div>
+          </div>
+          <p class="mt-1">
+          3308 sayılı Meslekî Eğitim Kanunu ve 5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanununun 5 inci maddesinin (b) bendi gereğince zorunlu staja tabi tüm öğrencilere "İş Kazası ve Meslek Hastalığı Sigortası" yapılması ve sigorta primlerinin Üniversite tarafından ödenmesi gerekmektedir.  Staj süresi boyunca üniversitemiz tarafından öğrencimizin SGK’ya kaydı yaptırılacaktır. <br>
+      
+          Staja SGK sicil numarası alındıktan sonra başlayacaktır. Farklı firmalarda yapılacak stajlar için ayrı form doldurulacaktır. Öğrenci bu evraktan 2 nüsha düzenleyip firmaca onaylandıktan sonra bir tanesini belirlenen staj döneminden en az 1 ay önce ilgili bölüm başkanlığına teslim etmek zorundadır.  <br>
+      
+          Yanıtınız Evet ise Ek-1 formunu doldurunuz.
+          </p> 
+              <div class="container border">
+                  <div class="row border-bottom">
+                      <div class="col-4 border-end">
+                          <p>T.C. Kocaeli Üniversitesi Teknoloji Fakültesi
+                              Bölüm İş Yeri ve Staj Komisyonu Onayı
+                          </p>
+                      </div>
+                      <div class="col-4 border-end">
+                          <p class="text-center">Yukarıda adı geçen öğrencinin ilgili tarihlerde 
+                              staj uygulamasını ilgili kurumda yapması; 
+                          </p>
+                          <div class="row">
+                              <div class="col-6">Uygundur</div>
+                              <div class="col-6">Uygun Değildir.</div>
+                          </div>
+                      </div>
+                      <div class="col-4 text-center">
+                          <b>Onay</b> 
+                      </div>
+                  </div>
+                  <b>Not:</b> 
+              </div>
+          </div> 
         </div>
-        <div class="row border-bottom border-dark">
-            <div class="col-3 border-end border-dark">
-                Faaliyet Alanı
-            </div>
-            <div class="col-9">
-                <%= faaliyetalani %> 
-            </div>
+        <div class="d-flex justify-content-center">
+            <button type="button" class="download btn btn-success">PDF İNDİR</button>
         </div>
-        <div class="row border-bottom border-dark">
-            <div class="col-3 border-end border-dark">Adres:</div>
-            <div class="col-9 border-bottom border-dark"><%= firmaadres %></div>
-            <div class="col-3 border-end border-dark"></div>
-            <div class="col-3">İl:  <%= firmail %> </div>
-            <div class="col-3">İlçe:  <%= firmailce %></div>
-            <div class="col-3">Posta Kodu: <%= firmapostakodu %></div>
-        </div>
-        <div class="row border-bottom border-dark">
-            <div class="col-3 border-end border-dark">İletişim Bilgileri:</div>
-            <div class="col-3">Telefon: <%= firmatelno %> </div>
-            <div class="col-3">Fax: <%= firmafax %> </div>
-            <div class="col-3">E-Posta: <%= firmaeposta %> </div>
-        </div>
-        <div class="row border-bottom border-dark">
-            <div class="col-3 border-end border-dark ">Staj Sorumlusunun Ünvanı:</div>
-            <div class="col-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="unvan" id="unvanMuh" <% if (unvan=="Mühendis") { %>
-                        <%= "checked" %> 
-                       <% } %>>
-                    <label class="form-check-label" for="unvanMuh">
-                      Mühendis
-                    </label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="unvan" id="unvanTknkOgr" <% if (unvan=="Teknik Öğretmen") { %>
-                        <%= "checked" %> 
-                       <% } %>>
-                    <label class="form-check-label" for="unvanTknkOgr">
-                      Teknik Öğretmen
-                    </label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="unvan" id="unvanHekim" <% if (unvan=="Hekim") { %>
-                    <%= "checked" %> 
-                   <% } %>>
-                    <label class="form-check-label" for="unvanHekim">
-                      Hekim
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-8">
-                Kurum olarak 3308 sayılı kanundaki devlet katkısından yararlanmak istiyor musunuz?
-            </div>
-            <div class="col-4">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="devletkatki" id="devKatYes" <% if (devletkatki==1) { %>
-                                <%= "checked" %> 
-                               <% } %>>
-                            <label class="form-check-label" for="devKatYes">
-                              Evet
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="devletkatki" id="devKatNo" <% if (devletkatki==0) { %>
-                                <%= "checked" %> 
-                               <% } %>>
-                            <label class="form-check-label" for="devKatNo"> 
-                              Hayır
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <p class="text-center mt-1">Yukarıda adı geçen öğrencinin ilgili tarihlerde staj uygulamasını kurumumuzda yapması uygun görülmüştür.</p>
-    <div class="container ">
-        <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4">
-                Firma Yetkilisinin Adı Soyadı: <br>
-                Ünvanı: <br>
-                Kaşe ve İmza:
-            </div>
-        </div>
-    </div>
-    <p class="mt-1">
-    3308 sayılı Meslekî Eğitim Kanunu ve 5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanununun 5 inci maddesinin (b) bendi gereğince zorunlu staja tabi tüm öğrencilere "İş Kazası ve Meslek Hastalığı Sigortası" yapılması ve sigorta primlerinin Üniversite tarafından ödenmesi gerekmektedir.  Staj süresi boyunca üniversitemiz tarafından öğrencimizin SGK’ya kaydı yaptırılacaktır. <br>
-
-    Staja SGK sicil numarası alındıktan sonra başlayacaktır. Farklı firmalarda yapılacak stajlar için ayrı form doldurulacaktır. Öğrenci bu evraktan 2 nüsha düzenleyip firmaca onaylandıktan sonra bir tanesini belirlenen staj döneminden en az 1 ay önce ilgili bölüm başkanlığına teslim etmek zorundadır.  <br>
-
-    Yanıtınız Evet ise Ek-1 formunu doldurunuz.
-    </p> 
-        <div class="container border">
-            <div class="row border-bottom">
-                <div class="col-4 border-end">
-                    <p>T.C. Kocaeli Üniversitesi Teknoloji Fakültesi
-                        Bölüm İş Yeri ve Staj Komisyonu Onayı
-                    </p>
-                </div>
-                <div class="col-4 border-end">
-                    <p class="text-center">Yukarıda adı geçen öğrencinin ilgili tarihlerde 
-                        staj uygulamasını ilgili kurumda yapması; 
-                    </p>
-                    <div class="row">
-                        <div class="col-6">Uygundur</div>
-                        <div class="col-6">Uygun Değildir.</div>
-                    </div>
-                </div>
-                <div class="col-4 text-center">
-                    <b>Onay</b> 
-                </div>
-            </div>
-            <b>Not:</b> 
-        </div>
-    </div>
 </body>
+
+<script>
+    let div = document.querySelector(".elem");
+    let btn = document.querySelector(".download");
+    btn.addEventListener('click', () => {
+        html2pdf().from(div).save()
+    })
+</script>
 </html>

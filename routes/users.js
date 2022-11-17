@@ -24,7 +24,6 @@ router.get("/download-3rapor",isAuth,userControllers.downloadimerapor);
 
 router.get("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_get);
 router.post("/staj1basvur",isAuth,userControllers.ogrencistaj1basvur_post);
-router.get("/staj1pdf",isAuth,userControllers.staj1pdf_get);
 
 router.get("/staj1basvurubelgesi",isAuth,userControllers.ogrencistaj1basvurubelgesi_get);
 router.post("/staj1basvurubelgesi", fileUpload.upload.single("basvuruform"), isAuth, userControllers.ogrencistaj1basvurubelgesi_post);
@@ -56,7 +55,11 @@ router.get("/download-2rapor",isAuth,userControllers.downloadstaj2rapor);
 
 
 router.get("/profilOgrenci",isAuth,userControllers.profilOgrenci_get);
-router.get("/pdfstaj1",userControllers.staj1pdf_get);
+
+
+router.get("/pdfstaj1",isAuth,userControllers.staj1pdf_get);
+router.get("/pdfstaj2",isAuth,userControllers.staj2pdf_get);
+router.get("/pdfime",isAuth,userControllers.stajime_get);
 
 
 module.exports = router;

@@ -64,8 +64,8 @@
               </a> 
           </li>
       </ul>
-    </nav>
-    <div class="p-2">
+    </nav><br><br>
+    <div class="p-3">
       <main>
         <div class="py-5 text-center border-bottom">
           <h4>Staj 1</h4>
@@ -412,7 +412,7 @@
                   </div>
                 </div>
                 <h4>Staj Bilgileri</h4>
-                <div class="col-6">
+                <div class="col-sm-5">
                   <label for="basTarih" class="form-label"
                     >Başlangıç Tarihi</label
                   >
@@ -428,7 +428,7 @@
                   </div>
                   <div class="invalid-feedback">Tarih boş geçilemez.</div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-5">
                   <label for="bitTarih" class="form-label">Bitiş Tarihi:</label>
                   <div class="input-group has-validation">
                     <input
@@ -440,6 +440,20 @@
                       required
                     />
                     <div class="invalid-feedback">Tarih boş geçilemez.</div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <label for="isgunu" class="form-label">İş Günü:</label>
+                  <div class="input-group has-validation">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="isgunu"
+                      name="isgunu"
+                      placeholder=""
+                      required
+                    />
+                    <div class="invalid-feedback">İş günü boş geçilemez.</div>
                   </div>
                 </div>
                 <div class="col-8 pt-4">
@@ -565,8 +579,17 @@
                 type="submit"
                 >
                 Gönder
-              </button>   
-            </form>
+              </button> 
+              <br>
+              <div class="text-center">
+                <h4><a href="/ogrenci/pdfstaj1"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a></h4> 
+              </div> 
+              <% if (typeof message != "undefined") { %> 
+                <div class="alert alert-<%= renk %> text-center m-3">
+                 <%= message %> 
+               </div>
+              <% } %> 
+            </form>  
           </div>
         </div>
       </main>

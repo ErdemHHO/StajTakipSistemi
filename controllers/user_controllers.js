@@ -67,8 +67,26 @@ const ogrenciimebasvur_get=async function(req, res) {
     }
 }
 const ogrenciimebasvur_post=async function(req, res) {
-    const stajTipiID = 3;   
+    const kullaniciNumara1=req.session.kullaniciNumara;
+    const isim=req.session.kullaniciAd;
+    const soyisim=req.session.kullaniciSoyad;
+    const telNo=req.session.kullaniciTelNo;
+    const eposta=req.session.kullaniciMail;
+
+    const stajTipiID = 3;
+    const kullaniciNumara = req.body.kullaniciNumara;
+    const kayitara = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara1,
+            stajTipiID:3
+        }
+    })
+    const kullaniciAd = req.body.kullaniciAd;
+    const kullaniciSoyad = req.body.kullaniciSoyad;
+    const kullaniciTelNo = req.body.kullaniciTelNo; 
+    const kullaniciMail= req.body.kullaniciMail;  
     const tc = req.body.tc;
+    const uyruk = req.body.uyruk;
     const iban = req.body.iban;
     const ogrenciadres = req.body.ogrenciadres;
     const ogrenciil = req.body.ogrenciil;
@@ -94,10 +112,59 @@ const ogrenciimebasvur_post=async function(req, res) {
     let cumartesi=req.body.cumartesi;
 
     try {
+        if(kayitara){
+            kayitara.kullaniciNumara = kullaniciNumara1;
+            kayitara.kullaniciAd = kullaniciAd;
+            kayitara.kullaniciSoyad = kullaniciSoyad;
+            kayitara.kullaniciTelNo = kullaniciTelNo;
+            kayitara.kullaniciMail = kullaniciMail;
+            kayitara.stajTipiID = stajTipiID;
+            kayitara.tc = tc;
+            kayitara.iban = iban;
+            kayitara.uyruk = uyruk;
+            kayitara.isgunu = isgunu;
+            kayitara.ogrenciadres = ogrenciadres;
+            kayitara.ogrenciil = ogrenciil;
+            kayitara.ogrenciilce = ogrenciilce;
+            kayitara.ogrencipostakodu = ogrencipostakodu;
+            kayitara.firmaadi = firmaadi;
+            kayitara.faaliyetalani = firmafaaliyetalani;
+            kayitara.firmaadres = firmaadres;
+            kayitara.firmail = firmail;
+            kayitara.firmailce = firmailce;
+            kayitara.firmapostakodu = firmapostakodu;
+            kayitara.firmatelno = firmatelno;
+            kayitara.firmafax = firmafax;
+            kayitara.firmaeposta = firmaeposta;
+            kayitara.unvan = unvan;
+            kayitara.devletkatki = devletkatki;
+            kayitara.baslangictarihi = baslangictarihi;
+            kayitara.bitistarihi = bitistarihi;
+            kayitara.aile = aile;
+            kayitara.genelsaglik = genelsaglik;
+            kayitara.yas25 = yas25;
+            kayitara.cumartesi = cumartesi;
+            await kayitara.save();
+            return res.render("ogrenci/ogrenciimebasvur.ejs",{
+                message: "Başvuru Güncellendi",
+                renk:"success",
+                kullaniciNumara:kullaniciNumara1,
+                isim:isim,
+                soyisim:soyisim,
+                telNo:telNo,
+                eposta:eposta
+            });
+        }
         await stajkayit.create({
+            kullaniciNumara:kullaniciNumara1,
+            kullaniciAd:kullaniciAd,
+            kullaniciSoyad:kullaniciSoyad,
+            kullaniciTelNo:kullaniciTelNo,
+            kullaniciMail:kullaniciMail,
             stajTipiID:stajTipiID,
             tc:tc,
             iban:iban,
+            uyruk:uyruk,
             ogrenciadres:ogrenciadres,
             ogrenciil:ogrenciil,
             ogrenciilce:ogrenciilce,
@@ -121,12 +188,19 @@ const ogrenciimebasvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.render("ogrenci/ogrenciimebasvur.ejs", {
+        return res.render("ogrenci/ogrenciimebasvur.ejs",{
+            message: "Başvuru Kaydedildi",
+            renk:"success",
+            kullaniciNumara:kullaniciNumara1,
+            isim:isim,
+            soyisim:soyisim,
+            telNo:telNo,
+            eposta:eposta
         });
     }
     catch(err) {
         console.log(err);
-    }
+    } 
 }
 const ogrenciimebasvurubelgesi_get=async function(req, res) {
     const kullaniciNumara=req.session.kullaniciNumara;
@@ -422,12 +496,24 @@ const ogrencistaj1basvur_get=async function(req, res) {
     }
 }
 const ogrencistaj1basvur_post=async function(req, res) {
+    const kullaniciNumara1=req.session.kullaniciNumara;
+    const isim=req.session.kullaniciAd;
+    const soyisim=req.session.kullaniciSoyad;
+    const telNo=req.session.kullaniciTelNo;
+    const eposta=req.session.kullaniciMail;
+
     const stajTipiID = 1;
     const kullaniciNumara = req.body.kullaniciNumara;
+    const kayitara = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:1
+        }
+    })
     const kullaniciAd = req.body.kullaniciAd;
     const kullaniciSoyad = req.body.kullaniciSoyad;
     const kullaniciTelNo = req.body.kullaniciTelNo; 
-    const kullaniciMail= req.body.kullaniciMail;     
+    const kullaniciMail= req.body.kullaniciMail;  
     const tc = req.body.tc;
     const uyruk = req.body.uyruk;
     const ogrenciadres = req.body.ogrenciadres;
@@ -454,6 +540,48 @@ const ogrencistaj1basvur_post=async function(req, res) {
     let cumartesi=req.body.cumartesi;
 
     try {
+        if(kayitara){
+            kayitara.kullaniciNumara = kullaniciNumara;
+            kayitara.kullaniciAd = kullaniciAd;
+            kayitara.kullaniciSoyad = kullaniciSoyad;
+            kayitara.kullaniciTelNo = kullaniciTelNo;
+            kayitara.kullaniciMail = kullaniciMail;
+            kayitara.stajTipiID = stajTipiID;
+            kayitara.tc = tc;
+            kayitara.isgunu = isgunu;
+            kayitara.uyruk = uyruk;
+            kayitara.ogrenciadres = ogrenciadres;
+            kayitara.ogrenciil = ogrenciil;
+            kayitara.ogrenciilce = ogrenciilce;
+            kayitara.ogrencipostakodu = ogrencipostakodu;
+            kayitara.firmaadi = firmaadi;
+            kayitara.faaliyetalani = firmafaaliyetalani;
+            kayitara.firmaadres = firmaadres;
+            kayitara.firmail = firmail;
+            kayitara.firmailce = firmailce;
+            kayitara.firmapostakodu = firmapostakodu;
+            kayitara.firmatelno = firmatelno;
+            kayitara.firmafax = firmafax;
+            kayitara.firmaeposta = firmaeposta;
+            kayitara.unvan = unvan;
+            kayitara.devletkatki = devletkatki;
+            kayitara.baslangictarihi = baslangictarihi;
+            kayitara.bitistarihi = bitistarihi;
+            kayitara.aile = aile;
+            kayitara.genelsaglik = genelsaglik;
+            kayitara.yas25 = yas25;
+            kayitara.cumartesi = cumartesi;
+            await kayitara.save();
+            return res.render("ogrenci/ogrencistaj1basvur.ejs",{
+                message: "Başvuru Güncellendi",
+                renk:"success",
+                kullaniciNumara:kullaniciNumara1,
+                isim:isim,
+                soyisim:soyisim,
+                telNo:telNo,
+                eposta:eposta
+            });
+        }
         await stajkayit.create({
             kullaniciNumara:kullaniciNumara,
             kullaniciAd:kullaniciAd,
@@ -486,9 +614,14 @@ const ogrencistaj1basvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
-            kullaniciNumara:kullaniciNumara
-
+        return res.render("ogrenci/ogrencistaj1basvur.ejs",{
+            message: "Başvuru Kaydedildi",
+            renk:"success",
+            kullaniciNumara:kullaniciNumara1,
+            isim:isim,
+            soyisim:soyisim,
+            telNo:telNo,
+            eposta:eposta
         });
     }
     catch(err) {
@@ -789,7 +922,24 @@ const ogrencistaj2basvur_get=async function(req, res) {
     }
 }
 const ogrencistaj2basvur_post=async function(req, res) {
-    const stajTipiID = 2;   
+    const kullaniciNumara1=req.session.kullaniciNumara;
+    const isim=req.session.kullaniciAd;
+    const soyisim=req.session.kullaniciSoyad;
+    const telNo=req.session.kullaniciTelNo;
+    const eposta=req.session.kullaniciMail;
+
+    const stajTipiID = 2;
+    const kullaniciNumara = req.body.kullaniciNumara;
+    const kayitara = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:2
+        }
+    })
+    const kullaniciAd = req.body.kullaniciAd;
+    const kullaniciSoyad = req.body.kullaniciSoyad;
+    const kullaniciTelNo = req.body.kullaniciTelNo; 
+    const kullaniciMail= req.body.kullaniciMail;  
     const tc = req.body.tc;
     const uyruk = req.body.uyruk;
     const ogrenciadres = req.body.ogrenciadres;
@@ -816,8 +966,56 @@ const ogrencistaj2basvur_post=async function(req, res) {
     let cumartesi=req.body.cumartesi;
 
     try {
+        if(kayitara){
+            kayitara.kullaniciNumara = kullaniciNumara;
+            kayitara.kullaniciAd = kullaniciAd;
+            kayitara.kullaniciSoyad = kullaniciSoyad;
+            kayitara.kullaniciTelNo = kullaniciTelNo;
+            kayitara.kullaniciMail = kullaniciMail;
+            kayitara.stajTipiID = stajTipiID;
+            kayitara.tc = tc;
+            kayitara.isgunu = isgunu;
+            kayitara.uyruk = uyruk;
+            kayitara.ogrenciadres = ogrenciadres;
+            kayitara.ogrenciil = ogrenciil;
+            kayitara.ogrenciilce = ogrenciilce;
+            kayitara.ogrencipostakodu = ogrencipostakodu;
+            kayitara.firmaadi = firmaadi;
+            kayitara.faaliyetalani = firmafaaliyetalani;
+            kayitara.firmaadres = firmaadres;
+            kayitara.firmail = firmail;
+            kayitara.firmailce = firmailce;
+            kayitara.firmapostakodu = firmapostakodu;
+            kayitara.firmatelno = firmatelno;
+            kayitara.firmafax = firmafax;
+            kayitara.firmaeposta = firmaeposta;
+            kayitara.unvan = unvan;
+            kayitara.devletkatki = devletkatki;
+            kayitara.baslangictarihi = baslangictarihi;
+            kayitara.bitistarihi = bitistarihi;
+            kayitara.aile = aile;
+            kayitara.genelsaglik = genelsaglik;
+            kayitara.yas25 = yas25;
+            kayitara.cumartesi = cumartesi;
+            await kayitara.save();
+            return res.render("ogrenci/ogrencistaj2basvur.ejs",{
+                message: "Başvuru Güncellendi",
+                renk:"success",
+                kullaniciNumara:kullaniciNumara1,
+                isim:isim,
+                soyisim:soyisim,
+                telNo:telNo,
+                eposta:eposta
+            });
+        }
         await stajkayit.create({
+            kullaniciNumara:kullaniciNumara,
+            kullaniciAd:kullaniciAd,
+            kullaniciSoyad:kullaniciSoyad,
+            kullaniciTelNo:kullaniciTelNo,
+            kullaniciMail:kullaniciMail,
             stajTipiID:stajTipiID,
+            isgunu:isgunu,
             tc:tc,
             uyruk:uyruk,
             ogrenciadres:ogrenciadres,
@@ -843,12 +1041,19 @@ const ogrencistaj2basvur_post=async function(req, res) {
             yas25:yas25,
             cumartesi:cumartesi,
         })
-        res.render("ogrenci/ogrencistaj2basvur.ejs", {
+        return res.render("ogrenci/ogrencistaj2basvur.ejs",{
+            message: "Başvuru Kaydedildi",
+            renk:"success",
+            kullaniciNumara:kullaniciNumara1,
+            isim:isim,
+            soyisim:soyisim,
+            telNo:telNo,
+            eposta:eposta
         });
     }
     catch(err) {
         console.log(err);
-    }
+    } 
 }
 
 const ogrencistaj2basvurubelgesi_get=async function(req, res) {
@@ -1138,10 +1343,11 @@ const profilOgrenci_get=async function(req, res) {
 }
 //PDF GET 
 const staj1pdf_get=async function(req, res) {
+    const kullanici=req.session.kullaniciNumara;
     const staj1pdf = await stajkayit.findOne({
         where:{
             stajTipiID:1,
-            kullaniciNumara:201307011
+            kullaniciNumara:kullanici
         }
     }); 
     const kullaniciNumara=staj1pdf.kullaniciNumara;
@@ -1175,12 +1381,32 @@ const staj1pdf_get=async function(req, res) {
     const cumartesi= staj1pdf.cumartesi;
 
     try { 
-         await res.render("ogrenci/pdfstaj1.ejs", {
+        // (async () => {
+        //     const browser = await puppeteer.launch({
+        //             headless: true
+        //         }
+        //     );
+        //     const page = await browser.newPage();
+        //     await page.goto('http://localhost:3000/', {
+        //     waitUntil: 'networkidle2',
+        //     });
+        //     await page.setViewport({ width: 1800, height: 1050 });
+        //     await page.pdf({ 
+        //     path: path.join(__dirname,'../../../../Downloads','resdfdt.pdf'), 
+        //     format: 'a4',
+        //     fullPage:true,
+        //     });
+        //     await browser.close();
+        //     res.redirect("/ogrenci/staj1basvur");
+        // })();
+        
+        return res.render("ogrenci/pdfstaj1.ejs",{
             kullaniciNumara:kullaniciNumara,
-            isim:isim,
-            soyisim:soyisim,
-            telNo:telNo,
-            eposta:eposta,
+            kullaniciAd:isim,
+            kullaniciSoyad:soyisim,
+            kullaniciTelNo:telNo,
+            kullaniciMail:eposta,
+            stajTipiID:1,
             tc:tc,
             uyruk:uyruk,
             ogrenciadres:ogrenciadres,
@@ -1197,39 +1423,179 @@ const staj1pdf_get=async function(req, res) {
             firmafax:firmafax,
             firmaeposta:firmaeposta,
             unvan:unvan,
+            devletkatki:devletkatki,
             baslangictarihi:baslangictarihi,
             bitistarihi:bitistarihi,
             isgunu:isgunu,
-            devletkatki:devletkatki,
             aile:aile,
             genelsaglik:genelsaglik,
             yas25:yas25,
             cumartesi:cumartesi,
         });
-        // (async () => {
-        //     const browser = await puppeteer.launch({
-        //             headless: true
-        //         }
-        //     );
-        //     const page = await browser.newPage();
-        //     await page.goto('http://localhost:3000/ogrenci/pdfstaj1?target=https://google.com', {
-        //     waitUntil: 'networkidle2',
-        //     });
-        //     await page.setViewport({ width: 1800, height: 1050 });
-        //     await page.pdf({ 
-        //     path: path.join(__dirname,'../../../../Downloads','erdem616wer181.pdf'), 
-        //     format: 'a4',
-        //     fullPage:true,
-        //     });
-        //     await browser.close();
-        //     res.redirect("/ogrenci/staj1basvur");
-        // })();
-
+        
     }
     catch(err) {
         console.log(err);
     }
 }
+const staj2pdf_get=async function(req, res) {
+    const kullanici=req.session.kullaniciNumara;
+    const staj1pdf = await stajkayit.findOne({
+        where:{
+            stajTipiID:2,
+            kullaniciNumara:kullanici
+        }
+    }); 
+    const kullaniciNumara=staj1pdf.kullaniciNumara;
+    const isim=staj1pdf.kullaniciAd;
+    const soyisim=staj1pdf.kullaniciSoyad;
+    const telNo=staj1pdf.kullaniciTelNo;
+    const eposta=staj1pdf.kullaniciMail;
+    const tc = staj1pdf.tc;
+    const uyruk = staj1pdf.uyruk;
+    const ogrenciadres = staj1pdf.ogrenciadres;
+    const ogrenciil = staj1pdf.ogrenciil;
+    const ogrenciilce = staj1pdf.ogrenciilce;
+    const ogrencipostakodu = staj1pdf.ogrencipostakodu;
+    const firmaadi = staj1pdf.firmaadi;
+    const faaliyetalani = staj1pdf.faaliyetalani;
+    const firmaadres = staj1pdf.firmaadres;
+    const firmail = staj1pdf.firmail;
+    const firmailce = staj1pdf.firmailce;
+    const firmapostakodu = staj1pdf.firmapostakodu;
+    const firmatelno = staj1pdf.firmatelno;
+    const firmafax = staj1pdf.firmafax;
+    const firmaeposta = staj1pdf.firmaeposta;
+    const unvan = staj1pdf.unvan;
+    const baslangictarihi = staj1pdf.baslangictarihi;
+    const bitistarihi = staj1pdf.bitistarihi;
+    const isgunu = staj1pdf.isgunu;
+    const devletkatki = staj1pdf.devletkatki;
+    const aile= staj1pdf.aile;
+    const genelsaglik= staj1pdf.genelsaglik;
+    const yas25= staj1pdf.yas25;
+    const cumartesi= staj1pdf.cumartesi;
+
+    try { 
+        return res.render("ogrenci/pdfstaj2.ejs",{
+            kullaniciNumara:kullaniciNumara,
+            kullaniciAd:isim,
+            kullaniciSoyad:soyisim,
+            kullaniciTelNo:telNo,
+            kullaniciMail:eposta,
+            stajTipiID:1,
+            tc:tc,
+            uyruk:uyruk,
+            ogrenciadres:ogrenciadres,
+            ogrenciil:ogrenciil,
+            ogrenciilce:ogrenciilce,
+            ogrencipostakodu:ogrencipostakodu,
+            firmaadi:firmaadi,
+            faaliyetalani:faaliyetalani,
+            firmaadres:firmaadres,
+            firmail:firmail,
+            firmailce:firmailce,
+            firmapostakodu:firmapostakodu,
+            firmatelno:firmatelno,
+            firmafax:firmafax,
+            firmaeposta:firmaeposta,
+            unvan:unvan,
+            devletkatki:devletkatki,
+            baslangictarihi:baslangictarihi,
+            bitistarihi:bitistarihi,
+            isgunu:isgunu,
+            aile:aile,
+            genelsaglik:genelsaglik,
+            yas25:yas25,
+            cumartesi:cumartesi,
+        });
+        
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+const stajime_get=async function(req, res) {
+    const kullanici=req.session.kullaniciNumara;
+    const telefon=req.session.kullaniciTelNo;
+    const staj1pdf = await stajkayit.findOne({
+        where:{
+            stajTipiID:3,
+            kullaniciNumara:kullanici
+        }
+    }); 
+    const kullaniciNumara=staj1pdf.kullaniciNumara;
+    const isim=staj1pdf.kullaniciAd;
+    const soyisim=staj1pdf.kullaniciSoyad;
+    const telNo=staj1pdf.kullaniciTelNo;
+    const eposta=staj1pdf.kullaniciMail;
+    const tc = staj1pdf.tc;
+    const uyruk = staj1pdf.uyruk;
+    const iban = staj1pdf.iban;
+    const ogrenciadres = staj1pdf.ogrenciadres;
+    const ogrenciil = staj1pdf.ogrenciil;
+    const ogrenciilce = staj1pdf.ogrenciilce;
+    const ogrencipostakodu = staj1pdf.ogrencipostakodu;
+    const firmaadi = staj1pdf.firmaadi;
+    const faaliyetalani = staj1pdf.faaliyetalani;
+    const firmaadres = staj1pdf.firmaadres;
+    const firmail = staj1pdf.firmail;
+    const firmailce = staj1pdf.firmailce;
+    const firmapostakodu = staj1pdf.firmapostakodu;
+    const firmatelno = staj1pdf.firmatelno;
+    const firmafax = staj1pdf.firmafax;
+    const firmaeposta = staj1pdf.firmaeposta;
+    const unvan = staj1pdf.unvan;
+    const baslangictarihi = staj1pdf.baslangictarihi;
+    const bitistarihi = staj1pdf.bitistarihi;
+    const isgunu = staj1pdf.isgunu;
+    const devletkatki = staj1pdf.devletkatki;
+    const aile= staj1pdf.aile;
+    const genelsaglik= staj1pdf.genelsaglik;
+    const yas25= staj1pdf.yas25;
+    const cumartesi= staj1pdf.cumartesi;
+
+    try { 
+        return res.render("ogrenci/pdfime.ejs",{
+            kullaniciNumara:kullaniciNumara,
+            kullaniciAd:isim,
+            kullaniciSoyad:soyisim,
+            kullaniciTelNo:telNo,
+            kullaniciMail:eposta,
+            stajTipiID:1,
+            tc:tc,
+            iban:iban,
+            uyruk:uyruk,
+            ogrenciadres:ogrenciadres,
+            ogrenciil:ogrenciil,
+            ogrenciilce:ogrenciilce,
+            ogrencipostakodu:ogrencipostakodu,
+            firmaadi:firmaadi,
+            faaliyetalani:faaliyetalani,
+            firmaadres:firmaadres,
+            firmail:firmail,
+            firmailce:firmailce,
+            firmapostakodu:firmapostakodu,
+            firmatelno:firmatelno,
+            firmafax:firmafax,
+            firmaeposta:firmaeposta,
+            unvan:unvan,
+            devletkatki:devletkatki,
+            baslangictarihi:baslangictarihi,
+            bitistarihi:bitistarihi,
+            isgunu:isgunu,
+            aile:aile,
+            genelsaglik:genelsaglik,
+            yas25:yas25,
+            cumartesi:cumartesi,
+        });
+        
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 const pdfime_get=async function(req, res) {
     const imepdf = await stajkayit.findOne({
         where:{
@@ -1295,5 +1661,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,downloadstaj1basvuru,downloadstaj1degerlendirme,downloadstaj1rapor,downloadstaj2basvuru,downloadstaj2degerlendirme,downloadstaj2rapor,downloadimebasvuru,downloadimerapor,downloadimedegerlendirme
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,staj2pdf_get,stajime_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,downloadstaj1basvuru,downloadstaj1degerlendirme,downloadstaj1rapor,downloadstaj2basvuru,downloadstaj2degerlendirme,downloadstaj2rapor,downloadimebasvuru,downloadimerapor,downloadimedegerlendirme
 }
