@@ -4,6 +4,8 @@ const isAuth=require("../middlewares/auth");
 const userControllers=require("../controllers/user_controllers.js");
 const fileUpload = require("../helpers/file-upload");
 
+router.get("/erisim",isAuth,userControllers.erisim_get);
+
 router.get("/anasayfa",isAuth,userControllers.ogrencihome_get);
 
 router.get("/imebasvur",isAuth,userControllers.ogrenciimebasvur_get);

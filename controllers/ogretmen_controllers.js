@@ -12,7 +12,21 @@ const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
 
 
+const erisim_get=async function(req, res) {
+    try {
+        res.render("ogretmen/goruntuleme.ejs", { 
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 const stajogretmentable_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=3){
+        return res.redirect("/ogretmen/erisim");
+    }
     const ogretmenstajkayittable=await stajkayit.findAll();
     try {
         res.render("ogretmen/stajogretmentable.ejs", {      
@@ -27,6 +41,10 @@ const stajogretmentable_get=async function(req, res) {
 
 
 const degerlendirogretmen_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=3){
+        return res.redirect("/ogretmen/erisim");
+    }
     const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
     const sunumAra1=await sunum.findAll({
         where:{
@@ -199,6 +217,10 @@ const degerlendirogretmen_post=async function(req, res) {
 
 
 const profilOgretmen_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=3){
+        return res.redirect("/ogretmen/erisim");
+    }
     const ogretmenstajkayittable=await stajkayit.findAll();
     try {
         res.render("ogretmen/profilOgretmen.ejs", {      
@@ -211,6 +233,10 @@ const profilOgretmen_get=async function(req, res) {
 }
 
 const ogretmenbelgegor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=3){
+        return res.redirect("/ogretmen/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     let kullaniciNumarasi="---------";
     try {
@@ -488,4 +514,5 @@ module.exports={
     download1basvuru,
     download1degerlendirme,
     download1rapor,
+    erisim_get
 }

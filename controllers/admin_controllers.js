@@ -16,11 +16,24 @@ const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
 
 
+const erisim_get=async function(req, res) {
+    try {
+        res.render("yonetici/goruntuleme.ejs", { 
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
 
 //******DUYURU SAYFALARI******/
 
 //yonetici duyuru tablosu
 const duyurutablosu_get= async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const duyurular=await duyuru.findAll();
     try {
         res.render("yonetici/duyurutable.ejs", {
@@ -33,6 +46,10 @@ const duyurutablosu_get= async function(req, res) {
 }
 // yonetici duyuru olustur islemleri
 const duyuruolustur_get= async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         res.render("yonetici/duyuruolustur.ejs", {
         });
@@ -57,6 +74,10 @@ const duyuruolustur_post=async function(req, res){
 }
 // yonetici duyuru güncelle islemleri
 const duyuruguncelle_get= async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         res.render("yonetici/duyuruolustur.ejs", {
         });
@@ -66,9 +87,9 @@ const duyuruguncelle_get= async function(req, res) {
     }
 }
 const duyuruguncelle_post= async function(req,res){
-        const duyurubaslık= req.body.duyuruBaslik
-        const duyuruacıklama= req.body.duyuruAciklama
-        const duyurutur = req.body.duyuruTuru
+        const duyurubaslık= req.body.duyuruBaslik;
+        const duyuruacıklama= req.body.duyuruAciklama;
+        const duyurutur = req.body.duyuruTuru;
     
         try {
             const Duyuru=await duyuru.findOne({
@@ -101,6 +122,10 @@ const duyuruguncelle_post= async function(req,res){
 }
     
 const duyurusil_get= async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         res.render("yonetici/duyurusil.ejs", {
         });
@@ -137,6 +162,10 @@ const duyurusil_post=async function(req,res){
 }
 //yonetici kullanıci tablo islemleri
 const kullanicitablosu_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         const kullanicilar=await kullanici.findAll();
         res.render("yonetici/kullanicitable.ejs", {
@@ -150,6 +179,10 @@ const kullanicitablosu_get=async function(req, res) {
 
 //yonetici kullanıci ekle islemleri
 const kullaniciekle_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const roller=await rol.findAll();
     try {
         return res.render("yonetici/kullaniciekle.ejs", {
@@ -261,6 +294,10 @@ const kullaniciekle_post=async function(req, res) {
     }
 }
 const kullanicisil_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         res.render("yonetici/kullanicisil.ejs", {
         });
@@ -339,6 +376,10 @@ const kullanicisil_post=async function(req,res){
     }
 }
 const kullaniciguncelle_get=async function(req,res){
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const roller=await rol.findAll();
     try {
         res.render("yonetici/kullaniciguncelle.ejs", {
@@ -458,6 +499,10 @@ const kullaniciguncelle_post=async function(req,res){
 }
 
 const profil_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     let kullaniciNumara=req.session.kullaniciNumara;
     console.log("deneme");
     console.log(kullaniciNumara);
@@ -509,6 +554,10 @@ const profilduzenle_post=async function(req, res) {
     }
 }
 const profilduzenle_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     try {
         res.render("yonetici/profilduzenle.ejs", {
         });
@@ -519,6 +568,10 @@ const profilduzenle_get=async function(req, res) {
 }
 //yonetici staj-ime bilgi tablosu işlemleri
 const stajtable_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const stajkayittable=await stajkayit.findAll();
     try {
         res.render("yonetici/stajtable.ejs", {      
@@ -530,6 +583,10 @@ const stajtable_get=async function(req, res) {
     }
 }
 const yoneticibasvurubelge_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     let kullaniciNumarasi="---------";
     let none;
@@ -678,6 +735,10 @@ const RetBasvuruBelge=async function(req, res) {
     }
 }
 const yoneticibelgegor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     let kullaniciNumarasi="---------";
     try {
@@ -938,6 +999,10 @@ const download1rapor=async function(req, res) {
 }
 
 const yoneticistajogrbelirle_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     try {
         res.render("yonetici/stajogretmenbelirle.ejs", {
@@ -1064,6 +1129,10 @@ const yoneticistajogrbelirle_post=async function(req, res) {
 
 //yonetici staj ime islemleri
 const stajimeislemleri_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=1){
+        return res.redirect("/admin/erisim");
+    }
     const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
     const sunumAra1=await sunum.findAll({
         where:{
@@ -1235,6 +1304,7 @@ const stajimeislemleri_post=async function(req, res) {
 }
 
 module.exports={
+    erisim_get,
     stajimeislemleri_get,
     stajimeislemleri_post,
     duyuruolustur_get,

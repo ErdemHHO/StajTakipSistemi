@@ -5,6 +5,10 @@ const router = express.Router();
 const adminControllers=require("../controllers/admin_controllers");
 //middleware
 const isAuth=require("../middlewares/auth");
+
+
+
+router.get("/erisim",isAuth,adminControllers.erisim_get);
 //------------------DUYURU------------------
 //tablo
 router.get("/duyurular",isAuth,adminControllers.duyurutablosu_get);

@@ -3,6 +3,7 @@ const router = express.Router();
 const isAuth=require("../middlewares/auth");
 const ogretmenControllers=require("../controllers/ogretmen_controllers.js");
 
+router.get("/erisim",isAuth,ogretmenControllers.erisim_get);
 
 router.get("/stajtablosu",isAuth,ogretmenControllers.stajogretmentable_get);
 

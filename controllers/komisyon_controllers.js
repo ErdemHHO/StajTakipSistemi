@@ -12,8 +12,24 @@ const stajdurum = require("../models/stajdurum");
 const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
 
+
+
+const erisim_get=async function(req, res) {
+    try {
+        res.render("komisyon/goruntuleme.ejs", { 
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 //komisyon kullanıcı tablosu
 const komisyonstajtablosu_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajkayittable=await stajkayit.findAll();
     try {
         res.render("komisyon/komisyonstajimetable.ejs", {      
@@ -26,6 +42,10 @@ const komisyonstajtablosu_get=async function(req, res) {
 }
 //komisyon staj tablosu
 const komisyonkullanicitablosu_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     try {
         const kullaniciTable=await kullanici.findAll({
             where:{
@@ -41,6 +61,10 @@ const komisyonkullanicitablosu_get=async function(req, res) {
     }
 }
 const komisyonsorumluluk_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     try {
         res.render("komisyon/komisyonsorumluluk.ejs", {
@@ -94,6 +118,10 @@ const komisyonsorumluluk_post=async function(req, res) {
 }
 
 const komisyonbasvurubelge_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     let kullaniciNumarasi="---------";
     let none;
@@ -243,6 +271,10 @@ const RetBasvuruBelge=async function(req, res) {
 }
 
 const komisyondegerlendirme_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const kullaniciNumaraOgretmen=req.session.kullaniciNumara;
     const sunumAra1=await sunum.findAll({
         where:{
@@ -414,6 +446,10 @@ const komisyondegerlendirme_post=async function(req, res) {
 }
 
 const komisyonstajogrbelirle_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     try {
         res.render("komisyon/komisyonstajogrbelirle.ejs", {
@@ -539,6 +575,10 @@ const komisyonstajogrbelirle_post=async function(req, res) {
 }
 
 const profilKomisyon_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     try {
         res.render("komisyon/profilKomisyon.ejs", {
@@ -550,6 +590,10 @@ const profilKomisyon_get=async function(req, res) {
     }
 }
 const komisyonbelgegor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=2){
+        return res.redirect("/komisyon/erisim");
+    }
     const stajTipi=await stajtipi.findAll();
     let kullaniciNumarasi="---------";
     try {
@@ -836,5 +880,6 @@ module.exports={
     download1basvuru,
     download1degerlendirme,
     download1rapor,
+    erisim_get
     
 }

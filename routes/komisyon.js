@@ -3,6 +3,8 @@ const router = express.Router();
 const isAuth=require("../middlewares/auth");
 const komisyonControllers=require("../controllers/komisyon_controllers.js");
 
+router.get("/erisim",isAuth,komisyonControllers.erisim_get);
+
 router.get("/kullanicitablosu",isAuth,komisyonControllers.komisyonkullanicitablosu_get);
 
 router.get("/stajtablosu",isAuth,komisyonControllers.komisyonstajtablosu_get);

@@ -5,7 +5,18 @@ const fs = require("fs");
 const stajbelgeler = require("../models/stajbelgeler.js");
 const sorumluluk = require("../models/sorumluluk.js");
 
+const erisim_get=async function(req, res) {
+    try {
+        res.render("ogrenci/goruntuleme.ejs", { 
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
 const ogrencihome_get=async function(req, res) {
+
     const kullaniciNumarasi=req.session.kullaniciNumara;
     const sorumluStaj1 = await sorumluluk.findOne({
         where:{
@@ -37,7 +48,11 @@ const ogrencihome_get=async function(req, res) {
     if(sorumluStaj3){
         if(sorumluStaj3.sorumluMu==1){disable3="";}
     }
+    const rolKontrol=req.session.rolID;
     try {
+        if(rolKontrol!=4){
+            return res.redirect("/ogrenci/erisim");
+        }
         res.render("ogrenci/ogrencihome.ejs", {      
             disable1,disable2,disable3
         });
@@ -53,7 +68,11 @@ const ogrenciimebasvur_get=async function(req, res) {
     const soyisim=req.session.kullaniciSoyad;
     const telNo=req.session.kullaniciTelNo;
     const eposta=req.session.kullaniciMail;
+    const rolKontrol=req.session.rolID;
     try {
+        if(rolKontrol!=4){
+            return res.redirect("/ogrenci/erisim");
+        }
         res.render("ogrenci/ogrenciimebasvur.ejs", { 
             kullaniciNumara:kullaniciNumara,
             isim:isim,
@@ -110,8 +129,11 @@ const ogrenciimebasvur_post=async function(req, res) {
     let genelsaglik=req.body.genelsaglik;
     let yas25=req.body.yas25;
     let cumartesi=req.body.cumartesi;
-
+    const rolKontrol=req.session.rolID;
     try {
+        if(rolKontrol!=4){
+            return res.redirect("/ogrenci/erisim");
+        }
         if(kayitara){
             kayitara.kullaniciNumara = kullaniciNumara1;
             kayitara.kullaniciAd = kullaniciAd;
@@ -203,6 +225,10 @@ const ogrenciimebasvur_post=async function(req, res) {
     } 
 }
 const ogrenciimebasvurubelgesi_get=async function(req, res) {
+        const rolKontrol=req.session.rolID;
+        if(rolKontrol!=4){
+            return res.redirect("/ogrenci/erisim");
+        }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -294,6 +320,10 @@ const ogrenciimebasvurubelgesi_post = async function(req,res){
 }
 
 const ogrenciimedegerlendirme_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -387,6 +417,10 @@ const downloadimedegerlendirme=async function(req, res) {
 
 
 const ogrenciimerapor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -477,6 +511,10 @@ const downloadimerapor=async function(req, res) {
 }
 
 const ogrencistaj1basvur_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const isim=req.session.kullaniciAd;
     const soyisim=req.session.kullaniciSoyad;
@@ -630,6 +668,10 @@ const ogrencistaj1basvur_post=async function(req, res) {
 }
 
 const ogrencistaj1basvurubelgesi_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -721,6 +763,10 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
 }
 
 const ogrencistaj1degerlendirme_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -814,6 +860,10 @@ const downloadstaj1degerlendirme=async function(req, res) {
 
 
 const ogrencistaj1rapor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -903,6 +953,10 @@ const downloadstaj1rapor=async function(req, res) {
 }
 
 const ogrencistaj2basvur_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const isim=req.session.kullaniciAd;
     const soyisim=req.session.kullaniciSoyad;
@@ -1057,6 +1111,10 @@ const ogrencistaj2basvur_post=async function(req, res) {
 }
 
 const ogrencistaj2basvurubelgesi_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -1149,6 +1207,10 @@ const ogrencistaj2basvurubelgesi_post = async function(req,res){
 
 
 const ogrencistaj2degerlendirme_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -1242,6 +1304,10 @@ const downloadstaj2degerlendirme=async function(req, res) {
 
 
 const ogrencistaj2rapor_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullaniciNumara=req.session.kullaniciNumara;
     const form = await stajbelgeler.findOne({
         where:{
@@ -1333,6 +1399,10 @@ const downloadstaj2rapor=async function(req, res) {
 
 //PROFİL
 const profilOgrenci_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     try {
         res.render("ogrenci/profilOgrenci.ejs", {      
         });
@@ -1343,6 +1413,10 @@ const profilOgrenci_get=async function(req, res) {
 }
 //PDF GET 
 const staj1pdf_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullanici=req.session.kullaniciNumara;
     const staj1pdf = await stajkayit.findOne({
         where:{
@@ -1380,26 +1454,7 @@ const staj1pdf_get=async function(req, res) {
     const yas25= staj1pdf.yas25;
     const cumartesi= staj1pdf.cumartesi;
 
-    try { 
-        // (async () => {
-        //     const browser = await puppeteer.launch({
-        //             headless: true
-        //         }
-        //     );
-        //     const page = await browser.newPage();
-        //     await page.goto('http://localhost:3000/', {
-        //     waitUntil: 'networkidle2',
-        //     });
-        //     await page.setViewport({ width: 1800, height: 1050 });
-        //     await page.pdf({ 
-        //     path: path.join(__dirname,'../../../../Downloads','resdfdt.pdf'), 
-        //     format: 'a4',
-        //     fullPage:true,
-        //     });
-        //     await browser.close();
-        //     res.redirect("/ogrenci/staj1basvur");
-        // })();
-        
+    try {        
         return res.render("ogrenci/pdfstaj1.ejs",{
             kullaniciNumara:kullaniciNumara,
             kullaniciAd:isim,
@@ -1439,6 +1494,10 @@ const staj1pdf_get=async function(req, res) {
     }
 }
 const staj2pdf_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullanici=req.session.kullaniciNumara;
     const staj1pdf = await stajkayit.findOne({
         where:{
@@ -1516,6 +1575,10 @@ const staj2pdf_get=async function(req, res) {
     }
 }
 const stajime_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const kullanici=req.session.kullaniciNumara;
     const telefon=req.session.kullaniciTelNo;
     const staj1pdf = await stajkayit.findOne({
@@ -1597,6 +1660,10 @@ const stajime_get=async function(req, res) {
 }
 
 const pdfime_get=async function(req, res) {
+    const rolKontrol=req.session.rolID;
+    if(rolKontrol!=4){
+        return res.redirect("/ogrenci/erisim");
+    }
     const imepdf = await stajkayit.findOne({
         where:{
             stajKayitID:12350
@@ -1661,5 +1728,5 @@ const pdfime_get=async function(req, res) {
 }
 
 module.exports={
-    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,staj2pdf_get,stajime_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,downloadstaj1basvuru,downloadstaj1degerlendirme,downloadstaj1rapor,downloadstaj2basvuru,downloadstaj2degerlendirme,downloadstaj2rapor,downloadimebasvuru,downloadimerapor,downloadimedegerlendirme
+    ogrencihome_get,ogrenciimebasvur_get,ogrenciimebasvurubelgesi_get,ogrenciimedegerlendirme_get,ogrenciimerapor_get,ogrencistaj1basvur_get,ogrencistaj1basvurubelgesi_get,ogrencistaj1degerlendirme_get,ogrencistaj1rapor_get,ogrencistaj2basvur_get,ogrencistaj2basvurubelgesi_get,ogrencistaj2degerlendirme_get,ogrencistaj2rapor_get,profilOgrenci_get,staj1pdf_get,staj2pdf_get,stajime_get,ogrenciimebasvur_post,ogrencistaj1basvur_post,ogrencistaj2basvur_post,pdfime_get,ogrencistaj1basvurubelgesi_post,ogrencistaj1degerlendirme_post,ogrencistaj1rapor_post,ogrencistaj2basvurubelgesi_post,ogrencistaj2degerlendirme_post,ogrencistaj2rapor_post,ogrenciimerapor_post,ogrenciimedegerlendirme_post,ogrenciimebasvurubelgesi_post,downloadstaj1basvuru,downloadstaj1degerlendirme,downloadstaj1rapor,downloadstaj2basvuru,downloadstaj2degerlendirme,downloadstaj2rapor,downloadimebasvuru,downloadimerapor,downloadimedegerlendirme,erisim_get
 }
