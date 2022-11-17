@@ -140,10 +140,6 @@ const stajkayit=sequelize.define("stajkayit",{
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
-    basvuruForm: {
-      type: DataTypes.BLOB,
-      allowNull: true
-    }
   }, {
     sequelize,
     tableName: 'stajkayit',

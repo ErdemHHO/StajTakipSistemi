@@ -288,16 +288,21 @@ const kullanicisil_post=async function(req,res){
         where: {
             kullaniciNumara: kullaniciNumarasi
         }
-    
     });
     const sunumSil = await sunum.findOne({
         where: {
             kullaniciNumara: kullaniciNumarasi
         }
-    
     });
+
     try {
         const Kullanici = await kullanici.findByPk(kullaniciNumarasi);
+        if(kullaniciNumarasi==2419){
+            return res.render("yonetici/kullanicisil.ejs",{
+                renk:"danger",
+                message: "Süper Admin Silinemez"
+            });
+        }
         if(Kullanici) {
             if(stajkayitSil){
                 await stajkayitSil.destroy();
