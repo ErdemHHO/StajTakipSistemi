@@ -581,8 +581,12 @@
                 Gönder
               </button> 
               <br>
-              <div class="text-center">
-                <h4><a href="/ogrenci/pdfstaj1"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a></h4> 
+              <div class="text-center">  
+                <h4>
+                  <button type="button" class="btn btn-warning" <%=disabled%>>
+                    <a href="/ogrenci/pdfstaj1" target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a>
+                  </button>
+                </h4> 
               </div> 
               <% if (typeof message != "undefined") { %> 
                 <div class="alert alert-<%= renk %> text-center m-3">

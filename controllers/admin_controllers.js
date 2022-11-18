@@ -11,7 +11,6 @@ const stajbelgeler = require("../models/stajbelgeler.js");
 const sunum = require("../models/sunum.js");
 const stajdegerlendirme = require("../models/stajdegerlendirme.js");
 const stajdurum = require("../models/stajdurum");
-
 const emailService=require("../helpers/send-mail");
 const config = require("../config/config.js");
 
@@ -263,6 +262,11 @@ const kullaniciekle_post=async function(req, res) {
         }
         if(!user){
             const newUser=await kullanici.create({kullaniciNumara:kullaniciNumara,kullaniciAd:kullaniciAd,kullaniciSoyad:kullaniciSoyad,kullaniciParola:hashedPassword,kullaniciMail:kullaniciMail,kullaniciTelNo:kullaniciTelNo,kullaniciFakulte:kullaniciFakulte,kullaniciBolum:kullaniciBolum,kullaniciSinif:kullaniciSinif,rolID:rolID});
+            if(rolID==4){
+                await stajdegerlendirme.create({kullaniciNumara:kullaniciNumara,durumID:8,stajTipiID:1});
+                await stajdegerlendirme.create({kullaniciNumara:kullaniciNumara,durumID:8,stajTipiID:2});
+                await stajdegerlendirme.create({kullaniciNumara:kullaniciNumara,durumID:8,stajTipiID:3});
+            }
             emailService.sendMail({
                 from:config.email.from,
                 to:newUser.kullaniciMail,
@@ -309,29 +313,102 @@ const kullanicisil_get=async function(req, res) {
 const kullanicisil_post=async function(req,res){
     const kullaniciNumarasi = req.body.kullanicinumarasi;
     console.log(kullaniciNumarasi);
-    const stajkayitSil = await stajkayit.findOne({
+    const stajkayitSil1 = await stajkayit.findOne({
         where: {
-            kullaniciNumara: kullaniciNumarasi
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:1
         }
     
     });
-    const sorumlulukSil = await sorumluluk.findOne({
+    const stajkayitSil2 = await stajkayit.findOne({
         where: {
-            kullaniciNumara: kullaniciNumarasi
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:2
         }
     
     });
-    const belgeSil = await stajbelgeler.findOne({
+    const stajkayitSil3 = await stajkayit.findOne({
         where: {
-            kullaniciNumara: kullaniciNumarasi
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:3
+        }
+    
+    });
+    const sorumlulukSil1 = await sorumluluk.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:1
+        }
+    
+    });
+    const sorumlulukSil2 = await sorumluluk.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:2
+        }
+    
+    });
+    const sorumlulukSil3 = await sorumluluk.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:3
+        }
+    
+    });
+    const belgeSil1 = await stajbelgeler.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:1
         }
     });
-    const sunumSil = await sunum.findOne({
+    const belgeSil2 = await stajbelgeler.findOne({
         where: {
-            kullaniciNumara: kullaniciNumarasi
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:2
         }
     });
-
+    const belgeSil3 = await stajbelgeler.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:3
+        }
+    });
+    const sunumSil1 = await sunum.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:1
+        }
+    });
+    const sunumSil2 = await sunum.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:2
+        }
+    });
+    const sunumSil3 = await sunum.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:3
+        }
+    });
+    const stajdegerlendirmeSil1 = await stajdegerlendirme.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:1
+        }
+    })
+    const stajdegerlendirmeSil2 = await stajdegerlendirme.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:2
+        }
+    })
+    const stajdegerlendirmeSil3 = await stajdegerlendirme.findOne({
+        where: {
+            kullaniciNumara: kullaniciNumarasi,
+            stajTipiID:3
+        }
+    })
     try {
         const Kullanici = await kullanici.findByPk(kullaniciNumarasi);
         if(kullaniciNumarasi==2419){
@@ -341,21 +418,65 @@ const kullanicisil_post=async function(req,res){
             });
         }
         if(Kullanici) {
-            if(stajkayitSil){
-                await stajkayitSil.destroy();
+            if(stajkayitSil1){
+                await stajkayitSil1.destroy();
                 console.log("stajkayitSilindi")
             }
-            if(sorumlulukSil){
-                await sorumlulukSil.destroy();
+            if(sorumlulukSil1){
+                await sorumlulukSil1.destroy();
                 console.log("sorumlulukSilindi")
             }
-            if(belgeSil){
-                await belgeSil.destroy();
+            if(belgeSil1){
+                await belgeSil1.destroy();
                 console.log("belgelerSilindi")
             }
-            if(sunumSil){
-                await sunumSil.destroy();
+            if(sunumSil1){
+                await sunumSil1.destroy();
                 console.log("sunumSilindi")
+            }
+            if(stajkayitSil2){
+                await stajkayitSil2.destroy();
+                console.log("stajkayitSilindi")
+            }
+            if(sorumlulukSil2){
+                await sorumlulukSil2.destroy();
+                console.log("sorumlulukSilindi")
+            }
+            if(belgeSil2){
+                await belgeSil2.destroy();
+                console.log("belgelerSilindi")
+            }
+            if(sunumSil2){
+                await sunumSil2.destroy();
+                console.log("sunumSilindi")
+            }
+            if(stajkayitSil3){
+                await stajkayitSil3.destroy();
+                console.log("stajkayitSilindi")
+            }
+            if(sorumlulukSil3){
+                await sorumlulukSil3.destroy();
+                console.log("sorumlulukSilindi")
+            }
+            if(belgeSil3){
+                await belgeSil3.destroy();
+                console.log("belgelerSilindi")
+            }
+            if(sunumSil3){
+                await sunumSil3.destroy();
+                console.log("sunumSilindi")
+            }
+            if(stajdegerlendirmeSil1){
+                await stajdegerlendirmeSil1.destroy()
+                console.log("değerlendirme silindi")
+            }
+            if(stajdegerlendirmeSil2){
+                await stajdegerlendirmeSil2.destroy()
+                console.log("değerlendirme silindi")
+            }
+            if(stajdegerlendirmeSil3){
+                await stajdegerlendirmeSil3.destroy()
+                console.log("değerlendirme silindi")
             }
             await Kullanici.destroy();
             return res.render("yonetici/kullanicisil.ejs",{
@@ -448,7 +569,7 @@ const kullaniciguncelle_post=async function(req,res){
             }   
         }
         if(kullaniciTelKontrol){
-            if(kullaniciMailKontrol.kullaniciTelNo!=kullaniciMail){
+            if(kullaniciTelKontrol.kullaniciTelNo!=kullaniciMail){
                 return res.render("yonetici/kullaniciguncelle.ejs", {
                     rol:roller,
                     message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
@@ -669,6 +790,12 @@ const downloadBasvuruBelge=async function(req, res) {
     }
 }
 const OnayBasvuruBelge=async function(req, res) {
+    const degerlendirme=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
 
     const kullaniciAra = await kullanici.findOne({
         where:{
@@ -691,8 +818,13 @@ const OnayBasvuruBelge=async function(req, res) {
             from:config.email.from,
             to:kullaniciMail,
             subject:"Staj Başvurunuz",
-            html:'<p"> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
+            html:'<p> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
             });
+
+            if(degerlendirme){
+                degerlendirme.durumID = 1
+                await degerlendirme.save();
+            }
         return res.redirect("/admin/basvurudegerlendir");
     }
     catch(err) {
@@ -700,6 +832,12 @@ const OnayBasvuruBelge=async function(req, res) {
     }
 }
 const RetBasvuruBelge=async function(req, res) {
+    const degerlendirme=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
     const kullaniciAra = await kullanici.findOne({
         where:{
             kullaniciNumara:basvuruBelgekullaniciNumarasi,
@@ -728,6 +866,11 @@ const RetBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
             });
+
+            if(degerlendirme){
+                degerlendirme.durumID = 3
+                await degerlendirme.save();
+            }
         return res.redirect("/admin/basvurudegerlendir");
     }
     catch(err) {

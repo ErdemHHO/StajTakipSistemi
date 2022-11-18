@@ -80,6 +80,12 @@ const komisyonsorumluluk_post=async function(req, res) {
     const stajTipiSecim=req.body.stajTipiSecim;
     let sorumluMu=req.body.sorumlu;
     console.log(sorumluMu);
+    const degerlendirme=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
     const sorumluKontrol = await sorumluluk.findOne({
         where:{
             kullaniciNumara:kullaniciNumarasi,
@@ -93,6 +99,10 @@ const komisyonsorumluluk_post=async function(req, res) {
             sorumluKontrol.stajTipiID = stajTipiSecim;
             sorumluKontrol.sorumluMu = sorumluMu;
             await sorumluKontrol.save();
+            if(degerlendirme){
+                degerlendirme.durumID = 9
+                await degerlendirme.save();
+            }
             console.log("başarılı")
             return res.render("komisyon/komisyonsorumluluk.ejs",{
                 stajTipi:stajTipi,
@@ -100,7 +110,11 @@ const komisyonsorumluluk_post=async function(req, res) {
                 renk:"success"
             });
         }
-        await sorumluluk.create({kullaniciNumara:kullaniciNumarasi,stajTipiID:stajTipiSecim,sorumluMu:sorumluMu});  
+        await sorumluluk.create({kullaniciNumara:kullaniciNumarasi,stajTipiID:stajTipiSecim,sorumluMu:sorumluMu});
+        if(degerlendirme){
+            degerlendirme.durumID = 9
+            await degerlendirme.save();
+        }
         res.render("komisyon/komisyonsorumluluk.ejs", {
             stajTipi:stajTipi,
             message:"Kullanıcının staj sorumluluk bilgisi oluşturuldu.",
@@ -204,6 +218,12 @@ const downloadBasvuruBelge=async function(req, res) {
     }
 }
 const OnayBasvuruBelge=async function(req, res) {
+    const degerlendirme=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
 
     const kullaniciAra = await kullanici.findOne({
         where:{
@@ -228,6 +248,11 @@ const OnayBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p> Staj Başvurunuz <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Onaylandı.</p> <br> <p> Staj bitiminde staj değerlendirme belgenizi ve staj raporunuzu yükleyiniz.</p>'
             });
+
+            if(degerlendirme){
+                degerlendirme.durumID = 1
+                await degerlendirme.save();
+            }
         return res.redirect("/komisyon/basvurubelgeleri");
     }
     catch(err) {
@@ -235,6 +260,12 @@ const OnayBasvuruBelge=async function(req, res) {
     }
 }
 const RetBasvuruBelge=async function(req, res) {
+    const degerlendirme=await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:basvuruBelgekullaniciNumarasi,
+            stajTipiID:stajTipiSecim
+        }
+    })
     const kullaniciAra = await kullanici.findOne({
         where:{
             kullaniciNumara:basvuruBelgekullaniciNumarasi,
@@ -263,6 +294,11 @@ const RetBasvuruBelge=async function(req, res) {
             subject:"Staj Başvurunuz",
             html:'<p style="color: red;""> Staj Başvurunuz Staj Şartlarına Uygun Görülemediğinden <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Tarafından Reddedildi.</p> <br> <p> <ins><strong>' +reddedenAdi+' '+reddedenSoyadi+'</ins></strong> Hocanızla İletişime Geçiniz.</p>'
             });
+
+            if(degerlendirme){
+                degerlendirme.durumID = 3
+                await degerlendirme.save();
+            }
         return res.redirect("/komisyon/basvurubelgeleri");
     }
     catch(err) {
@@ -408,10 +444,8 @@ const komisyondegerlendirme_post=async function(req, res) {
             return res.render("komisyon/komisyondegerlendirme.ejs", {
                 stajTipi:stajTipi,
                 sunum:sunumAra1,
-                message:"Bu kullanıcının daha önceden değerlendirmesi yapılmış !",
-                renk:"warning",
-                message2:"Değerlendirme Güncellendi",
-                renk2:"success"
+                message:"Değerlendirme Güncellendi",
+                renk:"success"
             })
         }
         await stajdegerlendirme.create({

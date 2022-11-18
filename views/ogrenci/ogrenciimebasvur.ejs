@@ -581,12 +581,16 @@
                 type="submit"
               >
                 Gönder
-              </button>
-              <br />
-              <div class="text-center">
-                <h4><a href="/ogrenci/pdfime"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a></h4> 
+              </button>  
+              <br />           
+              <div class="text-center">  
+                <h4>
+                  <button type="button" class="btn btn-warning" <%=disabled%>>
+                    <a href="/ogrenci/pdfstaj1" target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i>PDF İNDİRİN</a>
+                  </button>
+                </h4> 
               </div> 
-              <% if (typeof message != "undefined") { %> 
+              <% if (typeof message != "undefined") { %>
                 <div class="alert alert-<%= renk %> text-center m-3">
                  <%= message %> 
                </div>
@@ -596,7 +600,7 @@
         </div>
       </main>
     </div>
-
+ 
     <footer class="pt-5 bg-light text-dark text-center">
       <div class="text-start fw-lighter">
         <div

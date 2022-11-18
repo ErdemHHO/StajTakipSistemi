@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require("fs");
 const stajbelgeler = require("../models/stajbelgeler.js");
 const sorumluluk = require("../models/sorumluluk.js");
+const stajdegerlendirme = require("../models/stajdegerlendirme.js");
+const stajdurum = require("../models/stajdurum");
 
 const erisim_get=async function(req, res) {
     try {
@@ -16,8 +18,55 @@ const erisim_get=async function(req, res) {
 }
 
 const ogrencihome_get=async function(req, res) {
-
     const kullaniciNumarasi=req.session.kullaniciNumara;
+
+    const stajdegerlendirme1 = await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:1
+        }
+    });
+    const stajdegerlendirme2 = await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:2
+        }
+    });
+    const stajdegerlendirme3 = await stajdegerlendirme.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumarasi,
+            stajTipiID:3
+        }
+    });
+
+    let stajDurum1=stajdegerlendirme1.durumID;
+    let stajDurum2=stajdegerlendirme2.durumID;
+    let stajDurum3=stajdegerlendirme3.durumID;
+
+    const durumsorgu1 = await stajdurum.findOne({
+        where:{
+            durumID:stajDurum1
+        }
+    });
+    const durumsorgu2 = await stajdurum.findOne({
+        where:{
+            durumID:stajDurum2
+        }
+    });
+    const durumsorgu3 = await stajdurum.findOne({
+        where:{
+            durumID:stajDurum3
+        }
+    });
+
+    let durumGor1=durumsorgu1.durum;
+    let durumGor2=durumsorgu2.durum;
+    let durumGor3=durumsorgu3.durum;
+    console.log(durumGor1);
+    console.log(durumGor2);
+    console.log(durumGor3);
+
+
     const sorumluStaj1 = await sorumluluk.findOne({
         where:{
             kullaniciNumara:kullaniciNumarasi,
@@ -39,14 +88,17 @@ const ogrencihome_get=async function(req, res) {
     let disable1="disabled";
     let disable2="disabled";
     let disable3="disabled";
+    let bilgi1="Bu dersten sorumlu değilsiniz";
+    let bilgi2="Bu dersten sorumlu değilsiniz";
+    let bilgi3="Bu dersten sorumlu değilsiniz";
     if(sorumluStaj1){    
-        if(sorumluStaj1.sorumluMu==1){disable1="";}
+        if(sorumluStaj1.sorumluMu==1){disable1=""; bilgi1=" "}
     }
     if(sorumluStaj2){
-        if(sorumluStaj2.sorumluMu==1){disable2="";}
+        if(sorumluStaj2.sorumluMu==1){disable2=""; bilgi2=" "}
     }
     if(sorumluStaj3){
-        if(sorumluStaj3.sorumluMu==1){disable3="";}
+        if(sorumluStaj3.sorumluMu==1){disable3=""; bilgi3=" "}
     }
     const rolKontrol=req.session.rolID;
     try {
@@ -54,7 +106,7 @@ const ogrencihome_get=async function(req, res) {
             return res.redirect("/ogrenci/erisim");
         }
         res.render("ogrenci/ogrencihome.ejs", {      
-            disable1,disable2,disable3
+            disable1,disable2,disable3,durumGor1,durumGor2,durumGor3,bilgi1,bilgi2,bilgi3
         });
     }
     catch(err) {
@@ -69,6 +121,16 @@ const ogrenciimebasvur_get=async function(req, res) {
     const telNo=req.session.kullaniciTelNo;
     const eposta=req.session.kullaniciMail;
     const rolKontrol=req.session.rolID;
+    let disabled="";
+    const kayitarama = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:3
+        }
+    })
+    if(!kayitarama){
+        disabled="disabled";
+    }
     try {
         if(rolKontrol!=4){
             return res.redirect("/ogrenci/erisim");
@@ -78,7 +140,8 @@ const ogrenciimebasvur_get=async function(req, res) {
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta
+            eposta:eposta,
+            disabled:disabled
         });
     }
     catch(err) {
@@ -100,6 +163,7 @@ const ogrenciimebasvur_post=async function(req, res) {
             stajTipiID:3
         }
     })
+
     const kullaniciAd = req.body.kullaniciAd;
     const kullaniciSoyad = req.body.kullaniciSoyad;
     const kullaniciTelNo = req.body.kullaniciTelNo; 
@@ -129,11 +193,8 @@ const ogrenciimebasvur_post=async function(req, res) {
     let genelsaglik=req.body.genelsaglik;
     let yas25=req.body.yas25;
     let cumartesi=req.body.cumartesi;
-    const rolKontrol=req.session.rolID;
+
     try {
-        if(rolKontrol!=4){
-            return res.redirect("/ogrenci/erisim");
-        }
         if(kayitara){
             kayitara.kullaniciNumara = kullaniciNumara1;
             kayitara.kullaniciAd = kullaniciAd;
@@ -174,7 +235,8 @@ const ogrenciimebasvur_post=async function(req, res) {
                 isim:isim,
                 soyisim:soyisim,
                 telNo:telNo,
-                eposta:eposta
+                eposta:eposta,
+                disabled:""
             });
         }
         await stajkayit.create({
@@ -217,7 +279,8 @@ const ogrenciimebasvur_post=async function(req, res) {
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta
+            eposta:eposta,
+            disabled:""
         });
     }
     catch(err) {
@@ -274,7 +337,7 @@ const downloadimebasvuru=async function(req, res) {
 }
 const ogrenciimebasvurubelgesi_post = async function(req,res){
     let dosya = req.body.basvuruform;
-    
+
     console.log(dosya);
     if(req.file){
         dosya = req.file.filename;
@@ -284,6 +347,12 @@ const ogrenciimebasvurubelgesi_post = async function(req,res){
     }
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -295,6 +364,10 @@ const ogrenciimebasvurubelgesi_post = async function(req,res){
             form.basvuruForm = dosya;
             await form.save();
             console.log("başarılı")
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -302,13 +375,17 @@ const ogrenciimebasvurubelgesi_post = async function(req,res){
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,basvuruForm:dosya})
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
                 renk:"success",
                 bilgi:dosya
             });
         }
-        
+
     } catch (error) {
         return res.render("ogrenci/ogrenciimebasvurubelgesi.ejs",{
             message: "Başvuru Formunuz Gönderilemedi",
@@ -316,6 +393,7 @@ const ogrenciimebasvurubelgesi_post = async function(req,res){
         });
         console.log(error)
     }
+
 
 }
 
@@ -363,6 +441,12 @@ const ogrenciimedegerlendirme_post=async function(req, res) {
     console.log(dosya)
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -373,6 +457,12 @@ const ogrenciimedegerlendirme_post=async function(req, res) {
         if(form){
             form.degerlendirmeFormu = dosya;
             await form.save();
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrenciimedegerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
@@ -381,6 +471,12 @@ const ogrenciimedegerlendirme_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,degerlendirmeFormu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrenciimedegerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -458,6 +554,12 @@ const ogrenciimerapor_post=async function(req, res) {
 
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:3
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -468,6 +570,12 @@ const ogrenciimerapor_post=async function(req, res) {
         if(form){
             form.stajRaporu = dosya;
             await form.save();
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrenciimerapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
@@ -476,6 +584,12 @@ const ogrenciimerapor_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:3,stajRaporu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrenciimerapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -520,13 +634,24 @@ const ogrencistaj1basvur_get=async function(req, res) {
     const soyisim=req.session.kullaniciSoyad;
     const telNo=req.session.kullaniciTelNo;
     const eposta=req.session.kullaniciMail;
+    let disabled="";
+    const kayitarama = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:1
+        }
+    })
+    if(!kayitarama){
+        disabled="disabled";
+    }
     try {
         res.render("ogrenci/ogrencistaj1basvur.ejs", {      
             kullaniciNumara:kullaniciNumara,
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta
+            eposta:eposta,
+            disabled:disabled
         });
     }
     catch(err) {
@@ -617,7 +742,8 @@ const ogrencistaj1basvur_post=async function(req, res) {
                 isim:isim,
                 soyisim:soyisim,
                 telNo:telNo,
-                eposta:eposta
+                eposta:eposta,
+                disabled:""
             });
         }
         await stajkayit.create({
@@ -659,7 +785,8 @@ const ogrencistaj1basvur_post=async function(req, res) {
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta
+            eposta:eposta,
+            disabled:""
         });
     }
     catch(err) {
@@ -717,7 +844,7 @@ const downloadstaj1basvuru=async function(req, res) {
 }
 const ogrencistaj1basvurubelgesi_post = async function(req,res){
     let dosya = req.body.basvuruform;
-    
+
     console.log(dosya);
     if(req.file){
         dosya = req.file.filename;
@@ -725,8 +852,15 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
             console.log(err);
         })
     }
+
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -737,6 +871,10 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
         if(form){
             form.basvuruForm = dosya;
             await form.save();
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
@@ -745,13 +883,17 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,basvuruForm:dosya})
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
                 renk:"success",
                 bilgi:dosya
             });
         }
-        
+
     } catch (error) {
         return res.render("ogrenci/ogrencistaj1basvurubelgesi.ejs",{
             message: "Başvuru Formunuz Gönderilemedi",
@@ -759,7 +901,6 @@ const ogrencistaj1basvurubelgesi_post = async function(req,res){
         });
         console.log(error)
     }
-
 }
 
 const ogrencistaj1degerlendirme_get=async function(req, res) {
@@ -806,6 +947,12 @@ const ogrencistaj1degerlendirme_post=async function(req, res) {
     console.log(dosya)
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -816,6 +963,12 @@ const ogrencistaj1degerlendirme_post=async function(req, res) {
         if(form){
             form.degerlendirmeFormu = dosya;
             await form.save();
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrencistaj1degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
@@ -824,6 +977,12 @@ const ogrencistaj1degerlendirme_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,degerlendirmeFormu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrencistaj1degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -901,6 +1060,13 @@ const ogrencistaj1rapor_post=async function(req, res) {
 
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:1
+            }
+        })
+
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -912,6 +1078,12 @@ const ogrencistaj1rapor_post=async function(req, res) {
             form.stajRaporu = dosya;
             await form.save();
             console.log("başarılı")
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                    if(degerlendirme){
+                        degerlendirme.durumID = 10
+                        await degerlendirme.save();
+                    }
+                }
             return res.render("ogrenci/ogrencistaj1rapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -919,6 +1091,12 @@ const ogrencistaj1rapor_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:1,stajRaporu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrencistaj1rapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
                 renk:"success"
@@ -962,13 +1140,24 @@ const ogrencistaj2basvur_get=async function(req, res) {
     const soyisim=req.session.kullaniciSoyad;
     const telNo=req.session.kullaniciTelNo;
     const eposta=req.session.kullaniciMail;
+    let disabled="";
+    const kayitarama = await stajkayit.findOne({
+        where:{
+            kullaniciNumara:kullaniciNumara,
+            stajTipiID:2
+        }
+    })
+    if(!kayitarama){
+        disabled="disabled";
+    }
     try {
         res.render("ogrenci/ogrencistaj2basvur.ejs", {    
             kullaniciNumara:kullaniciNumara,
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta  
+            eposta:eposta,
+            disabled:disabled
         });
     }
     catch(err) {
@@ -1059,7 +1248,8 @@ const ogrencistaj2basvur_post=async function(req, res) {
                 isim:isim,
                 soyisim:soyisim,
                 telNo:telNo,
-                eposta:eposta
+                eposta:eposta,
+                disabled:""
             });
         }
         await stajkayit.create({
@@ -1102,7 +1292,8 @@ const ogrencistaj2basvur_post=async function(req, res) {
             isim:isim,
             soyisim:soyisim,
             telNo:telNo,
-            eposta:eposta
+            eposta:eposta,
+            disabled:""
         });
     }
     catch(err) {
@@ -1160,7 +1351,7 @@ const downloadstaj2basvuru=async function(req, res) {
 }
 const ogrencistaj2basvurubelgesi_post = async function(req,res){
     let dosya = req.body.basvuruform;
-    
+
     console.log(dosya);
     if(req.file){
         dosya = req.file.filename;
@@ -1170,6 +1361,12 @@ const ogrencistaj2basvurubelgesi_post = async function(req,res){
     }
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -1180,6 +1377,10 @@ const ogrencistaj2basvurubelgesi_post = async function(req,res){
         if(form){
             form.basvuruForm = dosya;
             await form.save();
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
@@ -1188,13 +1389,17 @@ const ogrencistaj2basvurubelgesi_post = async function(req,res){
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,basvuruForm:dosya})
+            if(degerlendirme){
+                degerlendirme.durumID = 2
+                await degerlendirme.save();
+            }
             return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
                 message: "Başvuru Formunuz Başarıyla Gönderildi",
                 renk:"success",
                 bilgi:dosya
             });
         }
-        
+
     } catch (error) {
         return res.render("ogrenci/ogrencistaj2basvurubelgesi.ejs",{
             message: "Başvuru Formunuz Gönderilemedi",
@@ -1202,6 +1407,7 @@ const ogrencistaj2basvurubelgesi_post = async function(req,res){
         });
         console.log(error)
     }
+
 
 }
 
@@ -1250,6 +1456,13 @@ const ogrencistaj2degerlendirme_post=async function(req, res) {
     console.log(dosya)
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
+
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -1261,6 +1474,12 @@ const ogrencistaj2degerlendirme_post=async function(req, res) {
             form.degerlendirmeFormu = dosya;
             await form.save();
             console.log("başarılı")
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrencistaj2degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -1268,6 +1487,12 @@ const ogrencistaj2degerlendirme_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,degerlendirmeFormu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrencistaj2degerlendirme.ejs",{
                 message: "Değerlendirme Formunuz Başarıyla Gönderildi",
                 renk:"success",
@@ -1345,6 +1570,12 @@ const ogrencistaj2rapor_post=async function(req, res) {
 
     try {
         const kullaniciNumara=req.session.kullaniciNumara;
+        const degerlendirme=await stajdegerlendirme.findOne({
+            where:{
+                kullaniciNumara:kullaniciNumara,
+                stajTipiID:2
+            }
+        })
         const form = await stajbelgeler.findOne({
             where:{
                 kullaniciNumara:kullaniciNumara,
@@ -1355,6 +1586,12 @@ const ogrencistaj2rapor_post=async function(req, res) {
         if(form){
             form.stajRaporu = dosya;
             await form.save();
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             console.log("başarılı")
             return res.render("ogrenci/ogrencistaj2rapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
@@ -1363,6 +1600,12 @@ const ogrencistaj2rapor_post=async function(req, res) {
             });
         }else{
             await stajbelgeler.create({kullaniciNumara:kullaniciNumara,stajTipiID:2,stajRaporu:dosya})
+            if(form.degerlendirmeFormu!=null && form.stajRaporu!=null){
+                if(degerlendirme){
+                    degerlendirme.durumID = 10
+                    await degerlendirme.save();
+                }
+            }
             return res.render("ogrenci/ogrencistaj2rapor.ejs",{
                 message: "Raporunuz Başarıyla Gönderildi",
                 renk:"success",
