@@ -559,23 +559,6 @@ const kullaniciguncelle_post=async function(req,res){
                 renk:"danger"
             });  
         }
-        if(kullaniciMailKontrol){
-            if(kullaniciMailKontrol.kullaniciMail!=kullaniciMail){
-               return res.render("yonetici/kullaniciguncelle.ejs", {
-                rol:roller,
-                message:"Mail adresinizle kayıtlı bir kullanıcı var.",
-                renk:"danger"
-            });  
-            }   
-        }
-        if(kullaniciTelKontrol){
-            if(kullaniciTelKontrol.kullaniciTelNo!=kullaniciMail){
-                return res.render("yonetici/kullaniciguncelle.ejs", {
-                    rol:roller,
-                    message:"Telefon numaranızla kayıtlı bir kullanıcı var.",
-                    renk:"danger"
-                }); 
-            }}
         if (kullanıcı) {
             kullanıcı.kullaniciNumara = kullaniciNumara;
             kullanıcı.kullaniciAd = kullaniciAd;
