@@ -25,21 +25,21 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 
 ### Kullanılan Npm Paketleri
 
--express
--mysql2
--express-session
--sequelize
--nodemailer
--sequelize-auto
--puppeteer
--multer
--html2canvas
--jspdf
--bcrypt
--connect-session-sequelize
--cookie-parser
--ejs
--csurf
+- express
+- mysql2
+- express-session
+- sequelize
+- nodemailer
+- sequelize-auto
+- puppeteer
+- multer
+- html2canvas
+- jspdf
+- bcrypt
+- connect-session-sequelize
+- cookie-parser
+- ejs
+- csurf
 
 ### ÇALIŞTIRMA AŞAMALARI
 
