@@ -13,25 +13,10 @@ Aşağıdaki link üzerinden proje içeriğine ait oluşturulmuş gerekli bilgil
 
 Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.google.com/file/d/18SocTw9Kop8EgYFbXkPd7h-qSzs0Vm1l/view?usp=share_link)
 
-### KULLANILAN TEKNOLOJİLER
-
-- MySQL 
-- Bootstrap
-- HTML
-- CSS
-- ExpressJs
-- EJS
-- NodeJs
-
-### KULLANILAN PROGRAMLAR
-
-- MySQL Workbench
-- Visual Studio Code
-
 
 ### ÇALIŞTIRMA AŞAMALARI
 
-Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra veri tabanı dosyasının MySQL Workbench üzerinde import edilme işlemi yapılmalıdır. Ardından indirilen **.rar** dosyası klasöre çıkartıldıktan sonra Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
+Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra ilgili **.rar** dosyası klasöre çıkartılmalı ve Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
 
 - ```
   npm init --yes
