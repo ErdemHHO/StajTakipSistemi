@@ -13,28 +13,58 @@ Aşağıdaki link üzerinden proje içeriğine ait oluşturulmuş gerekli bilgil
 
 Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.google.com/file/d/18SocTw9Kop8EgYFbXkPd7h-qSzs0Vm1l/view?usp=share_link)
 
+### KULLANILAN TEKNOLOJİLER
+
+- MySQL 
+- Bootstrap
+- HTML
+- CSS
+- JavaScript
+- EJS
+- NodeJs
+
+### Kullanılan Npm Paketleri
+
+-express
+-mysql2
+-express-session
+-sequelize
+-nodemailer
+-sequelize-auto
+-puppeteer
+-multer
+-html2canvas
+-jspdf
+-bcrypt
+-connect-session-sequelize
+-cookie-parser
+-ejs
+-csurf
 
 ### ÇALIŞTIRMA AŞAMALARI
 
-Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra ilgili **.rar** dosyası klasöre çıkartılmalı ve Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
+Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra veri tabanı dosyasının MySQL Workbench üzerinde import edilme işlemi yapılmalıdır. Ardından indirilen **.rar** dosyası klasöre çıkartıldıktan sonra Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
 
 - ```
   npm init --yes
   ```
 
 - ```
-  npm install mysql2 --yes
+  npm i express mysql2 ejs express-session sequelize 
   ```
   
 - ```
-  npm install bcrypt --yes
+  npm i bcrypt multer connect-session-sequelize cookie-parser
   ```
 - ```
-  npm install express nodemon
+  npm i nodemon  
   ```
   
 şeklinde ilgili paketler yüklenmelidir. Ardından proje çalıştırılmalıdır;
 
 - ```
-  nodemon index.js
+  node index.js  
+  ```
+- ```
+  nodemon index  
   ```
