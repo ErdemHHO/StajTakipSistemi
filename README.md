@@ -34,8 +34,6 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 
 ### ÇALIŞTIRMA AŞAMALARI
 
-Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra **.rar** dosyası klasöre çıkartılmalı ve Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
-
 - ```
   npm i  
   ```
