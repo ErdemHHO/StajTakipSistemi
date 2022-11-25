@@ -37,25 +37,11 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 Projeye ait verilen teknolojiler ve gerekli dosyalar indirildikten sonra **.rar** dosyası klasöre çıkartılmalı ve Visual Studio Code üzerinde açılmalıdır. Açılan dosyanın **terminal-powershell** kısmına sırasıyla aşağıda verilen işlemler uygulanmalıdır;
 
 - ```
-  npm init --yes
-  ```
-
-- ```
-  npm i express mysql2 ejs express-session sequelize 
-  ```
-  
-- ```
-  npm i bcrypt multer connect-session-sequelize cookie-parser
-  ```
-- ```
-  npm i nodemon  
+  npm i  
   ```
   
 şeklinde ilgili paketler yüklenmelidir. Ardından proje çalıştırılmalıdır;
 
 - ```
   node index.js  
-  ```
-- ```
-  nodemon index  
   ```
