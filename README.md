@@ -34,12 +34,12 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 
 ### ÇALIŞTIRMA AŞAMALARI
 
-- ```
+- ````
   npm i  
-  ```
+  ````
   
 şeklinde ilgili paketler yüklenmelidir. Ardından proje çalıştırılmalıdır;
 
-- ```
+- ````
   node index.js  
-  ```
+  ````
