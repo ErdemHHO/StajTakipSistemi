@@ -14,7 +14,7 @@ const loading_get=async function(req, res) {
                 return res.redirect("/komisyon/kullanicitablosu");
             }
             else if(rol==3){
-                return res.redirect("/ogretmen/stajtablosu");
+                return res.redirect("/ogretmen/belgegor");
             }
             if(rol==4){
                 return res.redirect("/ogrenci/anasayfa");
