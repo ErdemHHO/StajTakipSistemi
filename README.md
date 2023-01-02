@@ -48,8 +48,8 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 
 Kullanıcı Numara --- Şifre --- ROL ---
 
-*201307011        erdemhacihasanoğlu          --- Öğrenci
-*2419             serdarsolak                 --- Admin
-*5205             sedabalta                   --- Komisyon
-*7012             alpermetin                  --- Öğretmen
+ *201307011   ---     erdemhacihasanoğlu          --- Öğrenci
+ *2419        ---     serdarsolak                 --- Admin
+ *5205        ---     sedabalta                   --- Komisyon
+ *7012        ---     alpermetin                  --- Öğretmen
 
