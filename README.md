@@ -43,3 +43,13 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
 - ````
   node index.js  
   ````
+
+### ÖRNEK KULLANICILAR
+
+Kullanıcı Numara --- Şifre --- ROL ---
+
+*201307011        erdemhacihasanoğlu          --- Öğrenci
+*2419             serdarsolak                 --- Admin
+*5205             sedabalta                   --- Komisyon
+*7012             alpermetin                  --- Öğretmen
+
