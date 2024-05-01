@@ -1,3 +1,5 @@
+![Staj Takip Sistemi](KapakResmi.png)
+
 # STAJ TAKİP SİSTEMİ
 
 ## ÇALIŞMA AMACI
@@ -39,6 +41,10 @@ Proje bilgilendirme dökümanına ulaşmak için [tıklayınız](https://drive.g
   ````
   
 şeklinde ilgili paketler yüklenmelidir. Ardından proje çalıştırılmalıdır;
+
+- ````
+  docker-compose up
+  ````
 
 - ````
   node index.js  
