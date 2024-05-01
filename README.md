@@ -59,3 +59,12 @@ Kullanıcı Numara --- Şifre --- ROL ---
  *5205        ---     sedabalta                   --- Komisyon
  *7012        ---     alpermetin                  --- Öğretmen
 
+# INTERNSHIP TRACKING SYSTEM
+
+## OBJECTIVE
+
+Within the scope of the project, it is expected to develop a system that can dynamically generate documents (PDF) depending on user inputs. User information includes student information requested in internship applications, company information, full address, and contact information. It is aimed to create a dynamic application document using this information and to conduct internship application procedures through the created document.
+
+You can access the necessary informative text about the project content and the general design patterns of the project via the link below.
+
+To access the project information document, [click here](https://drive.google.com/file/d/18SocTw9Kop8EgYFbXkPd7h-qSzs0Vm1l/view?usp=share_link)
